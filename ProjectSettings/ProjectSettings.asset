@@ -915,11 +915,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: e0099245-17e1-4cad-a2f7-bfabe00e07e7
+  cloudProjectId: e9e7b2f2-8cf7-45be-9ef9-62c7d8a747f1
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: "2D \uAC8C\uC784 \uD504\uB85C\uC81D\uD2B8"
-  organizationId: kor_lien
+  projectName: UnityDev 2025-06-17_20-52-03
+  organizationId: dkswnsgml
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
