@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: cc4bf546254f6944ba76bd65550c6b49
+  productGUID: 17ea5c7954112b64caa44789f2b2ac6e
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: UnityDev
+  productName: "2D \uAC8C\uC784 \uD504\uB85C\uC81D\uD2B8"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -837,14 +837,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: UnityDev
+  metroPackageName: "2D \uAC8C\uC784 \uD504\uB85C\uC81D\uD2B8"
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: UnityDev
+  metroApplicationDescription: "2D \uAC8C\uC784 \uD504\uB85C\uC81D\uD2B8"
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -915,11 +915,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: e9e7b2f2-8cf7-45be-9ef9-62c7d8a747f1
+  cloudProjectId: e0099245-17e1-4cad-a2f7-bfabe00e07e7
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: UnityDev 2025-06-17_20-52-03
-  organizationId: dkswnsgml
+  projectName: "2D \uAC8C\uC784 \uD504\uB85C\uC81D\uD2B8"
+  organizationId: kor_lien
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
