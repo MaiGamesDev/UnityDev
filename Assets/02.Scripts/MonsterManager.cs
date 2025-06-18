@@ -1,29 +1,43 @@
+using Middle_Age_2D_Game;
+using System.Collections;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.Rendering.DebugUI;
 
 public abstract class MonsterManager : MonoBehaviour
 {
     [SerializeField] protected float hp = 10f;
     [SerializeField] protected float moveSpeed = 1f;
 
-    // Rigidbody2D rigid;
+
+    [SerializeField] protected float attackRange = 1f;
+    [SerializeField] protected float attackDamage = 3f;
+    private bool isAttacking = false;
+
     SpriteRenderer sRenderer;
-    private enum StateType { Left, Stop, Right }
+    Animator animator;
+    GameObject player;
+
+    private bool isHit;
+
+    private enum StateType { Left, Idle, Right }
     private StateType stateType;
 
     public abstract void Init();
 
     private void Awake()
     {
-        // rigid = GetComponent<Rigidbody2D>();
-
         sRenderer = GetComponent<SpriteRenderer>();
-        Init();
+        animator = GetComponent<Animator>();
+        player = GameObject.FindWithTag("Player");
 
+        Init();
     }
 
-    private void Start()
+    void Start()
     {
         Invoke("NextMove", 1f);
     }
@@ -31,10 +45,15 @@ public abstract class MonsterManager : MonoBehaviour
     void Update()
     {
         Move();
+        Attack();
     }
 
     void Move()
     {
+        if (isHit)
+            return;
+
+        animator.SetTrigger("Run");
 
         switch (stateType)
         {
@@ -48,10 +67,12 @@ public abstract class MonsterManager : MonoBehaviour
                 sRenderer.flipX = false;
                 break;
 
-            case StateType.Stop:
-                // 정지
+            case StateType.Idle:
+                animator.ResetTrigger("Run");
+                animator.SetTrigger("Idle");
                 break;
         }
+
 
         // 경계에 닿으면 방향 자동 반전
         if (transform.position.x > 8f)
@@ -59,11 +80,15 @@ public abstract class MonsterManager : MonoBehaviour
         else if (transform.position.x < -8f)
             SetStateType(StateType.Right);
 
-        // 플레이어 방향으로 전진
-        GameObject target = GameObject.Find("Player");
-        Vector3 dir = target.transform.position - transform.position;
-        dir.Normalize();
 
+        /* 플레이어 감지시 플레이어 방향으로 이동(구현 중)
+
+        if (gameObject.CompareTag("Player"))
+        {
+            GameObject target = GameObject.Find("Player");
+            dir = target.transform.position - transform.position;
+            dir.Normalize();
+        } */
     }
 
     void SetStateType(StateType state)
@@ -75,45 +100,82 @@ public abstract class MonsterManager : MonoBehaviour
     {
         int rand = Random.Range(-1, 2); // -1, 0, 1
         StateType newState = rand == -1 ? StateType.Left :
-                             rand == 0 ? StateType.Stop : StateType.Right;
+                             rand == 0 ? StateType.Idle : StateType.Right;
 
         SetStateType(newState);
 
-        Invoke("NextMove", 5f);
-    }
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-
+        Invoke("NextMove", 3f);
     }
 
     void OnMouseDown()
     {
-        Hit(1);
+        StartCoroutine(Hit(1));
     }
 
-    void Hit(float damage) // 캐릭터가 공격할시로 변경 예정
+    IEnumerator Hit(float damage)
     {
+        if (isHit)
+            yield break;
+
+        isHit = true;
+
         hp -= damage;
 
         if (hp <= 0)
         {
-            Destroy(gameObject);
-            // 아이템 떨구는 기능 추가
+            animator.SetTrigger("Death");
+
+            yield return new WaitForSeconds(3f);
+
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            Color c = sr.color;
+            for (float t = 0; t < 1f; t += Time.deltaTime)
+            {
+                sr.color = new Color(c.r, c.g, c.b, 1f - t);
+                yield return null;
+            }
+            gameObject.SetActive(false);
+            yield break;
         }
+
+        animator.SetTrigger("Hit");
+        yield return new WaitForSeconds(0.5f);
+        isHit = false;
     }
 
     void Attack()
     {
-        // hp -= player.attack; // 플레이어가 몬스터 공격했을 경우
-        if (hp <= 0)
+        if (isAttacking) return; // 공격 중이라면 중복공격X
+
+        float distance = Vector2.Distance(player.transform.position, transform.position); // 플레이어와의 거리 파악
+        if (distance <= attackRange)
         {
-
+            StartCoroutine(AttackRoutine());            
         }
-
     }
 
+    IEnumerator AttackRoutine()
+    {
+        isAttacking = true;
+        animator.SetTrigger("Attack");
 
+        float attackDuration = GetAnimLegnth("Attack");
 
+        yield return new WaitForSeconds(attackDuration * 0.5f);
+        // player.GetComponent<IDamageable>().TakeDamage(attackDamage); // 데미지 입힘
+
+        yield return new WaitForSeconds(attackDuration * 0.5f); // 나머지 쿨타임
+        isAttacking = false;
+    }
+
+    float GetAnimLegnth(string stateName)
+    {
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == stateName)
+                return clip.length;
+        }
+
+        return 1f;
+    }
 }
