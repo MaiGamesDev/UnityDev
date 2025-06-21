@@ -5,6 +5,9 @@ public class NPC : MonoBehaviour
 {
     public string idle;
     public string thankYou;
+    public string noMoney;
+
+    public UIManager uiManager;
     public TextMeshPro lineBox;
 
     public 
@@ -12,15 +15,23 @@ public class NPC : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        setLine(idle);
+        SetLine(idle);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void BuyItem(int price)
     {
-        
+        int gold = uiManager.gold;
+
+        if (gold >= price)
+        {
+            uiManager.SetGold(gold - price);
+            SetLine(thankYou);
+        }
+        else
+            SetLine(noMoney);
     }
-    void setLine(string line)
+
+    void SetLine(string line)
     {
         Debug.Log(line);
         lineBox.text = line;
