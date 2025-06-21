@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 6548469791253870321}
   - component: {fileID: 5788987378839247718}
   - component: {fileID: 1272875168160430723}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Flying Eye
   m_TagString: Fly
   m_Icon: {fileID: 0}
@@ -317,5 +317,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   moveSpeed: 1
+  traceRange: 5
   attackRange: 1
   attackDamage: 3

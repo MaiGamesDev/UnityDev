@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7601114372077906592}
   - component: {fileID: 7065749366136990030}
   - component: {fileID: 1037877564013814841}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Copper Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}

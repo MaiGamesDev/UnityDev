@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5357640299825841353}
   - component: {fileID: 7522880356439852378}
   - component: {fileID: 2185957860231922584}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   moveSpeed: 1
+  traceRange: 5
   attackRange: 1.5
   attackDamage: 3
 --- !u!70 &7522880356439852378
@@ -193,7 +194,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!1 &4953277150500927691
 GameObject:
   m_ObjectHideFlags: 0

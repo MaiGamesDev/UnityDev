@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1680868344587803564}
   - component: {fileID: 6292457658094197051}
   - component: {fileID: 3891208248079427380}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!114 &3891208248079427380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   moveSpeed: 1
+  traceRange: 5
   attackRange: 1
   attackDamage: 3
 --- !u!1 &8456727154645917384
