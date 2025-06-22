@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8904591563103766475}
   - component: {fileID: 7385233671112117016}
   m_Layer: 7
-  m_Name: HitBox
+  m_Name: MonsterHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 6548469791253870321}
   - component: {fileID: 5788987378839247718}
   - component: {fileID: 1272875168160430723}
+  - component: {fileID: 2232278921059519750}
   m_Layer: 6
   m_Name: Flying Eye
   m_TagString: Fly
@@ -320,3 +321,16 @@ MonoBehaviour:
   traceRange: 5
   attackRange: 1
   attackDamage: 3
+  attackHitbox: {fileID: 2710430203552141271}
+--- !u!114 &2232278921059519750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3648604802589235218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

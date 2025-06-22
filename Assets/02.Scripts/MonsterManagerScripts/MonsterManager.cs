@@ -12,15 +12,16 @@ using static UnityEngine.Rendering.DebugUI;
 
 public abstract class MonsterManager : MonoBehaviour
 {
-    [SerializeField] protected float hp = 10f;
+    [SerializeField] protected float monsterHp = 10f;
     [SerializeField] protected float moveSpeed = 1f;
     protected Transform player;
 
     [SerializeField] protected float traceRange = 5f;
-    [SerializeField] protected float attackRange = 1.2f;
+    [SerializeField] protected float attackRange = 1.5f;
     [SerializeField] protected float attackDamage = 3f;
     private bool isAttacking = false;
     private string[] attackAnimations = { "Attack", "Attack2" };
+    [SerializeField] private GameObject attackHitbox;
 
     SpriteRenderer sRenderer;
     Animator animator;
@@ -45,7 +46,13 @@ public abstract class MonsterManager : MonoBehaviour
         item = FindFirstObjectByType<ItemDropSpawner>();
 
         GameObject playerObj = GameObject.FindWithTag("Player");
-        player = playerObj.transform;                
+        player = playerObj.transform;
+
+        var hitbox = GetComponentInChildren<MonsterHitbox>();
+        if (hitbox != null)
+        {
+            hitbox.SetOwner(this);
+        }
     }
 
     void Start()
@@ -57,12 +64,12 @@ public abstract class MonsterManager : MonoBehaviour
         if (toPlayer.x < 0)
         {
             SetStateType(StateType.Left);
-            sRenderer.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         else
         {
             SetStateType(StateType.Right);
-            sRenderer.flipX = false;
+            transform.localScale = new Vector3(1, 1, 1);
         }
 
         animator.ResetTrigger("Idle");
@@ -73,8 +80,7 @@ public abstract class MonsterManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move(); // 물리기반(MovePosition) 이동
-        
+        Move(); // 물리기반(MovePosition) 이동        
     }
 
     /// <summary>
@@ -134,11 +140,11 @@ public abstract class MonsterManager : MonoBehaviour
             {
                 case StateType.Left:
                     ranMove = Vector2.left;
-                    sRenderer.flipX = true;
+                    transform.localScale = new Vector3(-1, 1, 1);
                     break;
                 case StateType.Right:
                     ranMove = Vector2.right;
-                    sRenderer.flipX = false;
+                    transform.localScale = new Vector3(1, 1, 1);
                     break;
                 case StateType.Idle:
                     ranMove = Vector2.zero;
@@ -172,9 +178,9 @@ public abstract class MonsterManager : MonoBehaviour
     {
         // flip 처리
         if (dir.x < 0)
-            sRenderer.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
         else if (dir.x > 0)
-            sRenderer.flipX = false;
+            transform.localScale = new Vector3(1, 1, 1);
 
         // 애니메이션 전환
         if (dir == Vector2.zero)
@@ -206,9 +212,9 @@ public abstract class MonsterManager : MonoBehaviour
 
         animator.SetTrigger("Hit");
 
-        hp -= damage;
+        monsterHp -= damage;
 
-        if (hp <= 0)
+        if (monsterHp <= 0)
         {
             animator.SetTrigger("Death");
 
@@ -247,13 +253,12 @@ public abstract class MonsterManager : MonoBehaviour
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
 
-        // player.GetComponent<IDamageable>().TakeDamage(attackDamage); // 플레이어에게 데미지 입힘
-        // 만약 Attack의 경우 hitBox.SetActive(true);
-
         yield return new WaitForSeconds(GetAnimLegnth(randomAttack)); // 나머지 쿨타임
         isAttacking = false;
         isMove = true;
     }
+
+    public abstract float AttackDamage();
 
     float GetAnimLegnth(string stateName)
     {
@@ -265,5 +270,6 @@ public abstract class MonsterManager : MonoBehaviour
 
         return 1f;
     }
+
 }
 

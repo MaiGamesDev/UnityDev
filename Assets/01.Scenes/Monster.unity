@@ -736,8 +736,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58f1ecb34cfc1a4ba29dba1c216bc7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitBox: {fileID: 1140795371}
   moveSpeed: 3
+  hp: 1
 --- !u!1 &1140795371
 GameObject:
   m_ObjectHideFlags: 0

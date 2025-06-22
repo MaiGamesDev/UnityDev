@@ -10,15 +10,14 @@ public class SoundManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playLoopSound(introBgmClip);
     }
 
-    void playSound(AudioClip clip)
+    public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
     }
 
-    void playLoopSound(AudioClip clip)
+    public void PlayLoopSound(AudioClip clip)
     {
         audioSource.loop = true;
         audioSource.clip = clip;

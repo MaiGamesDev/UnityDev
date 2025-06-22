@@ -5,10 +5,6 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
-    public float hp = 100f;
-    public float maxHp = 100f;
-    public int gold = 0;
-
     public RawImage Hp;
     public TextMeshProUGUI Gold;
     public RawImage Notice;
@@ -18,7 +14,8 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         ResetHp();
-        SetGold(gold);
+        SetGold(GameManager.Instance.gold);
+        SetHp(GameManager.Instance.hp);
     }
 
 
@@ -27,12 +24,12 @@ public class UIManager : MonoBehaviour
     {
         // hp 설정
 
-        hp = value;
-        if (hp >= 0)
+        GameManager.Instance.hp = value;
+        if (value >= 0)
         {
-            Hp.GetComponent<RectTransform>().sizeDelta = new Vector2(hp * 4f, 18);
+            Hp.GetComponent<RectTransform>().sizeDelta = new Vector2(value * 4f, 18);
         }
-        else if (hp <= 0)
+        else if (GameManager.Instance.hp <= 0)
         {
             Die();
         }
@@ -41,16 +38,16 @@ public class UIManager : MonoBehaviour
     {
         // hp를 maxhp로 리셋
 
-        SetHp(maxHp);
+        SetHp(GameManager.Instance.maxHp);
     }
     public void SetGold(int value)
     {
         // gold 설정
 
-        gold = value;
-        if (gold >= 0)
+        GameManager.Instance.gold = value;
+        if (value >= 0)
         {
-            Gold.text = $"소지금 : {gold}";
+            Gold.text = $"소지금 : {value} gold";
         }
     }
     public void SetHpEnemy(float value, float maxValue)
@@ -60,6 +57,7 @@ public class UIManager : MonoBehaviour
         var result = value / maxValue * 100;
         HpEnemy.GetComponent<RectTransform>().sizeDelta = new Vector2(result * 5f, 18);
     }
+
     public IEnumerator ShowNotice(string value)
     {
         //안내창 표시
