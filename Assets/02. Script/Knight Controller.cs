@@ -6,6 +6,8 @@ namespace Middle_Age_2D_Game
 {
     public class KnightController : MonoBehaviour, IMoveMethod
     {
+        private int hp = 1;
+
         [SerializeField] protected float moveSpeed = 7f;
         [SerializeField] protected float jumpPower = 7f;
 
