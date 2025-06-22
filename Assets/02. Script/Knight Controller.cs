@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Reflection;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Middle_Age_2D_Game
         private Animator knightAnim;
 
         public bool isGround = false;
-        private float x, y; // X, Y축 값을 넣기위한 변수
+        private float x; // X축 값을 넣기위한 변수
         //private SpriteRenderer spriteRd;
 
         public void Start()
@@ -25,7 +26,7 @@ namespace Middle_Age_2D_Game
 
         public void Update()
         {
-            Move();
+            StartCoroutine(Run());
             Jump();
         }
 
@@ -48,10 +49,23 @@ namespace Middle_Age_2D_Game
         /// <summary>
         /// 좌우만 움직이는 기능
         /// </summary>
-        private void Move()
+        private IEnumerator Run()
         {
+            
             x = Input.GetAxis("Horizontal"); // X축 이동
             transform.position += new Vector3(x, 0, 0) * moveSpeed * Time.deltaTime;
+
+            if (x > 0)
+            {
+                knightAnim.SetBool("Run", true);
+                knightAnim.SetBool("Idle", false);
+                yield return null;
+            }
+            else
+            {
+                knightAnim.SetBool("Run", false);
+                knightAnim.SetBool("Idle", true);
+            }
         }
 
         /// <summary>
@@ -69,11 +83,6 @@ namespace Middle_Age_2D_Game
         /// 공격 기능
         /// </summary>
         void Attack()
-        {
-
-        }
-
-        private void AnimIdlePlay()
         {
 
         }
