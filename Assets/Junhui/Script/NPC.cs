@@ -9,6 +9,9 @@ public class NPC : MonoBehaviour
 
     public UIManager uiManager;
     public TextMeshPro lineBox;
+    public SoundManager soundManager;
+    public AudioClip sndItemBuy;
+    public AudioClip sndNoMoney;
 
     public 
 
@@ -20,15 +23,19 @@ public class NPC : MonoBehaviour
 
     public void BuyItem(int price)
     {
-        int gold = uiManager.gold;
+        int gold = GameManager.Instance.gold;
 
         if (gold >= price)
         {
+            soundManager.PlaySound(sndItemBuy);
             uiManager.SetGold(gold - price);
             SetLine(thankYou);
         }
         else
+        { 
+            soundManager.PlaySound(sndNoMoney);
             SetLine(noMoney);
+        }
     }
 
     void SetLine(string line)
