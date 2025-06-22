@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/Monster.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Junhui/Scene/MapHome.unity
+    guid: 42f7bd484af635c4d81250f5ca278153
+  - enabled: 1
+    path: Assets/Junhui/Scene/Map.unity
+    guid: 8455377a6eb4e1949811d59baab4a3b6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
