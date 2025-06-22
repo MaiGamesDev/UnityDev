@@ -4,8 +4,13 @@ public class Skeleton : MonsterManager
 {
     public override void Init()
     {
-        //hp = 10f;
-        //moveSpeed = 0.5f;
-        //attackDamage = 8f;
+        monsterHp = 10f;
+        moveSpeed = 0.5f;
+        attackDamage = 8f;
+    }
+
+    public override float AttackDamage()
+    {
+        return attackDamage;
     }
 }

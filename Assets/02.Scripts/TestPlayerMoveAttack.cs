@@ -2,14 +2,15 @@ using System;
 using System.Collections;
 using System.Threading;
 using UnityEngine;
+using static UnityEditor.Progress;
 
-public class PlayerController : MonoBehaviour
+public class TestPlayerMoveAttack : MonoBehaviour
 {
     //private Animator animator;
-    [SerializeField] private GameObject hitBox;
     [SerializeField] private float moveSpeed = 3f;
     private float h, v;
     private bool isAttack = false;
+    public float hp = 3f;
 
     void Start()
     {
@@ -54,21 +55,19 @@ public class PlayerController : MonoBehaviour
     IEnumerator AttackRoutine()
     {
         isAttack = true;
-        hitBox.SetActive(true);
 
         yield return new WaitForSeconds(0.25f);
-        hitBox.SetActive(false);
         isAttack = false;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.GetComponent<MonsterManager>() != null)
-        {
-            MonsterManager monster = other.GetComponent<MonsterManager>();
-            StartCoroutine(monster.Hit(1));
-        }
-    }
+    //void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.GetComponent<MonsterManager>() != null)
+    //    {
+    //        MonsterManager monster = other.GetComponent<MonsterManager>();
+    //        StartCoroutine(monster.Hit(1));
+    //    }
+    //}
 
     //void OnCollisionEnter2D(Collision2D other)
     //{
@@ -78,4 +77,21 @@ public class PlayerController : MonoBehaviour
     //        item.Get();
     //    }
     //}
+
+    
+    public void TakeDamage(float damage)
+    {
+        hp -= damage;
+        Debug.Log("플레이어 피격! 남은 HP: " + hp);
+
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("플레이어 사망");
+    }
 }

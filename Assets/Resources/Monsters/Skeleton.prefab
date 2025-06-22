@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1680868344587803564}
   - component: {fileID: 6292457658094197051}
   - component: {fileID: 3891208248079427380}
+  - component: {fileID: 219686151946340898}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
@@ -195,6 +196,19 @@ MonoBehaviour:
   traceRange: 5
   attackRange: 1
   attackDamage: 3
+  attackHitbox: {fileID: 8456727154645917384}
+--- !u!114 &219686151946340898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951413053851876473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8456727154645917384
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,12 +221,12 @@ GameObject:
   - component: {fileID: 5843224229006360078}
   - component: {fileID: 1652870691948785463}
   m_Layer: 7
-  m_Name: HitBox
+  m_Name: MonsterHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6008000834103195947
 Transform:
   m_ObjectHideFlags: 0
@@ -222,8 +236,8 @@ Transform:
   m_GameObject: {fileID: 8456727154645917384}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.745042, y: -0.30500007, z: 0}
-  m_LocalScale: {x: 0.50879, y: 0.65555996, z: 0.78275996}
+  m_LocalPosition: {x: 1.66, y: -0.0814, z: 0}
+  m_LocalScale: {x: 0.86903524, y: 0.87917143, z: 0.78275996}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5397364300902300027}
@@ -318,5 +332,5 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 2, y: 2}
   m_Direction: 0

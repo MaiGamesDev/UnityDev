@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5357640299825841353}
   - component: {fileID: 7522880356439852378}
   - component: {fileID: 2185957860231922584}
+  - component: {fileID: 4698240116318326583}
   m_Layer: 6
   m_Name: Mushroom
   m_TagString: Untagged
@@ -131,6 +132,7 @@ MonoBehaviour:
   traceRange: 5
   attackRange: 1.5
   attackDamage: 3
+  attackHitbox: {fileID: 4953277150500927691}
 --- !u!70 &7522880356439852378
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -195,6 +197,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 6
+--- !u!114 &4698240116318326583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731502517511582802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4953277150500927691
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,12 +221,12 @@ GameObject:
   - component: {fileID: 8984346921530448978}
   - component: {fileID: 5794592094372335003}
   m_Layer: 7
-  m_Name: HitBox
+  m_Name: MonsterHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &827237108080044336
 Transform:
   m_ObjectHideFlags: 0
