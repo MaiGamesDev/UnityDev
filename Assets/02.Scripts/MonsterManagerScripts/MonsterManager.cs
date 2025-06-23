@@ -12,14 +12,11 @@ using static UnityEngine.Rendering.DebugUI;
 
 public abstract class MonsterManager : MonoBehaviour
 {
-    [SerializeField] protected float monsterHp = 10f;
-    [SerializeField] protected float moveSpeed = 1f;
+    [SerializeField] protected float monsterHp = 10f, moveSpeed = 1f;
     protected Transform player;
 
-    [SerializeField] protected float traceRange = 5f;
-    [SerializeField] protected float attackRange = 1.5f;
-    [SerializeField] protected float attackDamage = 3f;
-    private bool isAttacking = false;
+    [SerializeField] protected float traceRange = 5f, attackRange = 1.5f, attackDamage = 3f;
+    private bool isAttacking, isTrackingPlayer, isDead = false;
     private string[] attackAnimations = { "Attack", "Attack2" };
     [SerializeField] private GameObject attackHitbox;
 
@@ -28,7 +25,6 @@ public abstract class MonsterManager : MonoBehaviour
     Rigidbody2D rb;
 
     private bool isMove = true;
-    protected bool isTrackingPlayer = false;
 
     protected enum StateType { Left, Idle, Right }
     protected StateType stateType;
@@ -80,7 +76,8 @@ public abstract class MonsterManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move(); // 물리기반(MovePosition) 이동        
+        if (isDead) return;
+        Move(); // 물리기반(MovePosition) 이동 
     }
 
     /// <summary>
@@ -208,18 +205,20 @@ public abstract class MonsterManager : MonoBehaviour
 
     public IEnumerator Hit(float damage)
     {
-        isMove = false;  
+        if (isDead) // 죽은 상태라면 아무 동작도 하지 않음
+            yield break;
 
-        animator.SetTrigger("Hit");
-
+        isMove = false;        
         monsterHp -= damage;
 
         if (monsterHp <= 0)
         {
+            isDead = true;
+            rb.linearVelocity = Vector2.zero; 
             animator.SetTrigger("Death");
+            yield return new WaitForSeconds(0.2f);
 
             item.DropItem(transform.position);
-
             yield return new WaitForSeconds(3f);
 
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -233,6 +232,7 @@ public abstract class MonsterManager : MonoBehaviour
             yield break;
         }
 
+        animator.SetTrigger("Hit");
         yield return new WaitForSeconds(0.5f);
         isMove = true;
     }
