@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class KnightController : MonoBehaviour
 {
+    public float knightHP = 1f;
+    public float damage = 1f;
+
     private Animator animator;
     private Rigidbody2D knightRb;
 
@@ -83,7 +87,17 @@ public class KnightController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            animator.SetTrigger("Attack");
+            // anamy -= damage
+        }
+    }
 
+    void Death()
+    {
+        if (knightHP == 0)
+        {
+            animator.SetTrigger("Death");
+            // knightHP -= anamy damage
         }
     }
     /// <summary>
@@ -103,6 +117,4 @@ public class KnightController : MonoBehaviour
             animator.SetBool("isRun", false);
         }
     }
-
-
 }
