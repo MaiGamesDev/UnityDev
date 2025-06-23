@@ -1,106 +1,105 @@
-using System.Collections;
-using System.Reflection;
 using UnityEngine;
 
-namespace Middle_Age_2D_Game
+public class KnightController : MonoBehaviour
 {
-    public class KnightController : MonoBehaviour, IMoveMethod
+    private Animator animator;
+    private Rigidbody2D knightRb;
+
+    private Vector3 inputDir;
+
+    [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float jumpPower = 9f;
+
+    public bool isGround;
+
+    void Start()
     {
-        private float knightHP = 1;
-        private float damage = 1;
+        knightRb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+    }
 
-        [SerializeField] protected float moveSpeed = 7f;
-        [SerializeField] protected float jumpPower = 7f;
+    void Update()
+    {
+        InputKeyboard();
 
-        private GameObject knightOb;
-        private Rigidbody2D knightRb;
-        private Animator knightAnim;
-        private SpriteRenderer knightSR;
+    }
 
-        private bool isGround = false;
-        private float x; // X축 값을 넣기위한 변수
-        //private SpriteRenderer spriteRd;
+    private void FixedUpdate()
+    {
+        Run();
+    }
 
-        public void Start()
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
         {
-            knightOb = new GameObject();
-            knightRb = GetComponent<Rigidbody2D>();
-            knightAnim = GetComponent<Animator>();
-            knightSR = GetComponent<SpriteRenderer>();
-        }
-
-        public void Update()
-        {
-            StartCoroutine(Run());
-            Jump();
-            Attack();
-        }
-
-        void OnCollisionEnter2D(Collision2D other)
-        {
-            if (other.collider.CompareTag("Ground"))
-            {
-                isGround = true;
-            }
-        }
-
-        void OnCollisionExit2D(Collision2D other)
-        {
-            if (other.collider.CompareTag("Ground"))
-            {
-                isGround = false;
-            }
-        }
-
-        /// <summary>
-        /// 좌우만 움직이는 기능
-        /// </summary>
-        private IEnumerator Run()
-        {
-
-            x = Input.GetAxis("Horizontal"); // X축 이동
-            transform.position += new Vector3(x, 0, 0) * moveSpeed * Time.deltaTime;
-
-            if (isGround == true) // 땅에 닿아있을 때
-            {
-                if (x != 0) //움직일 때
-                {
-                    transform.localScale = (x > 0) ? new Vector3(1,1,1) : new Vector3(-1,1,1); // 캐릭터 방향, 콜라이더 함께 좌,우 방향제어
-                    
-                    knightAnim.SetBool("Run", true);
-                    knightAnim.SetBool("Idle", false);
-
-                }
-                else //멈춰있을 때
-                {
-                    knightAnim.SetBool("Run", false);
-                    knightAnim.SetBool("Idle", true);
-                }
-            }
-            yield return null;
-        }
-
-        /// <summary>
-        /// 점프하는 기능
-        /// </summary>
-        private void Jump()
-        {
-            if (Input.GetKeyDown(KeyCode.Space) && isGround == true)
-            {
-                knightRb.AddForce(transform.up * jumpPower, ForceMode2D.Impulse);
-                knightAnim.SetTrigger("Jump");
-            }
-        }
-
-        /// <summary>
-        /// 공격 기능
-        /// </summary>
-        void Attack()
-        {
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                knightAnim.SetTrigger("Attack");
-            }
+            animator.SetBool("isGround", true);
+            isGround = true;
         }
     }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            animator.SetBool("isGround", false);
+            isGround = false;
+        }
+    }
+    /// <summary>
+    /// 키보드 입력
+    /// </summary>
+    void InputKeyboard()
+    {
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
+
+        inputDir = new Vector3(x, y, 0);
+
+        SetAnimation();
+        Jump();
+    }
+    /// <summary>
+    /// 움직이는 기능
+    /// </summary>
+    void Run()
+    {
+        if (inputDir.x != 0)
+            knightRb.linearVelocityX = inputDir.x * moveSpeed;
+    }
+    /// <summary>
+    /// 점프기능
+    /// </summary>
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGround == true)
+        {
+            animator.SetTrigger("Jump");
+            knightRb.AddForceY(jumpPower, ForceMode2D.Impulse);
+        }
+    }
+
+    void Attack()
+    {
+
+    }
+    /// <summary>
+    /// 애니메이터 상의 애니메이션 모아둠
+    /// </summary>
+    void SetAnimation()
+    {
+        if (inputDir.x != 0)
+        {
+            animator.SetBool("isRun", true);
+
+            var scaleX = inputDir.x > 0 ? 1 : -1;
+            transform.localScale = new Vector3(scaleX, 1, 1);
+        }
+        else
+        {
+            animator.SetBool("isRun", false);
+        }
+    }
+
+
 }

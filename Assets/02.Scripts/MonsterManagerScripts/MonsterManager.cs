@@ -77,11 +77,11 @@ public abstract class MonsterManager : MonoBehaviour
     void FixedUpdate()
     {
         if (isDead) return;
-        Move(); // ¹°¸®±â¹Ý(MovePosition) ÀÌµ¿ 
+        Move(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(MovePosition) ï¿½Ìµï¿½ 
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î°¡ ¸Ê¿¡ µé¾î¿ÔÀ» ¶§ È£ÃâÇÏ´Â ¹æ¹ý    
+    /// ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½    
     /// </summary>
     /// public void OnPlayerEnterMap()
     /// {
@@ -102,13 +102,13 @@ public abstract class MonsterManager : MonoBehaviour
     {
         if (!isMove || player == null) return;
 
-        float distance = Vector2.Distance(player.position, transform.position); // ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸® ºñ±³
-        Vector2 toPlayerDir = (player.position - transform.position).normalized; // ÇÃ·¹ÀÌ¾î ¹æÇâÀ¸·Î ÀÌµ¿
-        Vector2 ranMove = Vector2.zero; // ±âº» ·£´ýÀÌµ¿
+        float distance = Vector2.Distance(player.position, transform.position); // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½
+        Vector2 toPlayerDir = (player.position - transform.position).normalized; // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
+        Vector2 ranMove = Vector2.zero; // ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
         
         if (distance <= traceRange)
         {
-            // ÃßÀû ½ÃÀÛ, ·£´ý ÀÌµ¿ ÁßÁö
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 
             isTrackingPlayer = true;
 
@@ -129,7 +129,7 @@ public abstract class MonsterManager : MonoBehaviour
             }           
         }
 
-        else // ¹üÀ§ ¹Û -> ·£´ýÀÌµ¿
+        else // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½
         {
             isTrackingPlayer = false;
 
@@ -173,13 +173,13 @@ public abstract class MonsterManager : MonoBehaviour
 
     void MoveAnimation(Vector2 dir)
     {
-        // flip Ã³¸®
+        // flip Ã³ï¿½ï¿½
         if (dir.x < 0)
             transform.localScale = new Vector3(-1, 1, 1);
         else if (dir.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
 
-        // ¾Ö´Ï¸ÞÀÌ¼Ç ÀüÈ¯
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½È¯
         if (dir == Vector2.zero)
         {
             animator.ResetTrigger("Run");
@@ -205,7 +205,7 @@ public abstract class MonsterManager : MonoBehaviour
 
     public IEnumerator Hit(float damage)
     {
-        if (isDead) // Á×Àº »óÅÂ¶ó¸é ¾Æ¹« µ¿ÀÛµµ ÇÏÁö ¾ÊÀ½
+        if (isDead) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ ï¿½Æ¹ï¿½ ï¿½ï¿½ï¿½Ûµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             yield break;
 
         isMove = false;        
@@ -239,7 +239,7 @@ public abstract class MonsterManager : MonoBehaviour
 
     void Attack()
     {
-        if (isAttacking) return; // °ø°Ý ÁßÀÌ¶ó¸é Áßº¹°ø°ÝX
+        if (isAttacking) return; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½X
                     
         StartCoroutine(AttackRoutine());        
     }
@@ -249,11 +249,11 @@ public abstract class MonsterManager : MonoBehaviour
         isAttacking = true;
         isMove = false;
 
-        // ·£´ýÀ¸·Î ¾Ö´Ï¸ÞÀÌ¼Ç ¼±ÅÃ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
 
-        yield return new WaitForSeconds(GetAnimLegnth(randomAttack)); // ³ª¸ÓÁö ÄðÅ¸ÀÓ
+        yield return new WaitForSeconds(GetAnimLegnth(randomAttack)); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½
         isAttacking = false;
         isMove = true;
     }
