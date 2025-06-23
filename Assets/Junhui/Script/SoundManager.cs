@@ -14,11 +14,13 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(AudioClip clip)
     {
+        // 사운드 재생
         audioSource.PlayOneShot(clip);
     }
 
     public void PlayLoopSound(AudioClip clip)
     {
+        // BGM 재생
         audioSource.loop = true;
         audioSource.clip = clip;
         audioSource.Play();

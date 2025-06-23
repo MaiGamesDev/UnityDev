@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//Game Manager ΩÃ±€≈Ê
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
@@ -30,4 +31,8 @@ public class GameManager : MonoBehaviour
     public float hp = 100f;
     public float maxHp = 100f;
     public int gold = 0;
+    public float Damage = 1;
+
+
+
 }

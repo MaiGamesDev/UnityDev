@@ -8,12 +8,10 @@ public class Coin : MonoBehaviour
     
     int value = 10;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -21,6 +19,7 @@ public class Coin : MonoBehaviour
     }
     void GetCoin()
     {
+        //사운드 재생, 코인 획득
         soundManager.PlaySound(sndCoin);
         uiManager.StartCoroutine(uiManager.ShowNotice($"{value} 코인을 얻었다."));
         uiManager.SetGold(GameManager.Instance.gold + value);

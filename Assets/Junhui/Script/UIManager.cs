@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI NoticeText;
     public RawImage HpEnemy;
 
+    private string lastNotice = "";
+
     void Start()
     {
         ResetHp();
@@ -62,7 +64,7 @@ public class UIManager : MonoBehaviour
     {
         //안내창 표시
 
-        StopCoroutine("ShowNotice");
+        lastNotice = value;
 
         NoticeText.text = value;
         Notice.gameObject.SetActive(true);
