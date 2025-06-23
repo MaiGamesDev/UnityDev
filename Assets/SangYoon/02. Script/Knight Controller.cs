@@ -81,7 +81,10 @@ public class KnightController : MonoBehaviour
 
     void Attack()
     {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
 
+        }
     }
     /// <summary>
     /// 애니메이터 상의 애니메이션 모아둠
