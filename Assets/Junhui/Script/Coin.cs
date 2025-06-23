@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public UIManager uiManager;
-    public SoundManager soundManager;
     public AudioClip sndCoin;
     
     int value = 10;
@@ -20,9 +18,9 @@ public class Coin : MonoBehaviour
     void GetCoin()
     {
         //사운드 재생, 코인 획득
-        soundManager.PlaySound(sndCoin);
-        uiManager.StartCoroutine(uiManager.ShowNotice($"{value} 코인을 얻었다."));
-        uiManager.SetGold(GameManager.Instance.gold + value);
+        SoundManager.Instance.PlaySound(sndCoin);
+        UIManager.Instance.StartCoroutine(UIManager.Instance.ShowNotice($"{value} 코인을 얻었다."));
+        UIManager.Instance.SetGold(GameManager.Instance.gold + value);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

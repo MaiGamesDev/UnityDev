@@ -3,14 +3,36 @@ using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
+    private static SoundManager instance;
+
+
+    public static SoundManager Instance
+    {
+        get
+        {
+            if (instance == null) instance = new SoundManager();
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public AudioSource audioSource;
 
 
     public AudioClip introBgmClip;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-    }
+    
 
     public void PlaySound(AudioClip clip)
     {

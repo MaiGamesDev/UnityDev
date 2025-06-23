@@ -5,6 +5,31 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
+    private static UIManager instance;
+
+
+    public static UIManager Instance
+    {
+        get
+        {
+            if (instance == null) instance = new UIManager();
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public RawImage Hp;
     public TextMeshProUGUI Gold;
     public RawImage Notice;

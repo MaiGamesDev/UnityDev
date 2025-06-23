@@ -9,9 +9,7 @@ public class NPC : MonoBehaviour
     public string noMoney;
     public string type;
 
-    public UIManager uiManager;
     public TextMeshPro lineBox;
-    public SoundManager soundManager;
     public AudioClip sndItemBuy;
     public AudioClip sndNoMoney;
 
@@ -40,13 +38,13 @@ public class NPC : MonoBehaviour
             }
 
 
-            soundManager.PlaySound(sndItemBuy);
-            uiManager.SetGold(gold - price);
+            SoundManager.Instance.PlaySound(sndItemBuy);
+            UIManager.Instance.SetGold(gold - price);
             SetLine(thankYou);
         }
         else
         { 
-            soundManager.PlaySound(sndNoMoney);
+            SoundManager.Instance.PlaySound(sndNoMoney);
             SetLine(noMoney);
         }
     }
@@ -55,14 +53,14 @@ public class NPC : MonoBehaviour
     {
         float value = 10;
         GameManager.Instance.maxHp += value;
-        uiManager.ResetHp();
-        uiManager.StartCoroutine(uiManager.ShowNotice($"고기를 먹었다. (체력 +{value})"));
+        UIManager.Instance.ResetHp();
+        UIManager.Instance.StartCoroutine(UIManager.Instance.ShowNotice($"고기를 먹었다. (체력 +{value})"));
     }
     void BuyUpgrade()
     {
         float value = 1;
         GameManager.Instance.Damage += value;
-        uiManager.StartCoroutine(uiManager.ShowNotice($"무기를 제련했다. (공격력 +{value})"));
+        UIManager.Instance.StartCoroutine(UIManager.Instance.ShowNotice($"무기를 제련했다. (공격력 +{value})"));
     }
 
     void SetLine(string line)
