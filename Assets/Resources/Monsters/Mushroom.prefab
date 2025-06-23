@@ -81,7 +81,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_Sprite: {fileID: 4723107735738678597, guid: f8b30c2afe165d645b54d500a9c30862, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cbb1052862dec469dc1511dad200b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10
+  monsterHp: 10
   moveSpeed: 1
   traceRange: 5
   attackRange: 1.5
@@ -167,8 +167,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.037999123, y: -0.26599425}
-  m_Size: {x: 0.5982943, y: 1.289143}
+  m_Offset: {x: 0.002132088, y: -0.4285915}
+  m_Size: {x: 0.52656025, y: 0.7917867}
   m_Direction: 0
 --- !u!50 &2185957860231922584
 Rigidbody2D:

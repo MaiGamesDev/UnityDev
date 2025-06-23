@@ -81,7 +81,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_Sprite: {fileID: 4035959289877228764, guid: c5b15ca3a0987ac46b73e4a04e12eeb2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -149,8 +149,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.13127136, y: -0.07160258}
-  m_Size: {x: 1.0397792, y: 1.8567948}
+  m_Offset: {x: 0.17263082, y: -0.2483202}
+  m_Size: {x: 0.58106536, y: 1.1875238}
   m_Direction: 0
 --- !u!50 &6292457658094197051
 Rigidbody2D:
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07847f27b9ceba4b8014a5dcd3c15e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10
+  monsterHp: 10
   moveSpeed: 1
   traceRange: 5
   attackRange: 1
@@ -236,8 +236,8 @@ Transform:
   m_GameObject: {fileID: 8456727154645917384}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.66, y: -0.0814, z: 0}
-  m_LocalScale: {x: 0.86903524, y: 0.87917143, z: 0.78275996}
+  m_LocalPosition: {x: 1.957, y: 0.1592, z: 0}
+  m_LocalScale: {x: 0.9066642, y: 0.66860825, z: 0.78275996}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5397364300902300027}
@@ -332,5 +332,5 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1, y: 2}
   m_Direction: 0
