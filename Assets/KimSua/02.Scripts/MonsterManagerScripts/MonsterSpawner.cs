@@ -41,13 +41,11 @@ public class MonsterSpawner : MonoBehaviour
             if (rayHit.collider != null)
             {
                 spawnY = rayHit.point.y;
-                Debug.Log("바닥을 찾았습니다.");
             }
             else
             {
                 // 지형을 못 찾으면 기본값에 생성
                 spawnY = -2f;
-                Debug.Log("땅을 찾지 못했습니다.");
             }
         }
 

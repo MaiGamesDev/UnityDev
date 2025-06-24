@@ -75,7 +75,7 @@ public class TestPlayerMoveAttack : MonoBehaviour
     public void TakeDamage(float damage)
     {
         hp -= damage;
-        Debug.Log("플레이어 피격! 남은 HP: " + hp);
+        //Debug.Log("플레이어 피격! 남은 HP: " + hp);
 
         if (hp <= 0)
         {
@@ -85,7 +85,7 @@ public class TestPlayerMoveAttack : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("플레이어 사망");
+        //Debug.Log("플레이어 사망");
     }
 
 

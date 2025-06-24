@@ -75,7 +75,8 @@ public abstract class MonsterManager : MonoBehaviour
     void FixedUpdate()
     {
         if (isDead) return;
-        Move(); 
+
+        Move();
     }
 
     protected void SetStateType(StateType state)
@@ -179,28 +180,33 @@ public abstract class MonsterManager : MonoBehaviour
 
     void MoveTo(Vector2 moveDir)
     {
-        rb.MovePosition(rb.position + (moveDir * moveSpeed * Time.fixedDeltaTime));
+        Vector2 pos = rb.position + (moveDir * moveSpeed * Time.fixedDeltaTime);
+
+        pos.x = Mathf.Clamp(pos.x, -8f, 8f);
+
+        rb.MovePosition(pos);
     }
 
 
     public IEnumerator Hit(float damage)
     {
-        if (isDead) 
+        if (isDead)
             yield break;
 
         isMove = false;
         monsterHp -= damage;
+        rb.linearVelocity = Vector2.zero;
 
-        if (monsterHp <= 0) 
+        if (monsterHp <= 0)
         {
             isDead = true;
             animator.SetTrigger("Death");
 
             foreach (Collider2D col in GetComponents<Collider2D>())
             {
-                col.enabled = false;
+                col.isTrigger = true;
             }
-
+            rb.bodyType = RigidbodyType2D.Kinematic;
             yield return new WaitForSeconds(0.2f);
 
             item.DropItem(transform.position);
@@ -224,20 +230,24 @@ public abstract class MonsterManager : MonoBehaviour
 
     void Attack()
     {
-        if (isAttacking) return; 
-                    
-        StartCoroutine(AttackRoutine());        
+        if (isAttacking) return;
+        isMove = false;
+
+        StartCoroutine(AttackRoutine());
     }
 
     IEnumerator AttackRoutine()
     {
         isAttacking = true;
         isMove = false;
-        
+        rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
+
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
 
-        yield return new WaitForSeconds(GetAnimLegnth(randomAttack)); 
+
+        yield return new WaitForSeconds(GetAnimLegnth(randomAttack));
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         isAttacking = false;
         isMove = true;
     }
@@ -251,7 +261,6 @@ public abstract class MonsterManager : MonoBehaviour
             if (clip.name == stateName)
                 return clip.length;
         }
-
         return 1f;
     }
 }
