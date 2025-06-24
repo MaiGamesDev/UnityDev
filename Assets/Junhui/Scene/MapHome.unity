@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4374542061610000656, guid: c67007a688971f44c9ec6786070a3fe7, type: 3}
+      propertyPath: BGMHomeClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e267e9795f60ad749b0e1e042faf9066, type: 3}
     - target: {fileID: 7137631476086704250, guid: c67007a688971f44c9ec6786070a3fe7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1456,6 +1460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: Map
+  BGM: {fileID: 8300000, guid: 10d661af58e201245a0c117ee2632bc9, type: 3}
 --- !u!114 &1050791118
 MonoBehaviour:
   m_ObjectHideFlags: 0

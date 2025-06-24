@@ -30,10 +30,6 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource audioSource;
 
-
-    public AudioClip introBgmClip;
-    
-
     public void PlaySound(AudioClip clip)
     {
         // 사운드 재생
