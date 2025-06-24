@@ -75,19 +75,8 @@ public abstract class MonsterManager : MonoBehaviour
     void FixedUpdate()
     {
         if (isDead) return;
-        Move(); // �������(MovePosition) �̵� 
+        Move(); 
     }
-
-    /// <summary>
-    /// �÷��̾ �ʿ� ������ �� ȣ���ϴ� ���    
-    /// </summary>
-    /// public void OnPlayerEnterMap()
-    /// {
-    ///     monsterSpawner = FindFirstObjectByType<MonsterSpawner>();
-    ///     monsterSpawner.SpawnMonster("Flying Eye", 2);
-    ///     monsterSpawner.SpawnMonster("Goblin", 3);
-    ///     monsterSpawner.SpawnMonster("Mushroom", 3);
-    /// }
 
     protected void SetStateType(StateType state)
     {
@@ -99,13 +88,14 @@ public abstract class MonsterManager : MonoBehaviour
     {
         if (!isMove || player == null) return;
 
-        float distance = Vector2.Distance(player.position, transform.position); // �÷��̾���� �Ÿ� ��
-        Vector2 toPlayerDir = (player.position - transform.position).normalized; // �÷��̾� �������� �̵�
-        Vector2 ranMove = Vector2.zero; // �⺻ �����̵�
-        
+        float distance = Vector2.Distance(player.position, transform.position); // 플레이어와의 거리 비교
+        Vector2 toPlayerDir = (player.position - transform.position).normalized; // 플레이어 방향으로 이동
+        Vector2 ranMove = Vector2.zero; // 기본 랜덤이동
+
         if (distance <= traceRange)
         {
-            // ���� ����, ���� �̵� ����
+            // 추적 시작, 랜덤 이동 중지
+
 
             isTrackingPlayer = true;
 
@@ -126,7 +116,7 @@ public abstract class MonsterManager : MonoBehaviour
             }
         }
 
-        else // ���� �� -> �����̵�
+        else // 범위 밖 -> 랜덤이동
         {
             isTrackingPlayer = false;
 
@@ -170,13 +160,11 @@ public abstract class MonsterManager : MonoBehaviour
 
     void MoveAnimation(Vector2 dir)
     {
-        // flip ó��
         if (dir.x < 0)
             transform.localScale = new Vector3(-1, 1, 1);
         else if (dir.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
 
-        // �ִϸ��̼� ��ȯ
         if (dir == Vector2.zero)
         {
             animator.ResetTrigger("Run");
@@ -197,18 +185,18 @@ public abstract class MonsterManager : MonoBehaviour
 
     public IEnumerator Hit(float damage)
     {
-        if (isDead) // ���� ���¶�� �ƹ� ���۵� ���� ����
+        if (isDead) 
             yield break;
 
         isMove = false;
         monsterHp -= damage;
 
-        if (monsterHp <= 0) // ���� ����
+        if (monsterHp <= 0) 
         {
             isDead = true;
             animator.SetTrigger("Death");
 
-            foreach (Collider2D col in GetComponents<Collider2D>()) // �ݶ��̴� ��Ȱ��ȭ
+            foreach (Collider2D col in GetComponents<Collider2D>())
             {
                 col.enabled = false;
             }
@@ -236,7 +224,7 @@ public abstract class MonsterManager : MonoBehaviour
 
     void Attack()
     {
-        if (isAttacking) return; // ���� ���̶�� �ߺ�����X
+        if (isAttacking) return; 
                     
         StartCoroutine(AttackRoutine());        
     }
@@ -245,12 +233,11 @@ public abstract class MonsterManager : MonoBehaviour
     {
         isAttacking = true;
         isMove = false;
-
-        // �������� �ִϸ��̼� ����
+        
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
 
-        yield return new WaitForSeconds(GetAnimLegnth(randomAttack)); // ������ ��Ÿ��
+        yield return new WaitForSeconds(GetAnimLegnth(randomAttack)); 
         isAttacking = false;
         isMove = true;
     }
@@ -267,6 +254,5 @@ public abstract class MonsterManager : MonoBehaviour
 
         return 1f;
     }
-
 }
 

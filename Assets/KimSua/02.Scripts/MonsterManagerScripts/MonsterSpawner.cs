@@ -7,6 +7,8 @@ public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> monsters = new List<GameObject>();
     [SerializeField] private Transform monster;
+    [SerializeField] private Transform player;
+    [SerializeField] private float minDistance = 3f;
 
 
     IEnumerator Start()
@@ -22,7 +24,7 @@ public class MonsterSpawner : MonoBehaviour
     {
         var randomIndex = Random.Range(0, monsters.Count);
         GameObject prefab = monsters[randomIndex];
-        var randomX = Random.Range(-2, 9);
+        float randomX = Random.Range(-2f, 9f);
         float spawnY;
 
         if (prefab.CompareTag("Fly"))
@@ -34,11 +36,12 @@ public class MonsterSpawner : MonoBehaviour
         {
             // 지상 몬스터는 Raycast로 지형 감지
             Vector2 pos = new Vector2(randomX, 10f);
-            RaycastHit2D rayHit = Physics2D.Raycast(pos, Vector2.down, 20f, LayerMask.GetMask("Ground")); // 처음 감지 위치, 아래 방향, 20만큼 거리, Ground만 인식
+            RaycastHit2D rayHit = Physics2D.Raycast(pos, Vector2.down, 15f, LayerMask.GetMask("Ground")); // 처음 감지 위치, 아래 방향, 15만큼 거리, Ground만 인식
 
             if (rayHit.collider != null)
             {
                 spawnY = rayHit.point.y;
+                Debug.Log("바닥을 찾았습니다.");
             }
             else
             {
@@ -49,6 +52,11 @@ public class MonsterSpawner : MonoBehaviour
         }
 
         Vector3 createPos = new Vector3(randomX, spawnY, 0);
-        Instantiate(prefab, createPos, Quaternion.identity, monster);        
-    }    
+
+        if (Vector2.Distance(player.position, createPos) >= minDistance) ;
+        {
+            Instantiate(prefab, createPos, Quaternion.identity, monster);
+            return;
+        }
+    }
 }

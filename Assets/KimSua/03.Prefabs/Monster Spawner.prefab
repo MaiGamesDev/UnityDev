@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &290028824045682903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7211332613623202523}
+  - component: {fileID: 4548445936563533047}
+  - component: {fileID: 8250590786639912341}
+  m_Layer: 0
+  m_Name: Monster Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7211332613623202523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290028824045682903}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4548445936563533047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290028824045682903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e64e15a15cd55d43b8d1c4a3ce88dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coins:
+  - {fileID: 7374238005798935920, guid: d3b4f3934476bd9428eac9f3bfc841b0, type: 3}
+  - {fileID: 5385813534052309690, guid: 7d5a0e37f79b9c547aa93810c645b4e9, type: 3}
+  - {fileID: 7552353093484554828, guid: ccf83c6a64b75c949a11145506493ea9, type: 3}
+--- !u!114 &8250590786639912341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290028824045682903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8410af3d59197254288642d560d38f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsters:
+  - {fileID: 3648604802589235218, guid: 0799d8ddeb6f53e4e991fae1fc00a5d1, type: 3}
+  - {fileID: 218387715862983509, guid: a0600f599ebe43f4b817b44f8f6b9117, type: 3}
+  - {fileID: 5672142484564556630, guid: 6266c01b7a5a4ee4c8aafecb5522a82f, type: 3}
+  - {fileID: 7851126675638324410, guid: 43942a60e33803d4693fb3b0ffd044c9, type: 3}
+  monster: {fileID: 7211332613623202523}
+  player: {fileID: 0}
+  minDistance: 3
