@@ -113,10 +113,10 @@ TextureImporter:
       name: 4 AttackNoMovement_0
       rect:
         serializedVersion: 2
-        x: 28
+        x: 0
         y: 0
-        width: 37
-        height: 36
+        width: 120
+        height: 80
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -135,10 +135,10 @@ TextureImporter:
       name: 4 AttackNoMovement_1
       rect:
         serializedVersion: 2
-        x: 160
+        x: 120
         y: 0
-        width: 64
-        height: 42
+        width: 120
+        height: 80
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -157,10 +157,10 @@ TextureImporter:
       name: 4 AttackNoMovement_2
       rect:
         serializedVersion: 2
-        x: 282
+        x: 240
         y: 0
-        width: 63
-        height: 35
+        width: 120
+        height: 80
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,10 +179,10 @@ TextureImporter:
       name: 4 AttackNoMovement_3
       rect:
         serializedVersion: 2
-        x: 402
+        x: 360
         y: 0
-        width: 57
-        height: 34
+        width: 120
+        height: 80
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

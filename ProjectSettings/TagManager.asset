@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Fly
+  - Attack
+  - Monster
   layers:
   - Default
   - TransparentFX

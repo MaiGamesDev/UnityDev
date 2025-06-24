@@ -1,18 +1,35 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class KnightController : MonoBehaviour
 {
-    public float knightHP = 1f;
-    public float damage = 1f;
+    // Default Knight stats field
+    //----------------------------------------------------------------------------------------
+    public float defaultHp = 2f;
+    public float defaultDamage = 2f;
+    public float defaultAttackSpeed = 0.2f;
+    //----------------------------------------------------------------------------------------
 
+    // For this field use when Knight stats upgrade
+    //-----------------------------------------------------------------------------------------
+    private float upDamage; // 승수에 따라 몬스터 체력 구현이 뒷받침 되어야함
+    private float upAttackSpeed; // 승수는 0.1 ~ 0.03으로 구현해야함 (기본 공격 속도가 1이기 때문)
+    private float upHp;
+    //-----------------------------------------------------------------------------------------
+
+    public float monsterAttackDamage = 1f;
+
+    public GameObject hitBox;
+
+    private GameObject knightGb;
     private Animator animator;
     private Rigidbody2D knightRb;
 
     private Vector3 inputDir;
 
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float jumpPower = 9f;
+    [SerializeField] private float jumpPower = 21f; // because the gravity value is 5.3
 
     public bool isGround;
 
@@ -20,12 +37,15 @@ public class KnightController : MonoBehaviour
     {
         knightRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
     }
 
     void Update()
     {
         InputKeyboard();
-
+        SetAnimation();
+        Jump();
+        StartCoroutine(Attack());
     }
 
     private void FixedUpdate()
@@ -50,6 +70,17 @@ public class KnightController : MonoBehaviour
             isGround = false;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Monster")) // hit Method
+        {
+            defaultHp -= monsterAttackDamage;
+            Death();
+        }
+        animator.SetTrigger("Hit");
+    }
+
     /// <summary>
     /// 키보드 입력
     /// </summary>
@@ -59,10 +90,8 @@ public class KnightController : MonoBehaviour
         float y = Input.GetAxis("Vertical");
 
         inputDir = new Vector3(x, y, 0);
-
-        SetAnimation();
-        Jump();
     }
+
     /// <summary>
     /// 움직이는 기능
     /// </summary>
@@ -71,37 +100,50 @@ public class KnightController : MonoBehaviour
         if (inputDir.x != 0)
             knightRb.linearVelocityX = inputDir.x * moveSpeed;
     }
+
     /// <summary>
-    /// 점프기능
+    /// Jump (Gravity : 5.3)
     /// </summary>
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGround == true)
+        if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             animator.SetTrigger("Jump");
             knightRb.AddForceY(jumpPower, ForceMode2D.Impulse);
         }
     }
 
-    void Attack()
+    /// <summary>
+    /// Attack (Use Z Key)
+    /// </summary>
+    IEnumerator Attack()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             animator.SetTrigger("Attack");
-            // anamy -= damage
+            hitBox.SetActive(true);
+
+            yield return new WaitForSeconds(defaultAttackSpeed);
+            hitBox.SetActive(false);
+
+            // MonsterManager.monsterHp -= damage;
         }
     }
 
+    /// <summary>
+    /// Death motion
+    /// </summary>
     void Death()
     {
-        if (knightHP == 0)
+        if (defaultHp <= 0)
         {
             animator.SetTrigger("Death");
-            // knightHP -= anamy damage
+            // defaultHP -= MonsterManager.attackdamage;
         }
     }
+
     /// <summary>
-    /// 애니메이터 상의 애니메이션 모아둠
+    /// Run motion in Animator
     /// </summary>
     void SetAnimation()
     {
@@ -116,5 +158,14 @@ public class KnightController : MonoBehaviour
         {
             animator.SetBool("isRun", false);
         }
+    }
+
+
+
+
+
+    void UpgradeStats()
+    {
+
     }
 }
