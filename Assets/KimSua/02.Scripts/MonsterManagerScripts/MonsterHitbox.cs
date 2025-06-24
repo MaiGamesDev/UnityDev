@@ -20,7 +20,6 @@ public class MonsterHitbox : MonoBehaviour
             var player = other.GetComponent<TestPlayerMoveAttack>();
             if (player != null)
             {
-                Debug.Log("몬스터 공격력: " + owner.AttackDamage());
                 player.TakeDamage(owner.AttackDamage()); // 연결된 MonsterManager에서 공격력 사용
             }
         }

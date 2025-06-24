@@ -75,19 +75,9 @@ public abstract class MonsterManager : MonoBehaviour
     void FixedUpdate()
     {
         if (isDead) return;
-        Move(); // �������(MovePosition) �̵� 
-    }
 
-    /// <summary>
-    /// �÷��̾ �ʿ� ������ �� ȣ���ϴ� ���    
-    /// </summary>
-    /// public void OnPlayerEnterMap()
-    /// {
-    ///     monsterSpawner = FindFirstObjectByType<MonsterSpawner>();
-    ///     monsterSpawner.SpawnMonster("Flying Eye", 2);
-    ///     monsterSpawner.SpawnMonster("Goblin", 3);
-    ///     monsterSpawner.SpawnMonster("Mushroom", 3);
-    /// }
+        Move();
+    }
 
     protected void SetStateType(StateType state)
     {
@@ -99,13 +89,14 @@ public abstract class MonsterManager : MonoBehaviour
     {
         if (!isMove || player == null) return;
 
-        float distance = Vector2.Distance(player.position, transform.position); // �÷��̾���� �Ÿ� ��
-        Vector2 toPlayerDir = (player.position - transform.position).normalized; // �÷��̾� �������� �̵�
-        Vector2 ranMove = Vector2.zero; // �⺻ �����̵�
-        
+        float distance = Vector2.Distance(player.position, transform.position); // 플레이어와의 거리 비교
+        Vector2 toPlayerDir = (player.position - transform.position).normalized; // 플레이어 방향으로 이동
+        Vector2 ranMove = Vector2.zero; // 기본 랜덤이동
+
         if (distance <= traceRange)
         {
-            // ���� ����, ���� �̵� ����
+            // 추적 시작, 랜덤 이동 중지
+
 
             isTrackingPlayer = true;
 
@@ -126,7 +117,7 @@ public abstract class MonsterManager : MonoBehaviour
             }
         }
 
-        else // ���� �� -> �����̵�
+        else // 범위 밖 -> 랜덤이동
         {
             isTrackingPlayer = false;
 
@@ -170,13 +161,11 @@ public abstract class MonsterManager : MonoBehaviour
 
     void MoveAnimation(Vector2 dir)
     {
-        // flip ó��
         if (dir.x < 0)
             transform.localScale = new Vector3(-1, 1, 1);
         else if (dir.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
 
-        // �ִϸ��̼� ��ȯ
         if (dir == Vector2.zero)
         {
             animator.ResetTrigger("Run");
@@ -191,28 +180,33 @@ public abstract class MonsterManager : MonoBehaviour
 
     void MoveTo(Vector2 moveDir)
     {
-        rb.MovePosition(rb.position + (moveDir * moveSpeed * Time.fixedDeltaTime));
+        Vector2 pos = rb.position + (moveDir * moveSpeed * Time.fixedDeltaTime);
+
+        pos.x = Mathf.Clamp(pos.x, -8f, 8f);
+
+        rb.MovePosition(pos);
     }
 
 
     public IEnumerator Hit(float damage)
     {
-        if (isDead) // ���� ���¶�� �ƹ� ���۵� ���� ����
+        if (isDead)
             yield break;
 
         isMove = false;
         monsterHp -= damage;
+        rb.linearVelocity = Vector2.zero;
 
-        if (monsterHp <= 0) // ���� ����
+        if (monsterHp <= 0)
         {
             isDead = true;
             animator.SetTrigger("Death");
 
-            foreach (Collider2D col in GetComponents<Collider2D>()) // �ݶ��̴� ��Ȱ��ȭ
+            foreach (Collider2D col in GetComponents<Collider2D>())
             {
-                col.enabled = false;
+                col.isTrigger = true;
             }
-
+            rb.bodyType = RigidbodyType2D.Kinematic;
             yield return new WaitForSeconds(0.2f);
 
             item.DropItem(transform.position);
@@ -236,21 +230,24 @@ public abstract class MonsterManager : MonoBehaviour
 
     void Attack()
     {
-        if (isAttacking) return; // ���� ���̶�� �ߺ�����X
-                    
-        StartCoroutine(AttackRoutine());        
+        if (isAttacking) return;
+        isMove = false;
+
+        StartCoroutine(AttackRoutine());
     }
 
     IEnumerator AttackRoutine()
     {
         isAttacking = true;
         isMove = false;
+        rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
 
-        // �������� �ִϸ��̼� ����
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
 
-        yield return new WaitForSeconds(GetAnimLegnth(randomAttack)); // ������ ��Ÿ��
+
+        yield return new WaitForSeconds(GetAnimLegnth(randomAttack));
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         isAttacking = false;
         isMove = true;
     }
@@ -264,9 +261,7 @@ public abstract class MonsterManager : MonoBehaviour
             if (clip.name == stateName)
                 return clip.length;
         }
-
         return 1f;
     }
-
 }
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 972470316436542377}
   - component: {fileID: 8904591563103766475}
-  - component: {fileID: 7385233671112117016}
+  - component: {fileID: 7166553049342298033}
   m_Layer: 7
   m_Name: MonsterHitbox
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2710430203552141271}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9611416, y: -0.6073489, z: 0}
+  m_LocalPosition: {x: 0.715, y: 0.089, z: 0}
   m_LocalScale: {x: 0.50879, y: 0.65555996, z: 0.78275996}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -88,8 +88,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &7385233671112117016
-CapsuleCollider2D:
+--- !u!61 &7166553049342298033
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,13 +118,22 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 2}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.5, y: 2.5}
+  m_EdgeRadius: 0
 --- !u!1 &3648604802589235218
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,8 +310,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.16933692, y: -0.04428809}
-  m_Size: {x: 0.5781553, y: 0.5781554}
+  m_Offset: {x: 0.16, y: -0.04}
+  m_Size: {x: 0.4, y: 0.4}
   m_Direction: 0
 --- !u!114 &1272875168160430723
 MonoBehaviour:
