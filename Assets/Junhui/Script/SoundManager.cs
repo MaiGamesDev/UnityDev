@@ -30,6 +30,11 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource audioSource;
 
+    private void Start()
+    {
+        audioSource.volume = 0.5f;
+    }
+
     public void PlaySound(AudioClip clip)
     {
         // 사운드 재생

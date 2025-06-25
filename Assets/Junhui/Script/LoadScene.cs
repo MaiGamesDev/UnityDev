@@ -5,7 +5,16 @@ public class LoadScene : MonoBehaviour
 {
     [SerializeField] private string sceneName;
     [SerializeField] private AudioClip BGM; 
-    public void OnButtonPressed()
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("ss");
+        if (other.gameObject.CompareTag("Player"))
+            ChangeScene();
+    }
+
+    public void ChangeScene()
     {
         SceneManager.LoadScene(sceneName);
         if (BGM != null)
