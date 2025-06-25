@@ -66,8 +66,8 @@ public class KnightController : MonoBehaviour
         {
             defaultHp -= monsterAttackDamage;
             Death();
+            animator.SetTrigger("Hit");
         }
-        animator.SetTrigger("Hit");
     }
 
     private void OnCollisionExit2D(Collision2D other)

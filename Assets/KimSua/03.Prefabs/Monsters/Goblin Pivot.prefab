@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4047500209884755716}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Goblin Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 2547283557372192106}
   - component: {fileID: 2822698481516335434}
   - component: {fileID: 2865223960699114533}
-  - component: {fileID: 4425051229411749059}
+  - component: {fileID: 8495956100664240834}
   m_Layer: 6
   m_Name: Goblin
   m_TagString: Untagged
@@ -223,13 +223,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e112f7341320a4eba10547bbea5b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterHp: 10
   moveSpeed: 1
   traceRange: 5
   attackRange: 1
-  attackDamage: 3
   attackHitbox: {fileID: 0}
---- !u!114 &4425051229411749059
+--- !u!114 &8495956100664240834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

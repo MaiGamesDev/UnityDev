@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1144370766781272753}
   - component: {fileID: 551065587832402170}
   - component: {fileID: 84045730417348331}
-  - component: {fileID: 3125389848633036531}
+  - component: {fileID: 2443807576523330185}
   m_Layer: 6
   m_Name: Mushroom
   m_TagString: Untagged
@@ -34,7 +34,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.865, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8074683163498562730}
   m_Father: {fileID: 1482438191471577325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6060760896727449914
@@ -126,11 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80cbb1052862dec469dc1511dad200b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterHp: 10
   moveSpeed: 1
   traceRange: 5
   attackRange: 1.5
-  attackDamage: 3
   attackHitbox: {fileID: 8477012985404662636}
 --- !u!70 &551065587832402170
 CapsuleCollider2D:
@@ -196,7 +195,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 6
---- !u!114 &3125389848633036531
+--- !u!114 &2443807576523330185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,7 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1482438191471577325}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mushroom Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +237,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5912412897756234552}
-  - {fileID: 8074683163498562730}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8477012985404662636
@@ -268,11 +266,11 @@ Transform:
   m_GameObject: {fileID: 8477012985404662636}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.03, y: 0.625, z: 0}
+  m_LocalPosition: {x: 1.03, y: -0.24000001, z: 0}
   m_LocalScale: {x: 0.5087911, y: 0.65555775, z: 0.78275555}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1482438191471577325}
+  m_Father: {fileID: 5912412897756234552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1506759485822542966
 SpriteRenderer:

@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 6548469791253870321}
   - component: {fileID: 5788987378839247718}
   - component: {fileID: 1272875168160430723}
-  - component: {fileID: 2232278921059519750}
+  - component: {fileID: 2788990320143105446}
   m_Layer: 6
   m_Name: Flying Eye
   m_TagString: Fly
@@ -325,13 +325,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571380192442b1e4a99298d8481fe75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterHp: 10
   moveSpeed: 1
   traceRange: 5
   attackRange: 1
-  attackDamage: 3
   attackHitbox: {fileID: 2710430203552141271}
---- !u!114 &2232278921059519750
+--- !u!114 &2788990320143105446
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

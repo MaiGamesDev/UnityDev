@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4865742751957605678}
   - component: {fileID: 7213884990980236359}
   - component: {fileID: 5092895721510246522}
-  - component: {fileID: 7266240475664878583}
+  - component: {fileID: 3689028030848095387}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
@@ -191,13 +191,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07847f27b9ceba4b8014a5dcd3c15e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterHp: 10
   moveSpeed: 1
   traceRange: 5
   attackRange: 3
-  attackDamage: 3
   attackHitbox: {fileID: 5645418471396783561}
---- !u!114 &7266240475664878583
+--- !u!114 &3689028030848095387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -352,7 +350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7845290738687028838}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Skeleton Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
