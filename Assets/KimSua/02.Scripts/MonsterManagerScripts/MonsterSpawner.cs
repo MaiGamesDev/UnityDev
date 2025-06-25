@@ -29,14 +29,14 @@ public class MonsterSpawner : MonoBehaviour
 
         if (prefab.CompareTag("Fly"))
         {
-            // °øÁß ¸ó½ºÅÍ °íÁ¤ ³ôÀÌ
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             spawnY = 2f;
         }
         else
         {
-            // Áö»ó ¸ó½ºÅÍ´Â Raycast·Î ÁöÇü °¨Áö
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í´ï¿½ Raycastï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             Vector2 pos = new Vector2(randomX, 10f);
-            RaycastHit2D rayHit = Physics2D.Raycast(pos, Vector2.down, 15f, LayerMask.GetMask("Ground")); // Ã³À½ °¨Áö À§Ä¡, ¾Æ·¡ ¹æÇâ, 15¸¸Å­ °Å¸®, Ground¸¸ ÀÎ½Ä
+            RaycastHit2D rayHit = Physics2D.Raycast(pos, Vector2.down, 15f, LayerMask.GetMask("Ground")); // Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡, ï¿½Æ·ï¿½ ï¿½ï¿½ï¿½ï¿½, 15ï¿½ï¿½Å­ ï¿½Å¸ï¿½, Groundï¿½ï¿½ ï¿½Î½ï¿½
 
             if (rayHit.collider != null)
             {
@@ -44,7 +44,7 @@ public class MonsterSpawner : MonoBehaviour
             }
             else
             {
-                // ÁöÇüÀ» ¸ø Ã£À¸¸é ±âº»°ª¿¡ »ý¼º
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã£ï¿½ï¿½ï¿½ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 spawnY = -2f;
             }
         }

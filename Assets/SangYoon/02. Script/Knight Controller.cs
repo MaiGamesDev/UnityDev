@@ -1,5 +1,6 @@
 
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -32,14 +33,13 @@ public class KnightController : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpPower = 21f; // because the gravity value is 5.3
 
-    private bool isGround;
+    public bool isGround;
     private bool isAttack;
 
     void Start()
     {
         knightRb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
     }
 
     void Update()
@@ -62,12 +62,6 @@ public class KnightController : MonoBehaviour
             animator.SetBool("isGround", true);
             isGround = true;
         }
-        if (other.gameObject.CompareTag("Monster")) // hit Method
-        {
-            defaultHp -= monsterAttackDamage;
-            Death();
-        }
-        animator.SetTrigger("Hit");
     }
 
     private void OnCollisionExit2D(Collision2D other)
@@ -81,14 +75,12 @@ public class KnightController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Monster")) // hit Method
+        if (other.GetComponent<MonsterManager>() != null) // hit Method
         {
-            defaultHp -= monsterAttackDamage;
-            Death();
+            MonsterManager monster = other.GetComponent<MonsterManager>();
+            StartCoroutine(monster.Hit(defaultDamage));
         }
-        animator.SetTrigger("Hit");
     }
-
     /// <summary>
     /// 키보드 입력
     /// </summary>
@@ -137,7 +129,6 @@ public class KnightController : MonoBehaviour
             isAttack = false;
 
             MonsterManager.monsterHp -= defaultAttackSpeed;
-
             Debug.Log("공격했음");
         }
     }
@@ -150,7 +141,6 @@ public class KnightController : MonoBehaviour
         if (defaultHp <= 0)
         {
             animator.SetTrigger("Death");
-            defaultHp -= MonsterManager.attackDamage;
         }
     }
 
@@ -173,8 +163,17 @@ public class KnightController : MonoBehaviour
     }
 
 
+    public void TakeDamage(float damage)
+    {
+        defaultHp -= monsterAttackDamage;
 
+        animator.SetTrigger("Hit");
 
+        if (defaultHp <= 0)
+        {
+            Death();
+        }
+    }
 
     void UpgradeStats()
     {

@@ -7,7 +7,7 @@ public class MonsterHitbox : MonoBehaviour
 {
     private MonsterManager owner;
 
-    // ¸ó½ºÅÍ µî·Ï (MonsterManager¿¡¼­ È£Ãâ)
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (MonsterManagerï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½)
     public void SetOwner(MonsterManager monster)
     {
         owner = monster;
@@ -20,7 +20,7 @@ public class MonsterHitbox : MonoBehaviour
             var player = other.GetComponent<TestPlayerMoveAttack>();
             if (player != null)
             {
-                player.TakeDamage(owner.AttackDamage()); // ¿¬°áµÈ MonsterManager¿¡¼­ °ø°Ý·Â »ç¿ë
+                player.TakeDamage(owner.AttackDamage()); // ï¿½ï¿½ï¿½ï¿½ï¿½ MonsterManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½ ï¿½ï¿½ï¿½
             }
         }
     }
