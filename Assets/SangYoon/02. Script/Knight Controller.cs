@@ -1,3 +1,4 @@
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -8,7 +9,7 @@ public class KnightController : MonoBehaviour
     //----------------------------------------------------------------------------------------
     public float defaultHp = 2f;
     public float defaultDamage = 2f;
-    public float defaultAttackSpeed = 0.2f;
+    public float defaultAttackSpeed = 1f;
     //----------------------------------------------------------------------------------------
 
     // For this field use when Knight stats upgrade
@@ -31,7 +32,8 @@ public class KnightController : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpPower = 21f; // because the gravity value is 5.3
 
-    public bool isGround;
+    private bool isGround;
+    private bool isAttack;
 
     void Start()
     {
@@ -60,6 +62,12 @@ public class KnightController : MonoBehaviour
             animator.SetBool("isGround", true);
             isGround = true;
         }
+        if (other.gameObject.CompareTag("Monster")) // hit Method
+        {
+            defaultHp -= monsterAttackDamage;
+            Death();
+        }
+        animator.SetTrigger("Hit");
     }
 
     private void OnCollisionExit2D(Collision2D other)
@@ -118,15 +126,19 @@ public class KnightController : MonoBehaviour
     /// </summary>
     IEnumerator Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) && !isAttack)
         {
-            animator.SetTrigger("Attack");
+            isAttack = true;
             hitBox.SetActive(true);
+            animator.SetTrigger("Attack");
 
             yield return new WaitForSeconds(defaultAttackSpeed);
             hitBox.SetActive(false);
+            isAttack = false;
 
-            // MonsterManager.monsterHp -= damage;
+            MonsterManager.monsterHp -= defaultAttackSpeed;
+
+            Debug.Log("공격했음");
         }
     }
 
@@ -138,7 +150,7 @@ public class KnightController : MonoBehaviour
         if (defaultHp <= 0)
         {
             animator.SetTrigger("Death");
-            // defaultHP -= MonsterManager.attackdamage;
+            defaultHp -= MonsterManager.attackDamage;
         }
     }
 

@@ -9,10 +9,13 @@ using static UnityEngine.Rendering.DebugUI;
 
 public abstract class MonsterManager : MonoBehaviour
 {
-    [SerializeField] protected float monsterHp = 10f, moveSpeed = 1f;
+    [SerializeField] protected float moveSpeed = 1f;
+    public static float monsterHp = 10f; // Changed (06-25)
     protected Transform player;
 
-    [SerializeField] protected float traceRange = 5f, attackRange = 2f, attackDamage = 3f;
+    [SerializeField] private float traceRange = 5f, attackRange = 2f;
+    public static float attackDamage = 3f; // Changed (06-25)
+
     private bool isAttacking, isTrackingPlayer, isDead = false;
     private string[] attackAnimations = { "Attack", "Attack2" };
     [SerializeField] private GameObject attackHitbox;
