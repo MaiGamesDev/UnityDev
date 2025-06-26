@@ -21,11 +21,12 @@ public abstract class MonsterManager : MonoBehaviour
     private string[] attackAnimations = { "Attack", "Attack2" };
     [SerializeField] private GameObject attackHitbox;
 
+    private bool isMove = true;
+
     SpriteRenderer sRenderer;
     Animator animator;
     Rigidbody2D rb;
 
-    private bool isMove = true;
 
     protected enum StateType { Left, Idle, Right }
     protected StateType stateType;

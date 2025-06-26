@@ -13,13 +13,6 @@ public class KnightController : MonoBehaviour
     public float defaultAttackSpeed = 1f;
     //----------------------------------------------------------------------------------------
 
-    // For this field use when Knight stats upgrade
-    //-----------------------------------------------------------------------------------------
-    private float upDamage; // 승수에 따라 몬스터 체력 구현이 뒷받침 되어야함
-    private float upAttackSpeed; // 승수는 0.1 ~ 0.03으로 구현해야함 (기본 공격 속도가 1이기 때문)
-    private float upHp;
-    //-----------------------------------------------------------------------------------------
-
     public float monsterAttackDamage = 1f;
 
     public GameObject hitBox;
@@ -35,6 +28,7 @@ public class KnightController : MonoBehaviour
 
     public bool isGround;
     private bool isAttack;
+    protected bool upgrade;
 
     void Start()
     {
@@ -128,7 +122,7 @@ public class KnightController : MonoBehaviour
             hitBox.SetActive(false);
             isAttack = false;
 
-            MonsterManager.monsterHp -= defaultAttackSpeed;
+            MonsterManager.monsterHp -= defaultDamage;
             Debug.Log("공격했음");
         }
     }
@@ -163,7 +157,7 @@ public class KnightController : MonoBehaviour
     }
 
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage) // this mathod using in MonsterHitBox OnTriggerEnter2D()
     {
         defaultHp -= monsterAttackDamage;
 
@@ -173,10 +167,5 @@ public class KnightController : MonoBehaviour
         {
             Death();
         }
-    }
-
-    void UpgradeStats()
-    {
-
     }
 }
