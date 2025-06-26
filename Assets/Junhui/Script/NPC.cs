@@ -59,7 +59,7 @@ public class NPC : MonoBehaviour
     void BuyUpgrade()
     {
         float value = 1;
-        GameManager.Instance.Damage += value;
+        GameManager.Instance.damage += value;
         UIManager.Instance.StartCoroutine(UIManager.Instance.ShowNotice($"무기를 제련했다. (공격력 +{value})"));
     }
 

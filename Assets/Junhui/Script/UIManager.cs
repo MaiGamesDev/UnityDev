@@ -38,9 +38,8 @@ public class UIManager : MonoBehaviour
 
     private string lastNotice = "";
 
-    void Start()
+    void OnEnable()
     {
-        ResetHp();
         SetGold(GameManager.Instance.gold);
         SetHp(GameManager.Instance.hp);
     }
