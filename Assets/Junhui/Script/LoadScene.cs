@@ -4,12 +4,12 @@ using UnityEngine.SceneManagement;
 public class LoadScene : MonoBehaviour
 {
     [SerializeField] private string sceneName;
-    [SerializeField] private AudioClip BGM; 
+    [SerializeField] private AudioClip BGM;
+    [SerializeField] private int mapCount = 0;
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("ss");
         if (other.gameObject.CompareTag("Player"))
             ChangeScene();
     }
@@ -21,5 +21,13 @@ public class LoadScene : MonoBehaviour
         {
             SoundManager.Instance.PlayLoopSound(BGM);
         }
+        if (mapCount != 0)
+        {
+            if (GameManager.Instance.unlockedMapCount < mapCount)
+            {
+                GameManager.Instance.unlockedMapCount = mapCount;
+            }
+        }
+
     }
 }

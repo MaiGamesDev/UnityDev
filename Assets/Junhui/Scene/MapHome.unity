@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 142056229}
   - component: {fileID: 142056232}
   m_Layer: 0
-  m_Name: ToMap
+  m_Name: ToWorldMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,8 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1a6484f0904274bb638eb22635f88d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Map
-  BGM: {fileID: 8300000, guid: 10d661af58e201245a0c117ee2632bc9, type: 3}
+  sceneName: WorldMap
+  BGM: {fileID: 8300000, guid: bf47f031180462346a4196b7f0d4833f, type: 3}
 --- !u!4 &142056231
 Transform:
   m_ObjectHideFlags: 0
