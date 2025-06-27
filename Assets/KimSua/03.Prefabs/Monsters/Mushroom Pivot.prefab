@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 1144370766781272753}
   - component: {fileID: 551065587832402170}
   - component: {fileID: 84045730417348331}
-  - component: {fileID: 2443807576523330185}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,6 +129,7 @@ MonoBehaviour:
   moveSpeed: 1
   traceRange: 5
   attackRange: 1.5
+  isAttacking: 0
   attackHitbox: {fileID: 8477012985404662636}
 --- !u!70 &551065587832402170
 CapsuleCollider2D:
@@ -180,7 +180,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.1
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -195,18 +195,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 6
---- !u!114 &2443807576523330185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4115372892025467945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5672142484564556630
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1482438191471577325}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Mushroom Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +238,8 @@ GameObject:
   - component: {fileID: 8074683163498562730}
   - component: {fileID: 1506759485822542966}
   - component: {fileID: 7074033297556604598}
-  m_Layer: 7
+  - component: {fileID: 535295601410238223}
+  m_Layer: 0
   m_Name: MonsterHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +350,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.15130126, y: 0.08807087}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -371,5 +360,18 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 3.9503748, y: 2.8513517}
   m_EdgeRadius: 0
+--- !u!114 &535295601410238223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8477012985404662636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 1144370766781272753}

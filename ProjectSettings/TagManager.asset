@@ -15,11 +15,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Monster
+  - Player
   - Item
   - Ground
-  - 
-  - 
+  - Monster
+  - DeadMonster
   - 
   - 
   - 

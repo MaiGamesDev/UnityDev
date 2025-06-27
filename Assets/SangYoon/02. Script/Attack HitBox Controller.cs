@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class HitBoxController : MonoBehaviour
 {
+    public KnightController knight;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        int monsterLayer = LayerMask.NameToLayer("Monster");
+        MonsterManager monster = other.GetComponent<MonsterManager>();
 
-        if (other.gameObject.layer == monsterLayer)
+        if (monster != null && knight.isAttack)
         {
+            StartCoroutine(monster.Hit(knight.defaultDamage));
         }
     }
 }

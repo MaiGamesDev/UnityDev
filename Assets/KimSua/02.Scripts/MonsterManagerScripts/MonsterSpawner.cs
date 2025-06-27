@@ -5,11 +5,16 @@ using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> monsters = new List<GameObject>();
+    public List<GameObject> monsters = new List<GameObject>();
     [SerializeField] private Transform monster;
-    [SerializeField] private Transform player;
+    private Transform player;
     [SerializeField] private float minDistance = 3f;
 
+    void Awake()
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        player = playerObj.transform;
+    }
 
     IEnumerator Start()
     {
@@ -29,14 +34,13 @@ public class MonsterSpawner : MonoBehaviour
 
         if (prefab.CompareTag("Fly"))
         {
-            // ���� ���� ���� ����
+
             spawnY = 2f;
         }
         else
         {
-            // ���� ���ʹ� Raycast�� ���� ����
             Vector2 pos = new Vector2(randomX, 10f);
-            RaycastHit2D rayHit = Physics2D.Raycast(pos, Vector2.down, 15f, LayerMask.GetMask("Ground")); // ó�� ���� ��ġ, �Ʒ� ����, 15��ŭ �Ÿ�, Ground�� �ν�
+            RaycastHit2D rayHit = Physics2D.Raycast(pos, Vector2.down, 15f, LayerMask.GetMask("Ground"));
 
             if (rayHit.collider != null)
             {
@@ -44,14 +48,13 @@ public class MonsterSpawner : MonoBehaviour
             }
             else
             {
-                // ������ �� ã���� �⺻���� ����
                 spawnY = -2f;
             }
         }
 
         Vector3 createPos = new Vector3(randomX, spawnY, 0);
 
-        if (Vector2.Distance(player.position, createPos) >= minDistance) ;
+        if (Vector2.Distance(player.position, createPos) >= minDistance)
         {
             Instantiate(prefab, createPos, Quaternion.identity, monster);
             return;

@@ -67,5 +67,4 @@ MonoBehaviour:
   - {fileID: 5672142484564556630, guid: 6266c01b7a5a4ee4c8aafecb5522a82f, type: 3}
   - {fileID: 7851126675638324410, guid: 43942a60e33803d4693fb3b0ffd044c9, type: 3}
   monster: {fileID: 7211332613623202523}
-  player: {fileID: 0}
   minDistance: 3

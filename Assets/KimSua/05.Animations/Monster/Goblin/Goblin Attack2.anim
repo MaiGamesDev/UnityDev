@@ -31,17 +31,8 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.5
+        time: 0.41666666
         value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5833333
-        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -52,7 +43,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Square
+    path: MonsterHitbox
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -88,7 +79,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 3394203039
+      path: 2598371665
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -149,17 +140,8 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.5
+        time: 0.41666666
         value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5833333
-        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -170,7 +152,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Square
+    path: MonsterHitbox
     classID: 1
     script: {fileID: 0}
     flags: 0

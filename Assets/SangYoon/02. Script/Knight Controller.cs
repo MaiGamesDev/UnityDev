@@ -27,7 +27,9 @@ public class KnightController : MonoBehaviour
     [SerializeField] private float jumpPower = 21f; // because the gravity value is 5.3
 
     public bool isGround;
-    private bool isAttack;
+    [HideInInspector] public bool isAttack;
+    [HideInInspector] public bool isHit; // Changed (06-27)
+    public static bool isDead; // Changed (06-27)
     protected bool upgrade;
 
     void Start()
@@ -38,14 +40,17 @@ public class KnightController : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+
         InputKeyboard();
         SetAnimation();
         Jump();
-        StartCoroutine(Attack());
+        Attack();
     }
 
     private void FixedUpdate()
     {
+        if (isDead) return;
         Run();
     }
 
@@ -67,14 +72,6 @@ public class KnightController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.GetComponent<MonsterManager>() != null) // hit Method
-        {
-            MonsterManager monster = other.GetComponent<MonsterManager>();
-            StartCoroutine(monster.Hit(defaultDamage));
-        }
-    }
     /// <summary>
     /// 키보드 입력
     /// </summary>
@@ -110,31 +107,36 @@ public class KnightController : MonoBehaviour
     /// <summary>
     /// Attack (Use Z Key)
     /// </summary>
-    IEnumerator Attack()
+    public void Attack()
     {
         if (Input.GetKeyDown(KeyCode.Z) && !isAttack)
         {
-            isAttack = true;
-            hitBox.SetActive(true);
-            animator.SetTrigger("Attack");
-
-            yield return new WaitForSeconds(defaultAttackSpeed);
-            hitBox.SetActive(false);
-            isAttack = false;
-
-            MonsterManager.monsterHp -= defaultDamage;
-            Debug.Log("공격했음");
+            StartCoroutine(AttackCoroutine());
         }
+    }
+    // Changed (06-27)
+    private IEnumerator AttackCoroutine()
+    {
+        isAttack = true;
+        hitBox.SetActive(true);
+        animator.SetTrigger("Attack");
+
+        yield return new WaitForSeconds(defaultAttackSpeed);
+
+        hitBox.SetActive(false);
+        isAttack = false;
     }
 
     /// <summary>
     /// Death motion
     /// </summary>
-    void Death()
+    void Death() // Changed (06-27)
     {
         if (defaultHp <= 0)
         {
-            animator.SetTrigger("Death");
+            isDead = true;
+            animator.SetTrigger("Death"); 
+            knightRb.gravityScale = 1f;
         }
     }
 
@@ -156,12 +158,17 @@ public class KnightController : MonoBehaviour
         }
     }
 
-
+    // Changed (06-27)
     public void TakeDamage(float damage) // this mathod using in MonsterHitBox OnTriggerEnter2D()
     {
-        defaultHp -= monsterAttackDamage;
+        if (isDead) return;
 
-        animator.SetTrigger("Hit");
+        defaultHp -= damage;
+
+        if (!isHit)
+        {
+            animator.SetTrigger("Hit");
+        }        
 
         if (defaultHp <= 0)
         {

@@ -5,23 +5,15 @@ using static UnityEditor.Progress;
 
 public class MonsterHitbox : MonoBehaviour
 {
-    private MonsterManager owner;
+    public MonsterManager monster;
 
-    // ���� ��� (MonsterManager���� ȣ��)
-    public void SetOwner(MonsterManager monster)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        owner = monster;
-    }
+        KnightController knight = other.GetComponent<KnightController>();
 
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        if (knight != null && monster.isAttacking && !KnightController.isDead)
         {
-            var player = other.GetComponent<TestPlayerMoveAttack>();
-            if (player != null)
-            {
-                player.TakeDamage(owner.AttackDamage()); // ����� MonsterManager���� ���ݷ� ���
-            }
+            knight.TakeDamage(monster.AttackDamage()); // abstract method use
         }
     }
 }

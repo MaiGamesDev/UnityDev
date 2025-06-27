@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 4865742751957605678}
   - component: {fileID: 7213884990980236359}
   - component: {fileID: 5092895721510246522}
-  - component: {fileID: 3689028030848095387}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,19 +193,8 @@ MonoBehaviour:
   moveSpeed: 1
   traceRange: 5
   attackRange: 3
+  isAttacking: 0
   attackHitbox: {fileID: 5645418471396783561}
---- !u!114 &3689028030848095387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113462279794665586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5645418471396783561
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,7 +206,8 @@ GameObject:
   - component: {fileID: 3960345302011777419}
   - component: {fileID: 5255611689288137941}
   - component: {fileID: 8092051094603741907}
-  m_Layer: 7
+  - component: {fileID: 1298205679613725960}
+  m_Layer: 0
   m_Name: MonsterHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +224,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.957, y: 0.1592, z: 0}
-  m_LocalScale: {x: 0.9066642, y: 0.66860825, z: 0.78275996}
+  m_LocalScale: {x: 0.9066642, y: 0.6686082, z: 0.78276}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2109856122883592743}
@@ -329,7 +318,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.14970171, y: -0.047765493}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -339,8 +328,21 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 2.9901555, y: 2.9075418}
   m_EdgeRadius: 0
+--- !u!114 &1298205679613725960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645418471396783561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 5092895721510246522}
 --- !u!1 &7851126675638324410
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7845290738687028838}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Skeleton Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

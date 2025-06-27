@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4047500209884755716}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Goblin Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,8 +46,7 @@ GameObject:
   - component: {fileID: 2547283557372192106}
   - component: {fileID: 2822698481516335434}
   - component: {fileID: 2865223960699114533}
-  - component: {fileID: 8495956100664240834}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,20 +224,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   traceRange: 5
-  attackRange: 1
-  attackHitbox: {fileID: 0}
---- !u!114 &8495956100664240834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3690168475426101573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  attackRange: 2
+  isAttacking: 0
+  attackHitbox: {fileID: 5516948835834154935}
 --- !u!1 &5516948835834154935
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,7 +238,8 @@ GameObject:
   - component: {fileID: 680453343908845935}
   - component: {fileID: 4911621988741804776}
   - component: {fileID: 551095176903291166}
-  m_Layer: 6
+  - component: {fileID: 6131925868759818645}
+  m_Layer: 0
   m_Name: MonsterHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +346,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -373,3 +362,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6131925868759818645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5516948835834154935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 2865223960699114533}

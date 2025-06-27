@@ -13,11 +13,13 @@ public abstract class MonsterManager : MonoBehaviour
     [SerializeField] protected float moveSpeed = 1f;
     public static float monsterHp = 10f; // Changed (06-25)
     protected Transform player;
+    bool isPlayerDead;
 
     [SerializeField] private float traceRange = 5f, attackRange = 2f;
     public static float attackDamage = 3f; // Changed (06-25)
 
-    private bool isAttacking, isTrackingPlayer, isDead = false;
+    [HideInInspector] public bool isAttacking;
+    private bool isTrackingPlayer, isDead = false;
     private string[] attackAnimations = { "Attack", "Attack2" };
     [SerializeField] private GameObject attackHitbox;
 
@@ -27,7 +29,6 @@ public abstract class MonsterManager : MonoBehaviour
     Animator animator;
     Rigidbody2D rb;
 
-
     protected enum StateType { Left, Idle, Right }
     protected StateType stateType;
     private Coroutine moveRoutine;
@@ -35,6 +36,7 @@ public abstract class MonsterManager : MonoBehaviour
     private ItemDropSpawner item;
 
     public abstract void Init();
+    // ----------------------------------------------------------------------------------------
 
     private void Awake()
     {
@@ -45,12 +47,6 @@ public abstract class MonsterManager : MonoBehaviour
 
         GameObject playerObj = GameObject.FindWithTag("Player");
         player = playerObj.transform;
-
-        var hitbox = GetComponentInChildren<MonsterHitbox>();
-        if (hitbox != null)
-        {
-            hitbox.SetOwner(this);
-        }
     }
 
     void Start()
@@ -81,9 +77,12 @@ public abstract class MonsterManager : MonoBehaviour
     {
         if (isDead) return;
 
+        isPlayerDead = KnightController.isDead;
         Move();
     }
 
+    // Move
+    // ----------------------------------------------------------------------------------------
     protected void SetStateType(StateType state)
     {
         stateType = state;
@@ -96,7 +95,7 @@ public abstract class MonsterManager : MonoBehaviour
 
         float distance = Vector2.Distance(player.position, transform.position); // 플레이어와의 거리 비교
         Vector2 toPlayerDir = (player.position - transform.position).normalized; // 플레이어 방향으로 이동
-        Vector2 ranMove = Vector2.zero; // 기본 랜덤이동
+        Vector2 ranMove = Vector2.zero; // default random move
 
         if (distance <= traceRange)
         {
@@ -148,6 +147,7 @@ public abstract class MonsterManager : MonoBehaviour
         }
     }
 
+
     IEnumerator MoveRoutine()
     {
         while (!isTrackingPlayer)
@@ -191,8 +191,9 @@ public abstract class MonsterManager : MonoBehaviour
 
         rb.MovePosition(pos);
     }
+    // ----------------------------------------------------------------------------------------
 
-
+    // Hit
     public IEnumerator Hit(float damage)
     {
         if (isDead)
@@ -205,25 +206,20 @@ public abstract class MonsterManager : MonoBehaviour
         if (monsterHp <= 0)
         {
             isDead = true;
+
+            if (CompareTag("Fly"))
+            {
+                rb.gravityScale = 1f;
+            }
             animator.SetTrigger("Death");
 
-            foreach (Collider2D col in GetComponents<Collider2D>())
-            {
-                col.isTrigger = true;
-            }
-            rb.bodyType = RigidbodyType2D.Kinematic;
+            gameObject.layer = LayerMask.NameToLayer("DeadMonster");
             yield return new WaitForSeconds(0.2f);
 
             item.DropItem(transform.position);
-            yield return new WaitForSeconds(1.5f);
 
-            SpriteRenderer sr = GetComponent<SpriteRenderer>();
-            Color c = sr.color;
-            for (float t = 0; t < 1f; t += Time.deltaTime)
-            {
-                sr.color = new Color(c.r, c.g, c.b, 1f - t);
-                yield return null;
-            }
+            yield return StartCoroutine(FadeOut(1f));
+
             gameObject.SetActive(false);
             yield break;
         }
@@ -233,9 +229,36 @@ public abstract class MonsterManager : MonoBehaviour
         isMove = true;
     }
 
+    private IEnumerator FadeOut(float duration = 1f)
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color c = sr.color;
+
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            float alpha = Mathf.Lerp(1f, 0f, t / duration);
+            sr.color = new Color(c.r, c.g, c.b, alpha);
+            yield return null;
+        }
+        sr.color = new Color(c.r, c.g, c.b, 0f);
+    }
+
+    // Attack
+    // ----------------------------------------------------------------------------------------
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            var player = other.GetComponent<KnightController>();
+
+            if (isPlayerDead)
+            player.TakeDamage(AttackDamage());
+        }
+    }
+
     void Attack()
     {
-        if (isAttacking) return;
+        if (isAttacking || KnightController.isDead) return;
         isMove = false;
 
         StartCoroutine(AttackRoutine());
@@ -249,7 +272,6 @@ public abstract class MonsterManager : MonoBehaviour
 
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
-
 
         yield return new WaitForSeconds(GetAnimLegnth(randomAttack));
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
