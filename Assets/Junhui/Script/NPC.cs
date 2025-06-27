@@ -4,25 +4,34 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class NPC : MonoBehaviour
 {
-    public string idle;
-    public string thankYou;
-    public string noMoney;
-    public string type;
+    [SerializeField] private string idle;
+    [SerializeField] private string thankYou;
+    [SerializeField] private string noMoney;
+    [SerializeField] private string type;
 
     public TextMeshPro lineBox;
+    public GameObject item;
+    public TextMeshPro priceText;
     public AudioClip sndItemBuy;
     public AudioClip sndNoMoney;
+
+    [SerializeField] private float defaultPrice;
+    [SerializeField] private float plusPrice;
+
+    [SerializeField] private float plusValue;
+    private float price = 0;
 
 
     void Start()
     {
         SetLine(idle);
+        SetPrice();
     }
 
-    public void BuyItem(int price)
+    public void BuyItem()
     {
         // 골드가 가격보다 많을시 구매
-        int gold = GameManager.Instance.gold;
+        float gold = GameManager.Instance.gold;
 
         if (gold >= price)
         {
@@ -41,6 +50,7 @@ public class NPC : MonoBehaviour
             SoundManager.Instance.PlaySound(sndItemBuy);
             UIManager.Instance.SetGold(gold - price);
             SetLine(thankYou);
+            SetPrice();
         }
         else
         { 
@@ -51,14 +61,14 @@ public class NPC : MonoBehaviour
 
     void BuyMeat()
     {
-        float value = 10;
+        float value = plusValue;
         GameManager.Instance.maxHp += value;
         UIManager.Instance.ResetHp();
         UIManager.Instance.StartCoroutine(UIManager.Instance.ShowNotice($"고기를 먹었다. (체력 +{value})"));
     }
     void BuyUpgrade()
     {
-        float value = 1;
+        float value = plusValue;
         GameManager.Instance.damage += value;
         UIManager.Instance.StartCoroutine(UIManager.Instance.ShowNotice($"무기를 제련했다. (공격력 +{value})"));
     }
@@ -68,4 +78,40 @@ public class NPC : MonoBehaviour
         // 대사 설정
         lineBox.text = line;
     }
+
+    void SetPrice()
+    {
+        float damage = Mathf.Clamp(GameManager.Instance.damage - 1,0,10000f) / plusValue;
+        float maxHp = Mathf.Clamp(GameManager.Instance.maxHp - 100f, 0, 10000f) / plusValue;
+        switch (type)
+        {
+            case "meat":
+                price = defaultPrice + maxHp * plusPrice;
+                Debug.Log(maxHp);
+                break;
+            case "upgrade":
+                price = defaultPrice + damage * plusPrice;
+                break;
+            case "magic":
+                price = defaultPrice;
+                break;
+        }
+        priceText.text = $"{price}gold";
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+            lineBox.gameObject.SetActive(true);
+            item.SetActive(true);  
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("Player"))
+            lineBox.gameObject.SetActive(false);
+            item.SetActive(false);
+            SetLine(idle);
+    }
+
 }

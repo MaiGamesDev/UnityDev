@@ -1300,6 +1300,7 @@ MonoBehaviour:
   sceneName: WorldMap
   BGM: {fileID: 0}
   mapCount: 3
+  noUI: 1
 --- !u!4 &927747595
 Transform:
   m_ObjectHideFlags: 0
@@ -1776,6 +1777,7 @@ MonoBehaviour:
   sceneName: WorldMap
   BGM: {fileID: 0}
   mapCount: 0
+  noUI: 1
 --- !u!4 &1321907707
 Transform:
   m_ObjectHideFlags: 0

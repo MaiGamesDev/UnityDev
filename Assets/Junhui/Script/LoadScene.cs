@@ -6,6 +6,7 @@ public class LoadScene : MonoBehaviour
     [SerializeField] private string sceneName;
     [SerializeField] private AudioClip BGM;
     [SerializeField] private int mapCount = 0;
+    [SerializeField] private bool noUI = false;
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -28,6 +29,11 @@ public class LoadScene : MonoBehaviour
                 GameManager.Instance.unlockedMapCount = mapCount;
             }
         }
+
+        if (noUI)
+            UIManager.Instance.gameObject.SetActive(false);
+        else
+            UIManager.Instance.gameObject.SetActive(true);
 
     }
 }
