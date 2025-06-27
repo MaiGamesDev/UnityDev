@@ -66,7 +66,7 @@ public class UIManager : MonoBehaviour
 
         SetHp(GameManager.Instance.maxHp);
     }
-    public void SetGold(int value)
+    public void SetGold(float value)
     {
         // gold ¼³Á¤
 

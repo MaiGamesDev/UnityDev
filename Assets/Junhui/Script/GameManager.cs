@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     public float hp = 100f;
     public float maxHp = 100f;
-    public int gold = 0;
+    public float gold = 0;
     public float damage = 1;
 
     public int unlockedMapCount = 2;
