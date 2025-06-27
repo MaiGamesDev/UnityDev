@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
         {
             SoundManager.Instance.PlayLoopSound(BGM);
         }
-    }
+    }   
 
     public void quit()
     {

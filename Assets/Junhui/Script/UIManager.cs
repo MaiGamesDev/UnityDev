@@ -79,9 +79,11 @@ public class UIManager : MonoBehaviour
     public void SetHpEnemy(float value, float maxValue)
     {
         //HpEnemy 너비 설정
-
+        HpEnemy.gameObject.SetActive(true);
         var result = value / maxValue * 100;
         HpEnemy.GetComponent<RectTransform>().sizeDelta = new Vector2(result * 5f, 18);
+        if (value <= 0)
+            HpEnemy.gameObject.SetActive(false);
     }
 
     public IEnumerator ShowNotice(string value)
