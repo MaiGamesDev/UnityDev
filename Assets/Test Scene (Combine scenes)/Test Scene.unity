@@ -204,6 +204,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: d3094afd25368044fb40e689e61c3024, type: 3}
     - target: {fileID: 7870589068421446940, guid: 894013562d2e41b4d93d58235a317813, type: 3}
+      propertyPath: isAttack
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7870589068421446940, guid: 894013562d2e41b4d93d58235a317813, type: 3}
       propertyPath: isGround
       value: 1
       objectReference: {fileID: 0}
@@ -1448,4 +1452,3 @@ SceneRoots:
   - {fileID: 1149460544}
   - {fileID: 868979832}
   - {fileID: 436511810}
-

@@ -27,7 +27,7 @@ public class KnightController : MonoBehaviour
     [SerializeField] private float jumpPower = 21f; // because the gravity value is 5.3
 
     public bool isGround;
-    [HideInInspector] public bool isAttack = true;
+    [SerializeField] public bool isAttack = true;
     [HideInInspector] public bool isHit; // Changed (06-27)
 
     public static bool isDead; // Changed (06-27)
