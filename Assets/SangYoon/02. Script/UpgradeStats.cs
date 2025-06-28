@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class UpgradeStats : KnightController
 {
+    Animator animator;
     // For this field use when Knight stats upgrade
     //-----------------------------------------------------------------------------------------
     private float upDamage = 1; // 승수에 따라 몬스터 체력 구현이 뒷받침 되어야함
@@ -9,22 +10,27 @@ public class UpgradeStats : KnightController
     private float upHp = 2;
     //-----------------------------------------------------------------------------------------
 
-    private bool HpUpgrade;
-    private bool DamageUpgrade;
-    private bool AttackSpeedUpgrade;
+    public bool isHpUpgrade;
+    public bool isDamageUpgrade;
+    public bool isAttackSpeedUpgrade;
 
     public void Upgrade()
     {
-        if (HpUpgrade == true)
+        if (isHpUpgrade)
         {
             defaultHp += upHp;
         }
 
-        if (DamageUpgrade == true)
+        if (isDamageUpgrade)
         {
             defaultDamage += upDamage;
         }
 
-
+        if (isAttackSpeedUpgrade)
+        {
+            Debug.Log("공속 증가!");
+            defaultAttackSpeed -= upAttackSpeed;
+            animator.SetFloat("AttackSpeed", defaultAttackSpeed + upAttackSpeed);
+        }
     }
 }

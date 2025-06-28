@@ -10,7 +10,7 @@ public class KnightController : MonoBehaviour
     //----------------------------------------------------------------------------------------
     public float defaultHp = 2f;
     public float defaultDamage = 2f;
-    public float defaultAttackSpeed = 1f;
+    public float defaultAttackSpeed = 2.5f;
     //----------------------------------------------------------------------------------------
 
     public float monsterAttackDamage = 1f;
@@ -27,8 +27,9 @@ public class KnightController : MonoBehaviour
     [SerializeField] private float jumpPower = 21f; // because the gravity value is 5.3
 
     public bool isGround;
-    [HideInInspector] public bool isAttack;
+    [HideInInspector] public bool isAttack = true;
     [HideInInspector] public bool isHit; // Changed (06-27)
+
     public static bool isDead; // Changed (06-27)
     protected bool upgrade;
 
@@ -109,22 +110,23 @@ public class KnightController : MonoBehaviour
     /// </summary>
     public void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && !isAttack)
+        if (Input.GetKeyDown(KeyCode.Z) && isAttack)
         {
             StartCoroutine(AttackCoroutine());
         }
     }
+
     // Changed (06-27)
     private IEnumerator AttackCoroutine()
     {
-        isAttack = true;
+        isAttack = false;
         hitBox.SetActive(true);
         animator.SetTrigger("Attack");
 
         yield return new WaitForSeconds(defaultAttackSpeed);
 
         hitBox.SetActive(false);
-        isAttack = false;
+        isAttack = true;
     }
 
     /// <summary>

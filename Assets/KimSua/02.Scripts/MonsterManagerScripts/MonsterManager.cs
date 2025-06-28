@@ -200,7 +200,7 @@ public abstract class MonsterManager : MonoBehaviour
             yield break;
 
         isMove = false;
-        monsterHp -= damage;
+        monsterHp -= damage; 
         rb.linearVelocity = Vector2.zero;
 
         if (monsterHp <= 0)
