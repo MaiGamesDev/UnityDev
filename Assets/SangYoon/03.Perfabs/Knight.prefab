@@ -292,3 +292,7 @@ MonoBehaviour:
   isGround: 0
   isAttack: 0
   isHit: 0
+  sndAttack: {fileID: 8300000, guid: 0050557348f207b41957519c455614d0, type: 3}
+  sndHurt: {fileID: 8300000, guid: 059dfb85bd9fba641a0436c98a04bbc1, type: 3}
+  sndDie: {fileID: 8300000, guid: f04110f9fd722cc4dbdbe2dc15c63ebb, type: 3}
+  sndJump: {fileID: 8300000, guid: d3094afd25368044fb40e689e61c3024, type: 3}

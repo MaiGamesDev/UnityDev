@@ -32,6 +32,12 @@ public class KnightController : MonoBehaviour
     public static bool isDead; // Changed (06-27)
     protected bool upgrade;
 
+    //사운드 AudioCllip
+    public AudioClip sndAttack;
+    public AudioClip sndHurt;
+    public AudioClip sndDie;
+    public AudioClip sndJump;
+
     void Start()
     {
         knightRb = GetComponent<Rigidbody2D>();
@@ -99,6 +105,7 @@ public class KnightController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
+            SoundManager.Instance.PlaySound(sndJump); //Jump 사운드
             animator.SetTrigger("Jump");
             knightRb.AddForceY(jumpPower, ForceMode2D.Impulse);
         }
@@ -117,6 +124,8 @@ public class KnightController : MonoBehaviour
     // Changed (06-27)
     private IEnumerator AttackCoroutine()
     {
+        SoundManager.Instance.PlaySound(sndAttack); //Attack 사운드
+
         isAttack = true;
         hitBox.SetActive(true);
         animator.SetTrigger("Attack");
@@ -134,6 +143,7 @@ public class KnightController : MonoBehaviour
     {
         if (defaultHp <= 0)
         {
+            SoundManager.Instance.PlaySound(sndDie); //death 사운드
             isDead = true;
             animator.SetTrigger("Death"); 
             knightRb.gravityScale = 1f;
@@ -162,6 +172,8 @@ public class KnightController : MonoBehaviour
     public void TakeDamage(float damage) // this mathod using in MonsterHitBox OnTriggerEnter2D()
     {
         if (isDead) return;
+
+        SoundManager.Instance.PlaySound(sndHurt); //hit 사운드
 
         defaultHp -= damage;
 

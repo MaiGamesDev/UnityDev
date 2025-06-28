@@ -4,7 +4,7 @@ public class Coin : MonoBehaviour
 {
     public AudioClip sndCoin;
     
-    int value = 10;
+    public int value = 10;
 
     void Start()
     {

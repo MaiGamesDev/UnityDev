@@ -36,8 +36,6 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI NoticeText;
     public RawImage HpEnemy;
 
-    private string lastNotice = "";
-
     void OnEnable()
     {
         SetGold(GameManager.Instance.gold);
@@ -82,6 +80,7 @@ public class UIManager : MonoBehaviour
         HpEnemy.gameObject.SetActive(true);
         var result = value / maxValue * 100;
         HpEnemy.GetComponent<RectTransform>().sizeDelta = new Vector2(result * 5f, 18);
+
         if (value <= 0)
             HpEnemy.gameObject.SetActive(false);
     }
@@ -89,8 +88,6 @@ public class UIManager : MonoBehaviour
     public IEnumerator ShowNotice(string value)
     {
         //안내창 표시
-
-        lastNotice = value;
 
         NoticeText.text = value;
         Notice.gameObject.SetActive(true);
