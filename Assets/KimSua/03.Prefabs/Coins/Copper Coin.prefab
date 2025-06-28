@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2434664144385642359}
   - component: {fileID: 7601114372077906592}
   - component: {fileID: 7065749366136990030}
+  - component: {fileID: 3106931085981129525}
   - component: {fileID: 1037877564013814841}
   m_Layer: 7
   m_Name: Copper Coin
@@ -115,7 +116,21 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
+--- !u!114 &3106931085981129525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5385813534052309690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 455989780436b4543a543fee035cdbb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sndCoin: {fileID: 8300000, guid: f753a82add7eccf49b5df6909ec65b8e, type: 3}
+  value: 50
 --- !u!58 &1037877564013814841
 CircleCollider2D:
   m_ObjectHideFlags: 0
