@@ -18,7 +18,7 @@ public class UpgradeStats : KnightController
     {
         if (isHpUpgrade)
         {
-            defaultHp += upHp;
+            UIManager.Instance.SetHp(GameManager.Instance.hp += upHp);
         }
 
         if (isDamageUpgrade)

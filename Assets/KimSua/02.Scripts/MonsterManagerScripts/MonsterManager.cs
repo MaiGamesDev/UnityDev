@@ -12,6 +12,7 @@ public abstract class MonsterManager : MonoBehaviour
 {
     [SerializeField] protected float moveSpeed = 1f;
     public static float monsterHp = 10f; // Changed (06-25)
+    protected float monsterMaxHp;
     protected Transform player;
     bool isPlayerDead;
 
@@ -34,6 +35,9 @@ public abstract class MonsterManager : MonoBehaviour
     private Coroutine moveRoutine;
 
     private ItemDropSpawner item;
+
+    [SerializeField] private AudioClip sndHit;
+    [SerializeField] private AudioClip sndDie;
 
     public abstract void Init();
     // ----------------------------------------------------------------------------------------
@@ -199,12 +203,18 @@ public abstract class MonsterManager : MonoBehaviour
         if (isDead)
             yield break;
 
+        SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
+
         isMove = false;
         monsterHp -= damage; 
         rb.linearVelocity = Vector2.zero;
 
+        UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
+
         if (monsterHp <= 0)
         {
+            SoundManager.Instance.PlaySound(sndDie); // Die 사운드
+
             isDead = true;
 
             if (CompareTag("Fly"))

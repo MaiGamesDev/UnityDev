@@ -195,6 +195,8 @@ MonoBehaviour:
   attackRange: 3
   isAttacking: 0
   attackHitbox: {fileID: 5645418471396783561}
+  sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
+  sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
 --- !u!1 &5645418471396783561
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monster: {fileID: 5092895721510246522}
+  knight: {fileID: 0}
 --- !u!1 &7851126675638324410
 GameObject:
   m_ObjectHideFlags: 0
