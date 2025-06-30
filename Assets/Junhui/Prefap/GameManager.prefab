@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d3013a4ea24204287549dc6be44a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
-  maxHp: 100
+  hp: 10
+  maxHp: 10
   gold: 0
-  Damage: 0
+  damage: 1
+  unlockedMapCount: 2

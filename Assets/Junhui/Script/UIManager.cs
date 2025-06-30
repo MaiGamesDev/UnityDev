@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.hp = value;
         if (value >= 0)
         {
-            Hp.GetComponent<RectTransform>().sizeDelta = new Vector2(value * 4f, 18);
+            Hp.GetComponent<RectTransform>().sizeDelta = new Vector2(value * 20f, 18);
         }
         else if (GameManager.Instance.hp <= 0)
         {
