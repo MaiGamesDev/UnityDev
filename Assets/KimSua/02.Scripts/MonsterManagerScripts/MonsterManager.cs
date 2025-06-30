@@ -1,23 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.Rendering.DebugUI;
 
 public abstract class MonsterManager : MonoBehaviour
 {
     [SerializeField] protected float moveSpeed = 1f;
-    public static float monsterHp = 10f; // Changed (06-25)
+    public float monsterHp = 10f;
     protected float monsterMaxHp;
     protected Transform player;
     bool isPlayerDead;
 
     [SerializeField] private float traceRange = 5f, attackRange = 2f;
-    public static float attackDamage = 3f; // Changed (06-25)
+    public float attackDamage = 3f;
 
     [HideInInspector] public bool isAttacking;
     private bool isTrackingPlayer, isDead = false;
@@ -206,8 +199,9 @@ public abstract class MonsterManager : MonoBehaviour
         SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
 
         isMove = false;
-        monsterHp -= damage; 
-        rb.linearVelocity = Vector2.zero;
+        monsterHp -= damage;
+        //rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
 
         UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
 
@@ -217,10 +211,6 @@ public abstract class MonsterManager : MonoBehaviour
 
             isDead = true;
 
-            if (CompareTag("Fly"))
-            {
-                rb.gravityScale = 1f;
-            }
             animator.SetTrigger("Death");
 
             gameObject.layer = LayerMask.NameToLayer("DeadMonster");
@@ -228,18 +218,16 @@ public abstract class MonsterManager : MonoBehaviour
 
             item.DropItem(transform.position);
 
-            yield return StartCoroutine(FadeOut(1f));
-
-            gameObject.SetActive(false);
-            yield break;
+            yield return StartCoroutine(FadeOut(0.8f));
         }
 
         animator.SetTrigger("Hit");
         yield return new WaitForSeconds(GetAnimLegnth("Hit"));
         isMove = true;
+        rb.bodyType = RigidbodyType2D.Dynamic;
     }
 
-    private IEnumerator FadeOut(float duration = 1f)
+    private IEnumerator FadeOut(float duration)
     {
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         Color c = sr.color;
@@ -251,6 +239,7 @@ public abstract class MonsterManager : MonoBehaviour
             yield return null;
         }
         sr.color = new Color(c.r, c.g, c.b, 0f);
+        gameObject.SetActive(false);
     }
 
     // Attack
@@ -262,7 +251,7 @@ public abstract class MonsterManager : MonoBehaviour
             var player = other.GetComponent<KnightController>();
 
             if (isPlayerDead)
-            player.TakeDamage(AttackDamage());
+                player.TakeDamage(AttackDamage());
         }
     }
 

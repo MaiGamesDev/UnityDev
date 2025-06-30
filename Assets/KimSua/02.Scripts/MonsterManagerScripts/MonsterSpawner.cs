@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
@@ -34,22 +33,11 @@ public class MonsterSpawner : MonoBehaviour
 
         if (prefab.CompareTag("Fly"))
         {
-
-            spawnY = 2f;
+            spawnY = 1f;
         }
         else
         {
-            Vector2 pos = new Vector2(randomX, 10f);
-            RaycastHit2D rayHit = Physics2D.Raycast(pos, Vector2.down, 15f, LayerMask.GetMask("Ground"));
-
-            if (rayHit.collider != null)
-            {
-                spawnY = rayHit.point.y;
-            }
-            else
-            {
-                spawnY = -2f;
-            }
+            spawnY = -3f;
         }
 
         Vector3 createPos = new Vector3(randomX, spawnY, 0);
