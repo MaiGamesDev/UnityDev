@@ -223,8 +223,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  monsterHp: 10
   traceRange: 5
   attackRange: 2
+  attackDamage: 3
   isAttacking: 0
   attackHitbox: {fileID: 5516948835834154935}
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}

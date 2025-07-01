@@ -339,9 +339,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571380192442b1e4a99298d8481fe75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
-  traceRange: 5
-  attackRange: 4
+  moveSpeed: 3
+  monsterHp: 10
+  traceRange: 10
+  attackRange: 2
+  attackDamage: 3
   isAttacking: 0
   attackHitbox: {fileID: 2710430203552141271}
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}

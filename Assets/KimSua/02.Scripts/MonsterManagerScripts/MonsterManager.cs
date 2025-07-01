@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public abstract class MonsterManager : MonoBehaviour
 {
@@ -17,11 +18,12 @@ public abstract class MonsterManager : MonoBehaviour
     private string[] attackAnimations = { "Attack", "Attack2" };
     [SerializeField] private GameObject attackHitbox;
 
-    private bool isMove = true;
+    public bool isMove = true;
 
     SpriteRenderer sRenderer;
     Animator animator;
     Rigidbody2D rb;
+    Collider2D col;
 
     protected enum StateType { Left, Idle, Right }
     protected StateType stateType;
@@ -40,6 +42,8 @@ public abstract class MonsterManager : MonoBehaviour
         sRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
+
         item = FindFirstObjectByType<ItemDropSpawner>();
 
         GameObject playerObj = GameObject.FindWithTag("Player");
@@ -63,18 +67,16 @@ public abstract class MonsterManager : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         }
 
-        animator.ResetTrigger("Idle");
-        animator.SetTrigger("Run");
-
         isTrackingPlayer = true;
     }
 
 
-    void FixedUpdate()
+    void Update()
     {
         if (isDead) return;
 
         isPlayerDead = KnightController.isDead;
+
         Move();
     }
 
@@ -97,8 +99,6 @@ public abstract class MonsterManager : MonoBehaviour
         if (distance <= traceRange)
         {
             // 추적 시작, 랜덤 이동 중지
-
-
             isTrackingPlayer = true;
 
             if (moveRoutine != null)
@@ -144,7 +144,6 @@ public abstract class MonsterManager : MonoBehaviour
         }
     }
 
-
     IEnumerator MoveRoutine()
     {
         while (!isTrackingPlayer)
@@ -168,12 +167,12 @@ public abstract class MonsterManager : MonoBehaviour
         else if (dir.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
 
-        if (dir == Vector2.zero)
+        if (dir == Vector2.zero && !isMove)
         {
             animator.ResetTrigger("Run");
             animator.SetTrigger("Idle");
         }
-        else
+        else if (isMove)
         {
             animator.ResetTrigger("Idle");
             animator.SetTrigger("Run");
@@ -182,9 +181,12 @@ public abstract class MonsterManager : MonoBehaviour
 
     void MoveTo(Vector2 moveDir)
     {
-        Vector2 pos = rb.position + (moveDir * moveSpeed * Time.fixedDeltaTime);
+        if (!CompareTag("Fly") && gameObject.layer == LayerMask.NameToLayer("Monster"))
+        {
+            moveDir.y = 0;
+        }
 
-        pos.x = Mathf.Clamp(pos.x, -8f, 8f);
+        Vector2 pos = rb.position + (moveDir * moveSpeed * Time.fixedDeltaTime);
 
         rb.MovePosition(pos);
     }
@@ -198,13 +200,15 @@ public abstract class MonsterManager : MonoBehaviour
 
         SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
 
-        isMove = false;
         monsterHp -= damage;
-        //rb.linearVelocity = Vector2.zero;
+
+        isMove = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
+       
 
         UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
 
+        
         if (monsterHp <= 0)
         {
             SoundManager.Instance.PlaySound(sndDie); // Die 사운드
@@ -213,18 +217,25 @@ public abstract class MonsterManager : MonoBehaviour
 
             animator.SetTrigger("Death");
 
-            gameObject.layer = LayerMask.NameToLayer("DeadMonster");
-            yield return new WaitForSeconds(0.2f);
+            if (CompareTag("Fly"))
+            {
+                rb.gravityScale = 1f;
+            }
 
             item.DropItem(transform.position);
-
-            yield return StartCoroutine(FadeOut(0.8f));
+            gameObject.layer = LayerMask.NameToLayer("DeadMonster");
+            col.isTrigger = true;
+           
+            yield return StartCoroutine(FadeOut(0.7f));
+            yield break;
         }
 
         animator.SetTrigger("Hit");
         yield return new WaitForSeconds(GetAnimLegnth("Hit"));
+
+        rb.bodyType = RigidbodyType2D.Dynamic;       
         isMove = true;
-        rb.bodyType = RigidbodyType2D.Dynamic;
+
     }
 
     private IEnumerator FadeOut(float duration)
@@ -239,6 +250,7 @@ public abstract class MonsterManager : MonoBehaviour
             yield return null;
         }
         sr.color = new Color(c.r, c.g, c.b, 0f);
+
         gameObject.SetActive(false);
     }
 
@@ -250,7 +262,7 @@ public abstract class MonsterManager : MonoBehaviour
         {
             var player = other.GetComponent<KnightController>();
 
-            if (isPlayerDead)
+            if (!isPlayerDead)
                 player.TakeDamage(AttackDamage());
         }
     }
@@ -258,7 +270,6 @@ public abstract class MonsterManager : MonoBehaviour
     void Attack()
     {
         if (isAttacking || KnightController.isDead) return;
-        isMove = false;
 
         StartCoroutine(AttackRoutine());
     }
@@ -267,13 +278,15 @@ public abstract class MonsterManager : MonoBehaviour
     {
         isAttacking = true;
         isMove = false;
-        rb.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
 
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
 
         yield return new WaitForSeconds(GetAnimLegnth(randomAttack));
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
         isAttacking = false;
         isMove = true;
     }
@@ -287,6 +300,7 @@ public abstract class MonsterManager : MonoBehaviour
             if (clip.name == stateName)
                 return clip.length;
         }
+
         return 1f;
     }
 }
