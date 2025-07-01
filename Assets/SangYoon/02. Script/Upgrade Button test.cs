@@ -4,12 +4,19 @@ using UnityEngine.UI;
 
 public class UpgradeButtontest : MonoBehaviour
 {
-    public Button Button;
-    public UpgradeButtontest upgrade;
+    public Button button;
 
+    UpgradeStats upgradeStats;
+
+    private void Update()
+    {
+        button.onClick.AddListener(OnClick);
+
+    }
     public void OnClick()
     {
-        // upgrade. UpgradeStats클래스의 isAttackSpeedUpgrade를 직접 접근해야함
+        upgradeStats.isAttackSpeedUpgrade = true;
+        upgradeStats.Upgrade();
+        upgradeStats.isAttackSpeedUpgrade = false;
     }
-
 }

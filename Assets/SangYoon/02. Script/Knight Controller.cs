@@ -10,7 +10,8 @@ public class KnightController : MonoBehaviour
     //----------------------------------------------------------------------------------------
     public float defaultHp = 2f;
     public float defaultDamage = 2f;
-    public float defaultAttackSpeed = 2.5f;
+    public float hitboxAttackSpeed = 2.5f;
+    public float animationAttackSpeed = 0.5f;
     //----------------------------------------------------------------------------------------
 
     public float monsterAttackDamage = 1f;
@@ -132,7 +133,7 @@ public class KnightController : MonoBehaviour
         hitBox.SetActive(true);
         animator.SetTrigger("Attack");
 
-        yield return new WaitForSeconds(defaultAttackSpeed);
+        yield return new WaitForSeconds(hitboxAttackSpeed);
 
         hitBox.SetActive(false);
         isAttack = true;
