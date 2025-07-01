@@ -64,13 +64,13 @@ public class NPC : MonoBehaviour
         float value = plusValue;
         GameManager.Instance.maxHp += value;
         UIManager.Instance.ResetHp();
-        UIManager.Instance.StartCoroutine(UIManager.Instance.ShowNotice($"고기를 먹었다. (체력 +{value})"));
+        UIManager.Instance.ShowNotice($"고기를 먹었다. (체력 +{value})");
     }
     void BuyUpgrade()
     {
         float value = plusValue;
         GameManager.Instance.damage += value;
-        UIManager.Instance.StartCoroutine(UIManager.Instance.ShowNotice($"무기를 제련했다. (공격력 +{value})"));
+        UIManager.Instance.ShowNotice($"무기를 제련했다. (공격력 +{value})");
     }
 
     void SetLine(string line)

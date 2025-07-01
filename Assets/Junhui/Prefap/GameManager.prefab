@@ -47,4 +47,5 @@ MonoBehaviour:
   hp: 100
   maxHp: 100
   gold: 0
-  Damage: 0
+  damage: 1
+  unlockedMapCount: 2

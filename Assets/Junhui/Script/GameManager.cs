@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public float hp = 100f;
-    public float maxHp = 100f;
+    public float hp = 10f;
+    public float maxHp = 10f;
     public float gold = 0;
     public float damage = 1;
 

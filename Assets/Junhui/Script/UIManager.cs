@@ -38,11 +38,20 @@ public class UIManager : MonoBehaviour
 
     void OnEnable()
     {
-        SetGold(GameManager.Instance.gold);
-        SetHp(GameManager.Instance.hp);
+        Init();
+    }
+
+    private void Start()
+    {
+        Init();
     }
 
 
+    public void Init()
+    {
+        SetGold(GameManager.Instance.gold);
+        SetHp(GameManager.Instance.hp);
+    }
 
     public void SetHp(float value)
     {
@@ -85,7 +94,12 @@ public class UIManager : MonoBehaviour
             HpEnemy.gameObject.SetActive(false);
     }
 
-    public IEnumerator ShowNotice(string value)
+    public void ShowNotice(string value)
+    {
+        StopAllCoroutines();
+        StartCoroutine(ShowNoticeCorutine(value));
+    }
+    public IEnumerator ShowNoticeCorutine(string value)
     {
         //¾È³»Ã¢ Ç¥½Ã
 
@@ -99,7 +113,7 @@ public class UIManager : MonoBehaviour
     {
         // »ç¸Á
 
-        StartCoroutine(ShowNotice("Á×¾î¹ö·È´Ù..."));
+        ShowNotice("Á×¾î¹ö·È´Ù...");
 
     }
 }

@@ -8,7 +8,7 @@ public class KnightController : MonoBehaviour
 {
     // Default Knight stats field
     //----------------------------------------------------------------------------------------
-    public float defaultHp = 2f;
+    // public float defaultHp = 2f; // GameManager.Instance.hp(싱글톤)으로 대체됨
     public float defaultDamage = 2f;
     public float hitboxAttackSpeed = 2.5f;
     public float animationAttackSpeed = 0.5f;
@@ -144,9 +144,9 @@ public class KnightController : MonoBehaviour
     /// </summary>
     void Death() // Changed (06-27)
     {
-        if (defaultHp <= 0)
+        if (GameManager.Instance.hp <= 0)
         {
-            SoundManager.Instance.PlaySound(sndDie); //death 사운드
+            SoundManager.Instance.PlaySound(sndDie); //Death 사운드
             isDead = true;
             animator.SetTrigger("Death"); 
             knightRb.gravityScale = 1f;
@@ -178,14 +178,14 @@ public class KnightController : MonoBehaviour
 
         SoundManager.Instance.PlaySound(sndHurt); //hit 사운드
 
-        defaultHp -= damage;
+        UIManager.Instance.SetHp(GameManager.Instance.hp -= damage);
 
         if (!isHit)
         {
             animator.SetTrigger("Hit");
         }        
 
-        if (defaultHp <= 0)
+        if (GameManager.Instance.hp <= 0)
         {
             Death();
         }

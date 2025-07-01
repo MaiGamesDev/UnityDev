@@ -131,6 +131,8 @@ MonoBehaviour:
   attackRange: 1.5
   isAttacking: 0
   attackHitbox: {fileID: 8477012985404662636}
+  sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
+  sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
 --- !u!70 &551065587832402170
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -375,3 +377,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monster: {fileID: 1144370766781272753}
+  knight: {fileID: 0}

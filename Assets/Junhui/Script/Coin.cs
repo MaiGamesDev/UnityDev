@@ -14,7 +14,7 @@ public class Coin : MonoBehaviour
     {
         //사운드 재생, 코인 획득
         SoundManager.Instance.PlaySound(sndCoin);
-        UIManager.Instance.StartCoroutine(UIManager.Instance.ShowNotice($"{value} 코인을 얻었다."));
+        UIManager.Instance.ShowNotice($"{value} 코인을 얻었다.");
         UIManager.Instance.SetGold(GameManager.Instance.gold + value);
         Destroy(gameObject);
     }

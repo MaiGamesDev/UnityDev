@@ -5,6 +5,7 @@ public class FlyingEye : MonsterManager
     public override void Init()
     {
         monsterHp = 2f;
+        monsterMaxHp = monsterHp;
         moveSpeed = 2f;
         attackDamage = 1f;
     }
