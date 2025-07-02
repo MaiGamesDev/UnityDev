@@ -282,15 +282,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bdea4037e84e5044883ef11f2a229e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultHp: 100
   defaultDamage: 2
-  defaultAttackSpeed: 1
+  hitboxAttackSpeed: 2.5
+  animationAttackSpeed: 0.5
   monsterAttackDamage: 1
   hitBox: {fileID: 1748097159863609188}
   moveSpeed: 7
   jumpPower: 21
-  isGround: 0
-  isAttack: 0
+  isGround: 1
+  isAttack: 1
   isHit: 0
   sndAttack: {fileID: 8300000, guid: 0050557348f207b41957519c455614d0, type: 3}
   sndHurt: {fileID: 8300000, guid: 059dfb85bd9fba641a0436c98a04bbc1, type: 3}
