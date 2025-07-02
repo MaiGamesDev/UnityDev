@@ -216,8 +216,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 0050557348f207b41957519c455614d0, type: 3}
     - target: {fileID: 8025069135995818696, guid: 894013562d2e41b4d93d58235a317813, type: 3}
+      propertyPath: m_Mass
+      value: 0.8384994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025069135995818696, guid: 894013562d2e41b4d93d58235a317813, type: 3}
       propertyPath: m_Constraints
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025069135995818696, guid: 894013562d2e41b4d93d58235a317813, type: 3}
+      propertyPath: m_UseAutoMass
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
