@@ -6,27 +6,16 @@ public interface IBossDefaultPattern
     public float attackDamage { get; set; }
     public float moveSpeed { get; set; }
 
-    public void Idle()
-    {
+   
+    
+    public void Idle();
 
-    }
-    public void Walk()
-    {
+    public void Walk();
 
-    }
+    public void Hit();
 
-    public void Hit()
-    {
+    public void Death();
 
-    }
+    public void DefaultAttack();
 
-    public void Death()
-    {
-
-    }
-
-    public void DefaultAttack()
-    {
-
-    }
 }
