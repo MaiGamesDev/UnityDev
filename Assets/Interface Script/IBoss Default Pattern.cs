@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IBossDefaultPatturn
+public interface IBossDefaultPattern
 {
     public float hp { get; set; }
     public float attackDamage { get; set; }
