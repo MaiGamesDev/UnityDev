@@ -1,15 +1,11 @@
 using System.Collections;
-using System.Diagnostics;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.XR;
-using static UnityEditor.Progress;
 
 public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
 {
-    private enum Boss1State { IDLE, WALK, TRACE, ATTACK }
-    private Boss1State bossState;
+    public enum Boss1State { IDLE, WALK, TRACE, ATTACK }
+    public Boss1State bossState;
 
     private Animator animator;
     private Rigidbody2D bosRb;
@@ -34,9 +30,12 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
     private bool isDead;
 
     private bool isTrace;
-    private float traceDist = 8f;
-    private float attackDist = 5f;
+    private bool isAttack;
+    [SerializeField] private float traceDist = 8f;
+    [SerializeField] private float attackDist = 3f;
+    [SerializeField] private float attackTime = 2f;
 
+    // --------------------------------------------------------------------
 
     void Awake()
     {
@@ -57,7 +56,7 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
 
         idleTime = Random.Range(1f, 5f);
 
-        // StartCoroutine(FindPlayerRoutine());
+        StartCoroutine(FindPlayerRoutine());
     }
 
     void Update()
@@ -84,6 +83,7 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
 
     }
 
+
     private void Flip()
     {
         isFacingRight = !isFacingRight;
@@ -92,7 +92,9 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
         transform.localScale = scale;
     }
 
-    /*
+    // --------------------------------------------------------------------
+
+
     IEnumerator FindPlayerRoutine()
     {
         while (true)
@@ -105,12 +107,12 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
 
                 float dirToPlayer = transform.position.x - target.position.x; // 보스 기준 플레이어가 어느 쪽에 있는지
 
-                bool isPlayerInFront = (moveDir > 0 && dirToPlayer > 0) || (moveDir < 0 && dirToPlayer < 0);
-                // moveDir = 1 보스가 오른쪽 봄, dirToPlayer = 1 플레이어가 오른쪽에 있음
+                //bool isPlayerInFront = (moveDir > 0 && dirToPlayer > 0) || (moveDir < 0 && dirToPlayer < 0);
+                //// moveDir = 1 보스가 오른쪽 봄, dirToPlayer = 1 플레이어가 오른쪽에 있음
 
-                isTrace = isPlayerInFront;
+                //isTrace = isPlayerInFront;
 
-                if (targetDist <= traceDist && isTrace)
+                if (targetDist <= traceDist)
                 {
                     animator.SetBool("isRun", true);
                     ChangeState(Boss1State.TRACE);
@@ -134,7 +136,7 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
                 ChangeState(Boss1State.ATTACK);
             }
         }
-    } */
+    }
 
     public void Idle()
     {
@@ -142,7 +144,7 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
         if (timer >= idleTime)
         {
             timer = 0f;
-            
+
             moveDir = Random.Range(0, 2) == 1 ? 1 : -1;
 
             // 이동 방향과 현재 바라보는 방향이 다르면 Flip
@@ -172,19 +174,40 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
 
     public void Trace() // 플레이어 발견
     {
-        //var targetDir = (target.position - transform.position).normalized;
-        //transform.position += Vector3.right * targetDir.x * moveSpeed * Time.deltaTime;
-        
-        //var direction = targetDir.x > 0 ? 1 : -1;
+        animator.SetBool("isWalk", true);
+        var targetDir = (target.position - transform.position).normalized;
+        transform.position += Vector3.right * targetDir.x * moveSpeed * Time.deltaTime;
 
-        //if ((direction > 0 && !isFacingRight) || (direction < 0 && isFacingRight))
-        //    Flip();
+        var direction = targetDir.x > 0 ? 1 : -1;
 
-        //moveDir = direction;
+        if ((direction > 0 && !isFacingRight) || (direction < 0 && isFacingRight))
+            Flip();
+
+        moveDir = direction;
     }
+
+    // Attack
+    // ----------------------------------------------------------------------------------------
 
     public void DefaultAttack()
     {
+        if (isAttack || KnightController.isDead) return;
+
+        StartCoroutine(AttackRoutine());
+    }
+
+    IEnumerator AttackRoutine()
+    {
+        isAttack = true;
+        animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(1f);
+
+        animator.SetBool("isWalk", false);
+        yield return new WaitForSeconds(attackTime - 0.5f);
+
+        isAttack = false;
+        animator.SetBool("isWalk", true);
+        ChangeState(Boss1State.TRACE);
 
     }
 
@@ -199,6 +222,9 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
         }
     }
 
+    // Hit
+    // ----------------------------------------------------------------------------------------
+
     public void Hit(float damage)
     {
         currHp -= damage;
@@ -207,6 +233,8 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
         {
             Death();
         }
+
+        animator.SetTrigger("Hurt");
     }
 
     public void Death()
@@ -216,7 +244,6 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
         bosRb.gravityScale = 0f;
 
         item.DropItem(transform.position);
-
     }
 
     private void ChangeState(Boss1State newState)
@@ -224,6 +251,4 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
         if (bossState != newState)
             bossState = newState;
     }
-
-
 }

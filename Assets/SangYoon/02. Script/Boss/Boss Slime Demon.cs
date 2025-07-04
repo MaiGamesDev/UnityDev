@@ -54,7 +54,7 @@ public class BossSlimeDemon : MonoBehaviour, IBossDefaultPattern
 
     }
 
-    public void Hit()
+    public void Hit(float damage)
     {
 
     }

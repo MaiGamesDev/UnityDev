@@ -79,7 +79,7 @@ void Start()
         ChangeState(State.IDLE);
     }
 
-    public void Hit()
+    public void Hit(float damage)
     {
 
     }
