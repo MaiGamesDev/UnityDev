@@ -1281,7 +1281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 290028824045682903, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 290028824045682903, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
       propertyPath: m_TagString
@@ -1457,7 +1457,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500507558}
   m_CullTransparentMesh: 1
---- !u!1 &2091185087
+--- !u!1 &1622862902
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1465,95 +1465,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2091185089}
-  - component: {fileID: 2091185088}
-  - component: {fileID: 2091185092}
-  - component: {fileID: 2091185091}
-  - component: {fileID: 2091185090}
+  - component: {fileID: 1622862903}
+  - component: {fileID: 1622862904}
+  - component: {fileID: 1622862905}
+  - component: {fileID: 1622862906}
   m_Layer: 0
-  m_Name: Slime Demon
+  m_Name: Demon Summon Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!212 &2091185088
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091185087}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f132fad17def2cd40b29b537ecefb70d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 14.4, y: 8}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &2091185089
+--- !u!4 &1622862903
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091185087}
+  m_GameObject: {fileID: 1622862902}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2091185089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &2091185090
-CapsuleCollider2D:
+--- !u!58 &1622862904
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091185087}
+  m_GameObject: {fileID: 1622862902}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -1577,48 +1521,33 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.08687377, y: 0.33634424}
-  m_Size: {x: 0.6085267, y: 0.6085267}
-  m_Direction: 0
---- !u!50 &2091185091
-Rigidbody2D:
-  serializedVersion: 5
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 3.6423368
+--- !u!114 &1622862905
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091185087}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!95 &2091185092
+  m_GameObject: {fileID: 1622862902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e766192804e8449b50e6d8d0381a1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slimeDemonState: 0
+--- !u!95 &1622862906
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091185087}
+  m_GameObject: {fileID: 1622862902}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 35b027eafb25dc04aa56ee5ffaec84a6, type: 2}
@@ -1633,6 +1562,103 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &2091185089 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+  m_PrefabInstance: {fileID: 659361553520820503}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &659361553520820503
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1281162122205319879, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_Size.x
+      value: 1.1725363
+      objectReference: {fileID: 0}
+    - target: {fileID: 1281162122205319879, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_Size.y
+      value: 2.327412
+      objectReference: {fileID: 0}
+    - target: {fileID: 1281162122205319879, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.00712806
+      objectReference: {fileID: 0}
+    - target: {fileID: 1281162122205319879, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.1957868
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358328650866078650, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_Name
+      value: Slime Demon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358328650866078650, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8881294673502405826, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 94daa3f42e3e26941aca72a724a13857, type: 3}
+    - target: {fileID: 8881294673502405826, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9024817570335233202, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1622862903}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1648,4 +1674,4 @@ SceneRoots:
   - {fileID: 1149460544}
   - {fileID: 868979832}
   - {fileID: 436511810}
-  - {fileID: 2091185089}
+  - {fileID: 659361553520820503}
