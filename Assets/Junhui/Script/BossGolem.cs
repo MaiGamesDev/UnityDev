@@ -19,7 +19,7 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
     private Transform target;
     private Animator animator;
 
-void Start()
+    void Start()
     {
         currHp = hp;
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -58,7 +58,7 @@ void Start()
     }
     public void Walk()
     {
-        transform.position += Vector3.right * moveSpeed * Time.deltaTime * moveDir; 
+        transform.position += Vector3.right * moveSpeed * Time.deltaTime * moveDir;
 
     }
     public void DefaultAttack()
@@ -73,7 +73,6 @@ void Start()
         animator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.01f);
         float currAnimLength = animator.GetCurrentAnimatorStateInfo(0).length;
-        Debug.Log(currAnimLength);
         yield return new WaitForSeconds(currAnimLength);
         isAttack = false;
         ChangeState(State.IDLE);
@@ -81,7 +80,12 @@ void Start()
 
     public void Hit(float damage)
     {
-
+        Debug.Log(damage);
+        currHp -= damage;
+        if (currHp <= 0)
+        {
+            Death();
+        }
     }
 
     public void Death()
