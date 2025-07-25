@@ -87,10 +87,9 @@ public abstract class MonsterManager : MonoBehaviour
         stateType = state;
     }
 
-
     void Move()
     {
-        if (!isMove || player == null) return;
+        if (!isMove) return;
 
         float distance = Vector2.Distance(player.position, transform.position); // 플레이어와의 거리 비교
         Vector2 toPlayerDir = (player.position - transform.position).normalized; // 플레이어 방향으로 이동
@@ -204,54 +203,38 @@ public abstract class MonsterManager : MonoBehaviour
 
         isMove = false;
         rb.bodyType = RigidbodyType2D.Kinematic;
-       
+
 
         UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
 
-        
+
         if (monsterHp <= 0)
-        {
-            SoundManager.Instance.PlaySound(sndDie); // Die 사운드
+            Death();
 
-            isDead = true;
-
-            animator.SetTrigger("Death");
-
-            if (CompareTag("Fly"))
-            {
-                rb.gravityScale = 1f;
-            }
-
-            item.DropItem(transform.position);
-            gameObject.layer = LayerMask.NameToLayer("DeadMonster");
-            col.isTrigger = true;
-           
-            yield return StartCoroutine(FadeOut(0.7f));
-            yield break;
-        }
 
         animator.SetTrigger("Hit");
         yield return new WaitForSeconds(GetAnimLegnth("Hit"));
 
-        rb.bodyType = RigidbodyType2D.Dynamic;       
+        rb.bodyType = RigidbodyType2D.Dynamic;
         isMove = true;
-
     }
 
-    private IEnumerator FadeOut(float duration)
+    void Death()
     {
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        Color c = sr.color;
+        SoundManager.Instance.PlaySound(sndDie); // Die 사운드
 
-        for (float t = 0; t < duration; t += Time.deltaTime)
-        {
-            float alpha = Mathf.Lerp(1f, 0f, t / duration);
-            sr.color = new Color(c.r, c.g, c.b, alpha);
-            yield return null;
-        }
-        sr.color = new Color(c.r, c.g, c.b, 0f);
+        isDead = true;
 
+        animator.SetTrigger("Death");
+
+        if (CompareTag("Fly"))
+            rb.gravityScale = 1f;
+
+
+        item.DropItem(transform.position);
         gameObject.SetActive(false);
+        gameObject.layer = LayerMask.NameToLayer("DeadMonster");
+        col.isTrigger = true;
     }
 
     // Attack
@@ -279,13 +262,13 @@ public abstract class MonsterManager : MonoBehaviour
         isAttacking = true;
         isMove = false;
         rb.linearVelocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Kinematic;
+        // rb.bodyType = RigidbodyType2D.Kinematic;
 
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
 
         yield return new WaitForSeconds(GetAnimLegnth(randomAttack));
-        rb.bodyType = RigidbodyType2D.Dynamic;
+        // rb.bodyType = RigidbodyType2D.Dynamic;
 
         isAttacking = false;
         isMove = true;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
+public class BossBringer : MonoBehaviour, IBossDefaultPattern
 {
     public enum Boss1State { IDLE, WALK, TRACE, ATTACK }
     public Boss1State bossState;
@@ -83,7 +83,6 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
 
     }
 
-
     private void Flip()
     {
         isFacingRight = !isFacingRight;
@@ -114,7 +113,7 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
 
                 if (targetDist <= traceDist)
                 {
-                    animator.SetBool("isRun", true);
+                    animator.SetBool("isWalk", true);
                     ChangeState(Boss1State.TRACE);
                 }
             }
@@ -202,13 +201,13 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
         animator.SetTrigger("Attack");
         yield return new WaitForSeconds(1f);
 
+        bosRb.linearVelocity = Vector2.zero;
         animator.SetBool("isWalk", false);
-        yield return new WaitForSeconds(attackTime - 0.5f);
+        yield return new WaitForSeconds(attackTime);
 
         isAttack = false;
         animator.SetBool("isWalk", true);
         ChangeState(Boss1State.TRACE);
-
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -222,17 +221,25 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
         }
     }
 
+
     // Hit
     // ----------------------------------------------------------------------------------------
 
     public void Hit(float damage)
     {
+        // SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
+
+        Debug.Log("보스 Hit 함수 호출됨");
+
         currHp -= damage;
 
-        if (currHp <= 0f)
-        {
+        animator.SetBool("isWalk", false);
+        bosRb.linearVelocity = Vector2.zero;
+
+        // UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
+
+        if (currHp <= 0)
             Death();
-        }
 
         animator.SetTrigger("Hurt");
     }
@@ -244,7 +251,8 @@ public class Boss1Controller : MonoBehaviour, IBossDefaultPattern
         bosRb.gravityScale = 0f;
 
         item.DropItem(transform.position);
-    }
+        gameObject.SetActive(false);
+    }    
 
     private void ChangeState(Boss1State newState)
     {
