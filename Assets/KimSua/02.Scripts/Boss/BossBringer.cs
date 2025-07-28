@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class BossBringer : MonoBehaviour, IBossDefaultPattern
 {
-    public enum Boss1State { IDLE, WALK, TRACE, ATTACK }
+    public enum Boss1State { IDLE, WALK, TRACE, ATTACK, CAST }
     public Boss1State bossState;
 
     private Animator animator;
     private Rigidbody2D bosRb;
     private Collider2D bosColl;
     private ItemDropSpawner item;
+
+    [SerializeField] private GameObject spellPrefab;
 
     public Transform target;
 
@@ -31,9 +33,10 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
     private bool isTrace;
     private bool isAttack;
+    [HideInInspector] public float spellDamage;
     [SerializeField] private float traceDist = 8f;
     [SerializeField] private float attackDist = 3f;
-    [SerializeField] private float attackTime = 2f;
+    [SerializeField] private float attackTime = 1.5f;
 
     // --------------------------------------------------------------------
 
@@ -52,6 +55,7 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
         hp = 50f;
         currHp = hp;
         attackDamage = 10f;
+        spellDamage = 15f;
         moveSpeed = 1f;
 
         idleTime = Random.Range(1f, 5f);
@@ -80,7 +84,6 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
                 DefaultAttack();
                 break;
         }
-
     }
 
     private void Flip()
@@ -198,17 +201,39 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
     IEnumerator AttackRoutine()
     {
         isAttack = true;
-        animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1f);
+        animator.SetBool("isWalk", false);
+
+        int ranValue = Random.Range(0, 10);
+        Debug.Log($"È®·ü {ranValue}");
+
+        if (ranValue < 3)
+        {
+            ChangeState(Boss1State.CAST);
+            Cast();
+        }
+
+        else
+        {
+            animator.SetTrigger("Attack");
+        }
 
         bosRb.linearVelocity = Vector2.zero;
-        animator.SetBool("isWalk", false);
+
         yield return new WaitForSeconds(attackTime);
 
         isAttack = false;
         animator.SetBool("isWalk", true);
         ChangeState(Boss1State.TRACE);
     }
+
+    public void Cast()
+    {
+        animator.SetTrigger("Cast");
+
+        Vector3 spawnPos = target.position + new Vector3(0f, 1.5f, 0f);
+        Instantiate(spellPrefab, spawnPos, Quaternion.identity);
+    }
+
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -252,7 +277,7 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
         item.DropItem(transform.position);
         gameObject.SetActive(false);
-    }    
+    }
 
     private void ChangeState(Boss1State newState)
     {
