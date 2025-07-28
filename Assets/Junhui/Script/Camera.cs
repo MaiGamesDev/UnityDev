@@ -11,7 +11,7 @@ public class Camera : MonoBehaviour
 
     private void Start()
     {
-        target = GameObject.Find("Knight");
+        target = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
     {

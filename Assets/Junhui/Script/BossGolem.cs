@@ -4,6 +4,10 @@ using System.Collections;
 
 public class BossGolem : MonoBehaviour, IBossDefaultPattern
 {
+    public AudioClip audioHit;
+    public AudioClip audioDeath;
+    public AudioClip audioAttack;
+
     public enum State { IDLE, WALK, ATTACK }
     public State state = State.IDLE;
 
@@ -24,6 +28,7 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
         currHp = hp;
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -80,7 +85,8 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
 
     public void Hit(float damage)
     {
-        Debug.Log(damage);
+        SoundManager.Instance.PlaySound(audioHit);
+        animator.SetTrigger("Hurt");
         currHp -= damage;
         if (currHp <= 0)
         {
@@ -90,6 +96,7 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
 
     public void Death()
     {
+        SoundManager.Instance.PlaySound(audioDeath);
         animator.SetTrigger("Death");
         isDead = true;
     }
@@ -97,5 +104,10 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
     {
         if (state != newState)
             state = newState;
+    }
+
+    public void PlayAttack()
+    {
+        SoundManager.Instance.PlaySound(audioAttack);
     }
 }
