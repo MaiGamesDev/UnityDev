@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 45885579}
   - component: {fileID: 45885582}
   - component: {fileID: 45885583}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Golem
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ Transform:
   m_GameObject: {fileID: 45885578}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.24, y: -3, z: 0}
+  m_LocalPosition: {x: 6, y: -3, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -293,6 +293,7 @@ MonoBehaviour:
   audioDeath: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
   audioAttack: {fileID: 8300000, guid: f3c71c74a1a6c6e46896e639b2aa17c0, type: 3}
   state: 0
+  rushSpeed: 0
 --- !u!61 &45885583
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -950,7 +951,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.3910985, y: -0.013257623}
+  m_Offset: {x: -1.0358593, y: -1.0827976}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -960,7 +961,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.782197, y: 3.5719702}
+  m_Size: {x: 4.6361127, y: 1.4328902}
   m_EdgeRadius: 0
 --- !u!114 &936953829
 MonoBehaviour:
@@ -1214,7 +1215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minCamLimit: {x: 0, y: 0}
-  maxCamLimit: {x: 13, y: 0}
+  maxCamLimit: {x: 0, y: 0}
 --- !u!1001 &1836747966
 PrefabInstance:
   m_ObjectHideFlags: 0

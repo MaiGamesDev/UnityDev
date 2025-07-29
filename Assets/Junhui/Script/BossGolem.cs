@@ -1,6 +1,7 @@
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using System.Collections;
+using UnityEngine.InputSystem.iOS;
 
 public class BossGolem : MonoBehaviour, IBossDefaultPattern
 {
@@ -8,7 +9,7 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
     public AudioClip audioDeath;
     public AudioClip audioAttack;
 
-    public enum State { IDLE, WALK, ATTACK }
+    public enum State { IDLE, WALK, ATTACK, RUSH }
     public State state = State.IDLE;
 
     public float hp { get; set; } = 50f;
@@ -19,6 +20,8 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
     private float moveDir = 1;
     private bool isAttack = false;
     private bool isDead = false;
+    [SerializeField] private float rushSpeed;
+    private bool isLeftRush = true;
 
     private Transform target;
     private Animator animator;
@@ -28,12 +31,14 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
         currHp = hp;
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
+        ChangeState(State.RUSH);
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (isDead) return;
         switch (state)
         {
@@ -45,6 +50,9 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
                 break;
             case State.ATTACK:
                 DefaultAttack();
+                break;
+            case State.RUSH:
+                RushAttack();
                 break;
         }
     }
@@ -70,6 +78,32 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
     {
         if (!isAttack)
             StartCoroutine(AttackRoutine());
+    }
+
+    public void RushAttack()
+    {
+        animator.SetTrigger("Walk");
+        if (isLeftRush)
+            LeftRush();
+        else
+            RightRush();
+    }
+
+    public void LeftRush()
+    {
+        transform.localScale = new Vector3(-1,1,1);
+        Vector2 pos = new Vector2(-6, -3);
+        transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * 12);
+        if (transform.position.x == -6)
+            isLeftRush = false;
+    }
+    public void RightRush()
+    {
+        transform.localScale = Vector3.one;
+        Vector2 pos = new Vector2(6, -3);
+        transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * 12);
+        if (transform.position.x == 6)
+            isLeftRush = true;
     }
 
     IEnumerator AttackRoutine()
