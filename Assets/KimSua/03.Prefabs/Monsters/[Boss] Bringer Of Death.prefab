@@ -275,11 +275,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossState: 0
+  spellPrefab: {fileID: 6557012180414985569, guid: 19b79eef0a89fc8468e3c0599284a78d, type: 3}
   target: {fileID: 0}
   currHp: 0
+  spellDamage: 0
   traceDist: 8
   attackDist: 3
-  attackTime: 2
 --- !u!50 &2165405241457611117
 Rigidbody2D:
   serializedVersion: 5
@@ -306,7 +307,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 7
 --- !u!70 &5612474021074337649
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

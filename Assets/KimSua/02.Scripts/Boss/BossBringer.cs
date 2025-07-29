@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class BossBringer : MonoBehaviour, IBossDefaultPattern
 {
-    public enum Boss1State { IDLE, WALK, TRACE, ATTACK }
+    public enum Boss1State { IDLE, WALK, TRACE, ATTACK, CAST }
     public Boss1State bossState;
 
     private Animator animator;
-    private Rigidbody2D bosRb;
-    private Collider2D bosColl;
+    private Rigidbody2D bossRb;
+    private Collider2D bossColl;
     private ItemDropSpawner item;
+
+    [SerializeField] private GameObject spellPrefab;
 
     public Transform target;
 
@@ -29,19 +31,20 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
     private bool isPlayerDead;
     private bool isDead;
 
-    private bool isTrace;
     private bool isAttack;
+    [HideInInspector] public float spellDamage;
     [SerializeField] private float traceDist = 8f;
     [SerializeField] private float attackDist = 3f;
-    [SerializeField] private float attackTime = 2f;
+    private float attackCooldown = 1f;
+    private float lastAttackTime;
 
     // --------------------------------------------------------------------
 
     void Awake()
     {
         animator = GetComponent<Animator>();
-        bosRb = GetComponent<Rigidbody2D>();
-        bosColl = GetComponent<Collider2D>();
+        bossRb = GetComponent<Rigidbody2D>();
+        bossColl = GetComponent<Collider2D>();
         item = FindFirstObjectByType<ItemDropSpawner>();
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -52,6 +55,7 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
         hp = 50f;
         currHp = hp;
         attackDamage = 10f;
+        spellDamage = 15f;
         moveSpeed = 1f;
 
         idleTime = Random.Range(1f, 5f);
@@ -80,7 +84,6 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
                 DefaultAttack();
                 break;
         }
-
     }
 
     private void Flip()
@@ -103,13 +106,7 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
             if (bossState == Boss1State.IDLE || bossState == Boss1State.WALK)
             {
-
                 float dirToPlayer = transform.position.x - target.position.x; // 보스 기준 플레이어가 어느 쪽에 있는지
-
-                //bool isPlayerInFront = (moveDir > 0 && dirToPlayer > 0) || (moveDir < 0 && dirToPlayer < 0);
-                //// moveDir = 1 보스가 오른쪽 봄, dirToPlayer = 1 플레이어가 오른쪽에 있음
-
-                //isTrace = isPlayerInFront;
 
                 if (targetDist <= traceDist)
                 {
@@ -130,8 +127,10 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
                 }
             }
 
-            if (targetDist < attackDist)
+            // 공격범위, 쿨다운 체크
+            if (targetDist < attackDist && bossState != Boss1State.ATTACK && Time.time - lastAttackTime >= attackCooldown)
             {
+                lastAttackTime = Time.time;
                 ChangeState(Boss1State.ATTACK);
             }
         }
@@ -143,6 +142,13 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
         if (timer >= idleTime)
         {
             timer = 0f;
+
+            if (targetDist <= traceDist)
+            {
+                animator.SetBool("isWalk", true);
+                ChangeState(Boss1State.TRACE);
+                return;
+            }
 
             moveDir = Random.Range(0, 2) == 1 ? 1 : -1;
 
@@ -173,7 +179,6 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
     public void Trace() // 플레이어 발견
     {
-        animator.SetBool("isWalk", true);
         var targetDir = (target.position - transform.position).normalized;
         transform.position += Vector3.right * targetDir.x * moveSpeed * Time.deltaTime;
 
@@ -198,17 +203,47 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
     IEnumerator AttackRoutine()
     {
         isAttack = true;
-        animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1f);
-
-        bosRb.linearVelocity = Vector2.zero;
         animator.SetBool("isWalk", false);
-        yield return new WaitForSeconds(attackTime);
+        yield return null;
 
+        int ranValue = Random.Range(0, 10);
+        Debug.Log($"확률 {ranValue}");
+
+        if (ranValue < 3)
+        {
+            ChangeState(Boss1State.CAST);
+            Cast();
+        }
+
+        else
+        {
+            animator.SetTrigger("Attack");
+            Debug.Log("Attack 실행");
+        }
+
+        bossRb.linearVelocity = Vector2.zero;
+
+        yield return new WaitForSeconds(1f);
         isAttack = false;
-        animator.SetBool("isWalk", true);
-        ChangeState(Boss1State.TRACE);
+
+        animator.SetBool("isWalk", false);
+        ChangeState(Boss1State.IDLE);        
     }
+
+    public void Cast()
+    {
+        animator.SetTrigger("Cast");
+
+        Vector3 spawnPos = new Vector3(target.position.x, -3f, 0f);
+        GameObject spell = Instantiate(spellPrefab, spawnPos, Quaternion.identity);
+
+        var spellScript = spell.GetComponent<BringerSpell>();
+        if (spellScript != null)
+        {
+            spellScript.Setup(spellDamage);
+        }
+    }
+
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -234,7 +269,7 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
         currHp -= damage;
 
         animator.SetBool("isWalk", false);
-        bosRb.linearVelocity = Vector2.zero;
+        bossRb.linearVelocity = Vector2.zero;
 
         // UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
 
@@ -247,12 +282,12 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
     public void Death()
     {
         animator.SetTrigger("Death");
-        bosColl.enabled = false;
-        bosRb.gravityScale = 0f;
+        bossColl.enabled = false;
+        bossRb.gravityScale = 0f;
 
         item.DropItem(transform.position);
         gameObject.SetActive(false);
-    }    
+    }
 
     private void ChangeState(Boss1State newState)
     {

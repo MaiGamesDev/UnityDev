@@ -1,33 +1,44 @@
 using System.Collections;
 using UnityEngine;
+using static BossBringer;
 using static UnityEditor.PlayerSettings;
 
 public abstract class MonsterManager : MonoBehaviour
 {
-    [SerializeField] protected float moveSpeed = 1f;
-    public float monsterHp = 10f;
-    protected float monsterMaxHp;
-    protected Transform player;
-    bool isPlayerDead;
-
-    [SerializeField] private float traceRange = 5f, attackRange = 2f;
-    public float attackDamage = 3f;
-
-    [HideInInspector] public bool isAttacking;
-    private bool isTrackingPlayer, isDead = false;
-    private string[] attackAnimations = { "Attack", "Attack2" };
-    [SerializeField] private GameObject attackHitbox;
-
-    public bool isMove = true;
+    #region 멤버변수
+    public enum StateType { Idle, Move, Trace, Attack }
+    public StateType stateType;
 
     SpriteRenderer sRenderer;
     Animator animator;
-    Rigidbody2D rb;
-    Collider2D col;
+    Rigidbody2D monsterRb;
+    Collider2D monsterColl;
 
-    protected enum StateType { Left, Idle, Right }
-    protected StateType stateType;
-    private Coroutine moveRoutine;
+    protected bool canFly = false;
+    private float minFlightHeight = -3f;
+
+    [SerializeField] protected float moveSpeed = 1f;
+    public float monsterHp = 10f;
+    protected float monsterMaxHp;
+    protected Transform target;
+    bool isPlayerDead;
+
+    private bool isFacingRight = false;
+    private float idleTime, walkTime, targetDist;
+    private float moveDir;
+    private Vector2 move;
+    private float timer;
+
+    [SerializeField] private float traceRange = 5f;
+    [SerializeField] private float attackRange = 2f;
+    public float attackDamage = 3f;
+
+    [HideInInspector] public bool isAttacking;
+    private bool isDead = false;
+    private string[] attackAnimations = { "Attack", "Attack2" };
+    [SerializeField] private GameObject attackHitbox;
+
+    protected bool isMove;
 
     private ItemDropSpawner item;
 
@@ -35,174 +46,218 @@ public abstract class MonsterManager : MonoBehaviour
     [SerializeField] private AudioClip sndDie;
 
     public abstract void Init();
+    #endregion
     // ----------------------------------------------------------------------------------------
 
+    #region Default
     private void Awake()
     {
         sRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
+        monsterRb = GetComponent<Rigidbody2D>();
+        monsterColl = GetComponent<Collider2D>();
 
         item = FindFirstObjectByType<ItemDropSpawner>();
+        target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        GameObject playerObj = GameObject.FindWithTag("Player");
-        player = playerObj.transform;
+        canFly = gameObject.CompareTag("Fly");
     }
 
     void Start()
     {
         Init();
-
-        Vector2 toPlayer = player.position - transform.position;
-
-        if (toPlayer.x < 0)
-        {
-            SetStateType(StateType.Left);
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        else
-        {
-            SetStateType(StateType.Right);
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-
-        isTrackingPlayer = true;
+        idleTime = Random.Range(1f, 5f);
+        StartCoroutine(FindPlayerRoutine());
     }
-
 
     void Update()
     {
-        if (isDead) return;
-
         isPlayerDead = KnightController.isDead;
 
-        Move();
+        targetDist = Vector3.Distance(transform.position, target.position);
+
+        switch (stateType)
+        {
+            case StateType.Idle:
+                Idle();
+                break;
+            case StateType.Move:
+                Move();
+                break;
+            case StateType.Trace:
+                Trace();
+                break;
+            case StateType.Attack:
+                Attack();
+                break;
+        }
     }
 
-    // Move
-    // ----------------------------------------------------------------------------------------
-    protected void SetStateType(StateType state)
+    private void FixedUpdate()
     {
-        stateType = state;
+        if (isDead) return;
+
+        if (isMove)
+        {
+            Vector2 velocity = new Vector2(move.x * moveSpeed, move.y * moveSpeed);
+
+            if (canFly && transform.position.y <= minFlightHeight)
+            {
+               velocity.y = 0; 
+            }
+
+            monsterRb.linearVelocity = velocity;
+        }
+        else
+            monsterRb.linearVelocity = Vector2.zero;
+    }
+
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
+
+    protected void ChangeStateType(StateType newState)
+    {
+        if (stateType != newState)
+            stateType = newState;
+    }
+
+    IEnumerator FindPlayerRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);            
+
+            if (stateType == StateType.Idle || stateType == StateType.Move)
+            {
+                if (targetDist <= traceRange)
+                {
+                    animator.SetTrigger("Run");
+                    ChangeStateType(StateType.Trace);
+                }
+            }
+
+            else if (stateType == StateType.Trace)
+            {
+                if (targetDist > traceRange)
+                {
+                    timer = 0f;
+                    walkTime = Random.Range(1f, 5f);
+
+                    animator.SetTrigger("Run");
+                    ChangeStateType(StateType.Move);
+                }
+            }
+
+            if (targetDist < attackRange)
+            {
+                ChangeStateType(StateType.Attack);
+            }
+        }
+    }
+    #endregion
+
+    void Idle()
+    {
+        isMove = false;
+        move = Vector2.zero;
+
+        timer += Time.deltaTime;
+        if (timer >= idleTime)
+        {
+            timer = 0f;
+
+            if (targetDist <= traceRange)
+            {
+                animator.SetTrigger("Run");
+                ChangeStateType(StateType.Trace);
+                return;
+            }
+
+            moveDir = Random.Range(0, 2) == 1 ? 1 : -1;
+
+            if ((moveDir > 0 && !isFacingRight) || (moveDir < 0 && isFacingRight))
+                Flip();
+
+            walkTime = Random.Range(1f, 5f);
+            animator.SetTrigger("Run");
+            ChangeStateType(StateType.Move);
+        }
     }
 
     void Move()
     {
-        if (!isMove) return;
+        isMove = true;
 
-        float distance = Vector2.Distance(player.position, transform.position); // 플레이어와의 거리 비교
-        Vector2 toPlayerDir = (player.position - transform.position).normalized; // 플레이어 방향으로 이동
-        Vector2 ranMove = Vector2.zero; // default random move
-
-        if (distance <= traceRange)
+        if (isMove)
         {
-            // 추적 시작, 랜덤 이동 중지
-            isTrackingPlayer = true;
+            move = new Vector2(moveDir, 0);
 
-            if (moveRoutine != null)
+            timer += Time.deltaTime;
+            if (timer >= walkTime)
             {
-                StopCoroutine(moveRoutine);
-                moveRoutine = null;
-            }
+                timer = 0f;
+                idleTime = Random.Range(1f, 5f);
 
-            ranMove = toPlayerDir;
-
-            MoveAnimation(toPlayerDir);
-            MoveTo(ranMove);
-
-            if (distance <= attackRange)
-            {
-                Attack();
+                animator.SetTrigger("Idle");
+                isMove = false;
+                ChangeStateType(StateType.Idle);
             }
         }
-
-        else // 범위 밖 -> 랜덤이동
+        else
         {
-            isTrackingPlayer = false;
-
-            switch (stateType)
-            {
-                case StateType.Left:
-                    ranMove = Vector2.left;
-                    transform.localScale = new Vector3(-1, 1, 1);
-                    break;
-                case StateType.Right:
-                    ranMove = Vector2.right;
-                    transform.localScale = new Vector3(1, 1, 1);
-                    break;
-                case StateType.Idle:
-                    ranMove = Vector2.zero;
-                    break;
-            }
-            MoveAnimation(ranMove);
-            MoveTo(ranMove);
-
-            if (moveRoutine == null)
-                moveRoutine = StartCoroutine(MoveRoutine());
+            move = Vector2.zero;
         }
     }
 
-    IEnumerator MoveRoutine()
+    void Trace()
     {
-        while (!isTrackingPlayer)
+        isMove = true;
+
+        Vector3 dirToPlayer = (target.position - transform.position).normalized;
+
+        if (canFly)
         {
-            int rand = Random.Range(-1, 2); // -1, 0, 1
-            StateType newState = rand == -1 ? StateType.Left :
-                                 rand == 0 ? StateType.Idle : StateType.Right;
-
-            SetStateType(newState);
-
-            yield return new WaitForSeconds(3f);
+            move = new Vector2(dirToPlayer.x, dirToPlayer.y);
+            moveDir = dirToPlayer.x;
+        }
+        else
+        {
+            moveDir = dirToPlayer.x > 0 ? 1 : -1;
+            move = new Vector2(moveDir, 0);
         }
 
-        moveRoutine = null;
-    }
+        if ((moveDir > 0 && !isFacingRight) || (moveDir < 0 && isFacingRight))
+            Flip();
 
-    void MoveAnimation(Vector2 dir)
-    {
-        if (dir.x < 0)
-            transform.localScale = new Vector3(-1, 1, 1);
-        else if (dir.x > 0)
-            transform.localScale = new Vector3(1, 1, 1);
-
-        if (dir == Vector2.zero && !isMove)
+        if (targetDist > traceRange)
         {
-            animator.ResetTrigger("Run");
             animator.SetTrigger("Idle");
+            ChangeStateType(StateType.Idle);
         }
-        else if (isMove)
+
+        else if (targetDist < attackRange)
         {
-            animator.ResetTrigger("Idle");
-            animator.SetTrigger("Run");
+            isMove = false;
+            move = Vector2.zero;
+            ChangeStateType(StateType.Attack);
         }
     }
-
-    void MoveTo(Vector2 moveDir)
-    {
-        if (!CompareTag("Fly") && gameObject.layer == LayerMask.NameToLayer("Monster"))
-        {
-            moveDir.y = 0;
-        }
-
-        Vector2 pos = rb.position + (moveDir * moveSpeed * Time.fixedDeltaTime);
-
-        rb.MovePosition(pos);
-    }
-    // ----------------------------------------------------------------------------------------
-
-    // Hit
+    
+    
     public IEnumerator Hit(float damage)
     {
         if (isDead)
             yield break;
 
+        isMove = false;
         SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
 
         monsterHp -= damage;
-
-        isMove = false;
-        rb.bodyType = RigidbodyType2D.Kinematic;
 
 
         UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
@@ -211,11 +266,9 @@ public abstract class MonsterManager : MonoBehaviour
         if (monsterHp <= 0)
             Death();
 
-
         animator.SetTrigger("Hit");
         yield return new WaitForSeconds(GetAnimLegnth("Hit"));
 
-        rb.bodyType = RigidbodyType2D.Dynamic;
         isMove = true;
     }
 
@@ -228,13 +281,11 @@ public abstract class MonsterManager : MonoBehaviour
         animator.SetTrigger("Death");
 
         if (CompareTag("Fly"))
-            rb.gravityScale = 1f;
-
+            monsterRb.gravityScale = 1f;
 
         item.DropItem(transform.position);
         gameObject.SetActive(false);
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");
-        col.isTrigger = true;
     }
 
     // Attack
@@ -261,17 +312,20 @@ public abstract class MonsterManager : MonoBehaviour
     {
         isAttacking = true;
         isMove = false;
-        rb.linearVelocity = Vector2.zero;
-        // rb.bodyType = RigidbodyType2D.Kinematic;
 
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
 
         yield return new WaitForSeconds(GetAnimLegnth(randomAttack));
-        // rb.bodyType = RigidbodyType2D.Dynamic;
 
         isAttacking = false;
         isMove = true;
+
+        if (targetDist <= traceRange)
+            ChangeStateType(StateType.Trace);
+        else
+            ChangeStateType(StateType.Idle);
+
     }
 
     public abstract float AttackDamage();
