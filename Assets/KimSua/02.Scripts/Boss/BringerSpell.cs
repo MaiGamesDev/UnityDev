@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class BringerSpell : MonoBehaviour
 {
-    public GameObject spell;
+    private float damage;
     private Transform target;
-    private BossBringer bossBringer;
 
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        bossBringer = GetComponent<BossBringer>();
+    }
+
+    public void Setup(float spellDamage)
+    {
+        damage = spellDamage;
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -17,8 +20,7 @@ public class BringerSpell : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var player = other.GetComponent<KnightController>();
-
-            player.TakeDamage(bossBringer.spellDamage);
+            player.TakeDamage(damage);
         }
     }
 

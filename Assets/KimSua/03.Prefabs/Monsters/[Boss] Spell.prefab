@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 5130951335003173863}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.065, y: 1.5165, z: 0}
-  m_LocalScale: {x: 1.538903, y: 2.9779608, z: 1}
+  m_LocalPosition: {x: -0.1716, y: 1.3092, z: 0}
+  m_LocalScale: {x: 0.9941309, y: 2.5634289, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8223177738679385347}
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5422212f1eefe4a8625c285f4a56c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossBringer: {fileID: 5876857133337788218}
+  bossBringer: {fileID: 4739460499155020827, guid: 784b0e2819753d24f8fb732bc9fb27c3, type: 3}
 --- !u!1 &6557012180414985569
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,8 +158,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8223177738679385347}
   - component: {fileID: 7331996079007869490}
-  - component: {fileID: 5876857133337788218}
-  - component: {fileID: 7073863009590730016}
   - component: {fileID: 221862078501482837}
   - component: {fileID: 3702113917945856239}
   - component: {fileID: -8408066497075727292}
@@ -241,52 +239,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5876857133337788218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6557012180414985569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98eb6c93c9881149aa461c7e17d91f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossState: 0
-  target: {fileID: 0}
-  currHp: 0
-  spellDamage: 0
-  traceDist: 8
-  attackDist: 3
-  attackTime: 2
---- !u!50 &7073863009590730016
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6557012180414985569}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!70 &221862078501482837
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -317,7 +269,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -358,4 +310,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968e6f1b3f6b6f4419c476d3d7e4d4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spell: {fileID: 6557012180414985569}
