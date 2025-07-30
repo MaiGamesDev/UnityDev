@@ -207,9 +207,8 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
         yield return null;
 
         int ranValue = Random.Range(0, 10);
-        Debug.Log($"È®·ü {ranValue}");
 
-        if (ranValue < 3)
+        if (ranValue < 4)
         {
             ChangeState(Boss1State.CAST);
             Cast();
@@ -218,7 +217,6 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
         else
         {
             animator.SetTrigger("Attack");
-            Debug.Log("Attack ½ÇÇà");
         }
 
         bossRb.linearVelocity = Vector2.zero;

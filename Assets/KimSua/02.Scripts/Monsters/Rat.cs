@@ -1,15 +1,13 @@
 using UnityEngine;
 
-public class Goblin : MonsterManager
+public class Rat : MonsterManager
 {
     public override void Init()
     {
-        monsterHp = 5f;
+        monsterHp = 2f;
         monsterMaxHp = monsterHp;
-        moveSpeed = 1.5f;
-        attackDamage = 3f;
-
-        attackAnimations = new string[] { "Attack", "Attack2" };
+        moveSpeed = 2f;
+        attackDamage = 2.5f;
     }
 
     public override float AttackDamage()

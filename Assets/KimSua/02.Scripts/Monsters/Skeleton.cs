@@ -8,6 +8,8 @@ public class Skeleton : MonsterManager
         monsterMaxHp = monsterHp;
         moveSpeed = 0.8f;
         attackDamage = 8f;
+
+        attackAnimations = new string[] { "Attack", "Attack2" };
     }
 
     public override float AttackDamage()

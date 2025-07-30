@@ -8,6 +8,8 @@ public class Mushroom : MonsterManager
         monsterMaxHp = monsterHp;
         moveSpeed = 1f;
         attackDamage = 3f;
+
+        attackAnimations = new string[] { "Attack", "Attack2" };
     }
 
     public override float AttackDamage()

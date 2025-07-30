@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using static BossBringer;
 using static UnityEditor.PlayerSettings;
@@ -15,7 +16,7 @@ public abstract class MonsterManager : MonoBehaviour
     Collider2D monsterColl;
 
     protected bool canFly = false;
-    private float minFlightHeight = -3f;
+    private float minFlightHeight = -2.35f;
 
     [SerializeField] protected float moveSpeed = 1f;
     public float monsterHp = 10f;
@@ -35,7 +36,7 @@ public abstract class MonsterManager : MonoBehaviour
 
     [HideInInspector] public bool isAttacking;
     private bool isDead = false;
-    private string[] attackAnimations = { "Attack", "Attack2" };
+    protected string[] attackAnimations = { "Attack" };
     [SerializeField] private GameObject attackHitbox;
 
     protected bool isMove;
@@ -103,7 +104,7 @@ public abstract class MonsterManager : MonoBehaviour
 
             if (canFly && transform.position.y <= minFlightHeight)
             {
-               velocity.y = 0; 
+                velocity.y = 0;
             }
 
             monsterRb.linearVelocity = velocity;
@@ -130,7 +131,7 @@ public abstract class MonsterManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);            
+            yield return new WaitForSeconds(0.1f);
 
             if (stateType == StateType.Idle || stateType == StateType.Move)
             {
@@ -247,8 +248,8 @@ public abstract class MonsterManager : MonoBehaviour
             ChangeStateType(StateType.Attack);
         }
     }
-    
-    
+
+
     public IEnumerator Hit(float damage)
     {
         if (isDead)
@@ -320,6 +321,8 @@ public abstract class MonsterManager : MonoBehaviour
 
         isAttacking = false;
         isMove = true;
+
+        yield return null;
 
         if (targetDist <= traceRange)
             ChangeStateType(StateType.Trace);
