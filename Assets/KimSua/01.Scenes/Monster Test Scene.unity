@@ -766,7 +766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8250590786639912341, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
       propertyPath: monsters.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8250590786639912341, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
       propertyPath: 'monsters.Array.data[4]'
@@ -776,6 +776,10 @@ PrefabInstance:
       propertyPath: 'monsters.Array.data[5]'
       value: 
       objectReference: {fileID: 533556856602254599, guid: d59f16e4400a7f346b37e73389549880, type: 3}
+    - target: {fileID: 8250590786639912341, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
+      propertyPath: 'monsters.Array.data[6]'
+      value: 
+      objectReference: {fileID: 5175649836090931880, guid: 165393d968197f24997823de15d3b171, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
