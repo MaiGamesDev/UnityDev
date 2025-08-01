@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dd717669fb10c594fb7fd2b76ad600f0
+guid: 6a42780ee42dde344b469287fe59a50f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_FX_0
+      name: Bat_Death_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
-        width: 64
-        height: 32
+        x: 23
+        y: 153
+        width: 17
+        height: 11
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 125c1aa740acbb845822b0c48d290613
-      internalID: 882172168
+      spriteID: 3316f15bfa86bf949af9ed09bd3770a6
+      internalID: -1358256026
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_FX_1
+      name: Bat_Death_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 32
+        x: 87
+        y: 150
+        width: 17
+        height: 15
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b53ae6c1dc55b2f44ab824aa87ad27a6
-      internalID: -1297039154
+      spriteID: 623cecdd174d75d46baaf3fb30320df4
+      internalID: -2137521822
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_FX_2
+      name: Bat_Death_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 32
+        x: 152
+        y: 149
+        width: 15
+        height: 16
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,20 +169,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff4e3d6b686a54141b3a35fd3953f7c7
-      internalID: 1731330003
+      spriteID: 9f2677039fbd8fd4ab0cf694eb79f1f5
+      internalID: -2077446368
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_FX_3
+      name: Bat_Death_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 32
+        x: 216
+        y: 152
+        width: 14
+        height: 16
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,20 +191,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ef27c6e08ad3a44686db5d437b1bb8a
-      internalID: 1485732835
+      spriteID: 2d66a92199b455a47bf9884bbc79c1d7
+      internalID: 570017771
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_FX_4
+      name: Bat_Death_4
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 32
+        x: 27
+        y: 87
+        width: 9
+        height: 16
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,20 +213,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4edf265b20a34944a1357e96c51c68d
-      internalID: 37998715
+      spriteID: 0d1aed990718fb94f9360b57dbecb2f6
+      internalID: -946717746
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_FX_5
+      name: Bat_Death_5
       rect:
         serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 32
+        x: 90
+        y: 87
+        width: 12
+        height: 13
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,20 +235,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ce8ff5a30ae7784a93599b5e393e3fd
-      internalID: 511594248
+      spriteID: 190e05e2d30527948ae9090ea387d756
+      internalID: -822829294
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_FX_6
+      name: Bat_Death_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 32
+        x: 153
+        y: 87
+        width: 13
+        height: 12
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,20 +257,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 663acb3f8b2f2b2448374a141319bc82
-      internalID: 1757452643
+      spriteID: 2246b1af62ae2014cba747f484e3730f
+      internalID: -1536612520
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_FX_7
+      name: Bat_Death_7
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 32
+        x: 217
+        y: 85
+        width: 13
+        height: 12
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,8 +279,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 143ac96225bdec4459ec181d1a6cec79
-      internalID: 1735006191
+      spriteID: c455a46df9e56a544aa6273d770a5afd
+      internalID: 1126365328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bat_Death_8
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 16
+        width: 13
+        height: 13
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b00106dad5fa41741886594e4ef1ed3b
+      internalID: 475012555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bat_Death_9
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 16
+        width: 17
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4358143549aa6654b93f40fe3ab6a133
+      internalID: 944846284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bat_Death_10
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 16
+        width: 18
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 280b4b62da61d084b99a7c9befa03d69
+      internalID: 57185646
       vertices: []
       indices: 
       edges: []
@@ -289,7 +355,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c5830b08390cf44458df6608a03eb7ac
+    spriteID: 795936507ef5ee7458fb07584ccb1f8f
     internalID: 0
     vertices: []
     indices: 
@@ -299,14 +365,17 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Slime_Spiked_Jump_FX_0: 882172168
-      Slime_Spiked_Jump_FX_1: -1297039154
-      Slime_Spiked_Jump_FX_2: 1731330003
-      Slime_Spiked_Jump_FX_3: 1485732835
-      Slime_Spiked_Jump_FX_4: 37998715
-      Slime_Spiked_Jump_FX_5: 511594248
-      Slime_Spiked_Jump_FX_6: 1757452643
-      Slime_Spiked_Jump_FX_7: 1735006191
+      Bat_Death_0: -1358256026
+      Bat_Death_1: -2137521822
+      Bat_Death_10: 57185646
+      Bat_Death_2: -2077446368
+      Bat_Death_3: 570017771
+      Bat_Death_4: -946717746
+      Bat_Death_5: -822829294
+      Bat_Death_6: -1536612520
+      Bat_Death_7: 1126365328
+      Bat_Death_8: 475012555
+      Bat_Death_9: 944846284
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d35b99c3fc329b548b04cd42ea5c5189
+guid: 674d86ae37518d84bb7a4c539885d4d1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_0
+      name: Bat_Hit_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 80
-        width: 64
-        height: 48
+        x: 23
+        y: 89
+        width: 17
+        height: 11
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e217622b7288cd94abf8a22fd4cd7b72
-      internalID: -1547364074
+      spriteID: f7f91723fa20fa943afa135a7b376c15
+      internalID: -1864878860
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_1
+      name: Bat_Hit_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 80
-        width: 64
-        height: 48
+        x: 87
+        y: 86
+        width: 17
+        height: 15
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +147,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c8c854371726c348bc32423c217a309
-      internalID: -629831410
+      spriteID: cddabf991929d2844b813a328f3a0e9d
+      internalID: -461884751
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_2
+      name: Bat_Hit_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 80
-        width: 64
-        height: 48
+        x: 152
+        y: 85
+        width: 15
+        height: 16
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,20 +169,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68ee74ec533b3ca40a7526b5d23084fa
-      internalID: 1196366270
+      spriteID: eb11055b072319f4d86405c1c4e4517e
+      internalID: -1053230853
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_3
+      name: Bat_Hit_3
       rect:
         serializedVersion: 2
-        x: 192
-        y: 80
-        width: 64
-        height: 48
+        x: 216
+        y: 88
+        width: 14
+        height: 16
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,20 +191,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c559637201a6fe04499375822c213042
-      internalID: -1869677318
+      spriteID: 38f5d722d86e1334796e5f10f81d2166
+      internalID: -811522370
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_Spiked_Jump_4
+      name: Bat_Hit_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 16
-        width: 64
-        height: 48
+        x: 25
+        y: 24
+        width: 13
+        height: 16
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,74 +213,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cd5029da1a88c74c94d7e5662742299
-      internalID: -288633308
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_Spiked_Jump_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 16
-        width: 64
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a8ec16955434a75458a85a255ba298f0
-      internalID: -1285661005
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_Spiked_Jump_6
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 16
-        width: 64
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b55286c501aebca439eb3b4228b7edd1
-      internalID: -1998436334
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_Spiked_Jump_7
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 16
-        width: 64
-        height: 48
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e5f75f6064b7fb44abb9e40dcd0bcbd6
-      internalID: 1061298990
+      spriteID: cab6d2f985bb07c40ada549684df064d
+      internalID: -1112173588
       vertices: []
       indices: 
       edges: []
@@ -289,7 +223,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d193d8a23749e554ab4796a2369d0a80
+    spriteID: c7dfefb0740bfe448893d9c9f7279921
     internalID: 0
     vertices: []
     indices: 
@@ -299,14 +233,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Slime_Spiked_Jump_0: -1547364074
-      Slime_Spiked_Jump_1: -629831410
-      Slime_Spiked_Jump_2: 1196366270
-      Slime_Spiked_Jump_3: -1869677318
-      Slime_Spiked_Jump_4: -288633308
-      Slime_Spiked_Jump_5: -1285661005
-      Slime_Spiked_Jump_6: -1998436334
-      Slime_Spiked_Jump_7: 1061298990
+      Bat_Hit_0: -1864878860
+      Bat_Hit_1: -461884751
+      Bat_Hit_2: -1053230853
+      Bat_Hit_3: -811522370
+      Bat_Hit_4: -1112173588
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

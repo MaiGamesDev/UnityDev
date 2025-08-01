@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7211332613623202523
 Transform:
   m_ObjectHideFlags: 0
@@ -66,5 +66,10 @@ MonoBehaviour:
   - {fileID: 218387715862983509, guid: a0600f599ebe43f4b817b44f8f6b9117, type: 3}
   - {fileID: 5672142484564556630, guid: 6266c01b7a5a4ee4c8aafecb5522a82f, type: 3}
   - {fileID: 7851126675638324410, guid: 43942a60e33803d4693fb3b0ffd044c9, type: 3}
+  - {fileID: 4011102508729867659, guid: 5950952147bd2094dae121e67f9cdabc, type: 3}
+  - {fileID: 533556856602254599, guid: d59f16e4400a7f346b37e73389549880, type: 3}
+  - {fileID: 5175649836090931880, guid: 165393d968197f24997823de15d3b171, type: 3}
+  - {fileID: 6624444882702849261, guid: a2a60ebc48121e047a047e3c39eba493, type: 3}
+  - {fileID: 7760327717815237464, guid: c3351174b7b842746834cb7a55542ad9, type: 3}
   monster: {fileID: 7211332613623202523}
   minDistance: 3

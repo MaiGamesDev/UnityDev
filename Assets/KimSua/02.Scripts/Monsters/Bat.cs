@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class Slime : MonsterManager
+public class Bat : MonsterManager
 {
     public override void Init()
     {
-        monsterHp = 2f;
+        monsterHp = 11f;
         monsterMaxHp = monsterHp;
-        moveSpeed = 1.5f;
-        attackDamage = 2f;
+        moveSpeed = 4f;
+        attackDamage = 3f;
     }
 
     public override float AttackDamage()

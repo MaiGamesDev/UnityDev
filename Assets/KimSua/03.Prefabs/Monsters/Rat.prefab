@@ -191,11 +191,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateType: 0
-  moveSpeed: 1
-  monsterHp: 10
+  moveSpeed: 1.5
+  monsterHp: 12
   traceRange: 5
   attackRange: 2
-  attackDamage: 3
+  attackDamage: 5
   isAttacking: 0
   attackHitbox: {fileID: 2101939411140576684}
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 7728817913073826911}
   - component: {fileID: 2534659444013554297}
   - component: {fileID: 3605404345270499388}
+  - component: {fileID: 2795099880374266876}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -334,3 +335,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2795099880374266876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101939411140576684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 9221215704964884706}
+  knight: {fileID: 0}
