@@ -8,6 +8,7 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
     public AudioClip audioHit;
     public AudioClip audioDeath;
     public AudioClip audioAttack;
+    public AudioClip audioRush;
 
     public enum State { IDLE, WALK, ATTACK, RUSH }
     public State state = State.IDLE;
@@ -20,8 +21,13 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
     private float moveDir = 1;
     private bool isAttack = false;
     private bool isDead = false;
-    [SerializeField] private float rushSpeed;
+    [SerializeField] private float rushSpeed = 12;
     private bool isLeftRush = true;
+    private bool isRush = false;
+    private bool isIdle = false;
+    private int attackCount = 0;
+    
+    public GameObject rushCollider;
 
     private Transform target;
     private Animator animator;
@@ -31,7 +37,6 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
         currHp = hp;
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
-        ChangeState(State.RUSH);
 
     }
 
@@ -59,10 +64,20 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
 
     public void Idle()
     {
+        if (!isIdle)
+        {
+            animator.SetTrigger("Idle");
+            isIdle = true;
+        }
+
         var targetDist = Vector3.Distance(transform.position, target.position);
         if (targetDist < 5)
         {
             ChangeState(State.ATTACK);
+        }
+        if (targetDist > 12)
+        {
+            ChangeState(State.RUSH);
         }
         if (currHp <= 0)
         {
@@ -80,32 +95,6 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
             StartCoroutine(AttackRoutine());
     }
 
-    public void RushAttack()
-    {
-        animator.SetTrigger("Walk");
-        if (isLeftRush)
-            LeftRush();
-        else
-            RightRush();
-    }
-
-    public void LeftRush()
-    {
-        transform.localScale = new Vector3(-1,1,1);
-        Vector2 pos = new Vector2(-6, -3);
-        transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * 12);
-        if (transform.position.x == -6)
-            isLeftRush = false;
-    }
-    public void RightRush()
-    {
-        transform.localScale = Vector3.one;
-        Vector2 pos = new Vector2(6, -3);
-        transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * 12);
-        if (transform.position.x == 6)
-            isLeftRush = true;
-    }
-
     IEnumerator AttackRoutine()
     {
         isAttack = true;
@@ -114,8 +103,60 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
         float currAnimLength = animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSeconds(currAnimLength);
         isAttack = false;
-        ChangeState(State.IDLE);
+
+        attackCount++;
+        if (attackCount > 1)
+        {
+            ChangeState(State.RUSH);
+            attackCount = 0;
+        }
+        else
+            ChangeState(State.IDLE);
     }
+
+    public void RushAttack()
+    {
+        if (!isRush)
+        {
+            animator.SetTrigger("Walk");
+            rushCollider.SetActive(true);
+            SoundManager.Instance.PlaySound(audioRush);
+            isRush = true;
+        }
+        if (isLeftRush)
+            LeftRush();
+        else
+            RightRush();
+    }
+
+    public void LeftRush()
+    {
+        Debug.Log("left");
+        transform.localScale = new Vector3(-1, 1, 1);
+        Vector2 pos = new Vector2(-6, -3);
+        transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * rushSpeed);
+        if (transform.position.x == -6)
+        {
+            ChangeState(State.IDLE);
+            transform.localScale = Vector3.one;
+            isLeftRush = false;
+            rushCollider.SetActive(false);
+        }
+    }
+    public void RightRush()
+    {
+        transform.localScale = Vector3.one;
+        Vector2 pos = new Vector2(6, -3);
+        transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * rushSpeed);
+        if (transform.position.x == 6)
+        {
+            ChangeState(State.IDLE);
+            transform.localScale = new Vector3(-1, 1, 1);
+            isLeftRush = true;
+            rushCollider.SetActive(false);
+        }
+    }
+
 
     public void Hit(float damage)
     {
@@ -136,6 +177,8 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
     }
     public void ChangeState(State newState)
     {
+        isRush = false;
+        isIdle = false;
         if (state != newState)
             state = newState;
     }
