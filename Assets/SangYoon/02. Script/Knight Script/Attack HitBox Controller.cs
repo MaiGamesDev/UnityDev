@@ -9,27 +9,23 @@ public class HitBoxController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         monster = other.GetComponent<MonsterManager>();
-        bossPattern = other.GetComponentInParent<IBossDefaultPattern>();
+        bossPattern = other.GetComponent<IBossDefaultPattern>();
 
-        if (knight.isAttack)
+        if (monster != null)
         {
-            if (monster != null)
-            {
-                Debug.Log("몬스터 공격");
-                StartCoroutine(monster.Hit(knight.defaultDamage));
-            }
-                
+            Debug.Log("몬스터 공격");
+            StartCoroutine(monster.Hit(knight.defaultDamage));
+        }
 
-            if (bossPattern != null)
-            {
-                Debug.Log("보스 공격");
-                bossPattern.Hit(knight.defaultDamage);
-            }
-            else
-            {
-                Debug.Log("보스를 찾지 못함");
-            }
-                
+
+        if (bossPattern != null)
+        {
+            Debug.Log("보스 공격");
+            bossPattern.Hit(knight.defaultDamage);
+        }
+        else
+        {
+            Debug.Log("보스를 찾지 못함");
         }
     }
 }

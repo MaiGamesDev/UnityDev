@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BossBringer : MonoBehaviour, IBossDefaultPattern
 {
-    public enum Boss1State { IDLE, WALK, TRACE, ATTACK, CAST }
+    #region 멤버변수
+    public enum Boss1State { IDLE, WALK, TRACE, ATTACK, CAST, HIT }
     public Boss1State bossState;
 
     private Animator animator;
@@ -32,11 +33,17 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
     private bool isDead;
 
     private bool isAttack;
+    private bool isMove = true;
+
     [HideInInspector] public float spellDamage;
     [SerializeField] private float traceDist = 8f;
     [SerializeField] private float attackDist = 3f;
-    private float attackCooldown = 1f;
+    private float attackCooldown = 3f;
     private float lastAttackTime;
+
+    [SerializeField] private AudioClip sndHit;
+    [SerializeField] private AudioClip sndDie;
+    #endregion
 
     // --------------------------------------------------------------------
 
@@ -82,6 +89,8 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
                 break;
             case Boss1State.ATTACK:
                 DefaultAttack();
+                break;
+            case Boss1State.HIT:
                 break;
         }
     }
@@ -138,10 +147,14 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
     public void Idle()
     {
+        isMove = false;
+
         timer += Time.deltaTime;
         if (timer >= idleTime)
         {
             timer = 0f;
+
+            isMove = true;
 
             if (targetDist <= traceDist)
             {
@@ -164,17 +177,20 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
     public void Walk()
     {
-        transform.position += Vector3.right * moveDir * moveSpeed * Time.deltaTime;
-
-        timer += Time.deltaTime;
-        if (timer >= walkTime)
+        if (isMove)
         {
-            timer = 0f;
-            idleTime = Random.Range(1f, 5f);
+            transform.position += Vector3.right * moveDir * moveSpeed * Time.deltaTime;
 
-            animator.SetBool("isWalk", false);
-            ChangeState(Boss1State.IDLE);
-        }
+            timer += Time.deltaTime;
+            if (timer >= walkTime)
+            {
+                timer = 0f;
+                idleTime = Random.Range(1f, 5f);
+
+                animator.SetBool("isWalk", false);
+                ChangeState(Boss1State.IDLE);
+            }
+        }        
     }
 
     public void Trace() // 플레이어 발견
@@ -202,6 +218,7 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
     IEnumerator AttackRoutine()
     {
+        isMove = false;
         isAttack = true;
         animator.SetBool("isWalk", false);
         yield return null;
@@ -223,6 +240,7 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
         yield return new WaitForSeconds(1f);
         isAttack = false;
+        isMove = true;
 
         animator.SetBool("isWalk", false);
         ChangeState(Boss1State.IDLE);        
@@ -260,30 +278,51 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
     public void Hit(float damage)
     {
-        // SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
-
-        Debug.Log("보스 Hit 함수 호출됨");
+        isMove = false;
+        SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
 
         currHp -= damage;
 
         animator.SetBool("isWalk", false);
         bossRb.linearVelocity = Vector2.zero;
 
-        // UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
+        UIManager.Instance.SetHpEnemy(currHp, hp);
 
         if (currHp <= 0)
+        {
             Death();
+            return;
+        }            
 
+        ChangeState(Boss1State.HIT);
+        StartCoroutine(HitRoutine());
+    }
+
+    private IEnumerator HitRoutine()
+    {
         animator.SetTrigger("Hurt");
+        yield return new WaitForSeconds(1f);
+        isMove = true;
+        ChangeState(Boss1State.IDLE);
     }
 
     public void Death()
     {
+        isDead = true;
+
+        SoundManager.Instance.PlaySound(sndDie); // Die 사운드
+
         animator.SetTrigger("Death");
         bossColl.enabled = false;
         bossRb.gravityScale = 0f;
 
         item.DropItem(transform.position);
+
+        Invoke("DisableSelf", 1f); // 1초 뒤 실행        
+    }
+
+    private void DisableSelf()
+    {
         gameObject.SetActive(false);
     }
 

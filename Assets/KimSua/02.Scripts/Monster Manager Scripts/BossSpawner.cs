@@ -3,7 +3,7 @@ using UnityEngine;
 public class BossSpawner : MonoBehaviour
 {
     [SerializeField] private Transform bossSpawn;
-    [SerializeField] private GameObject bossPrefab;
+    public GameObject bossPrefab;
 
     void Start()
     {
