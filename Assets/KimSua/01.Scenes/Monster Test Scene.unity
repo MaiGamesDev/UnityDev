@@ -720,10 +720,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster Spawner
       objectReference: {fileID: 0}
-    - target: {fileID: 290028824045682903, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7211332613623202523, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -764,18 +760,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8250590786639912341, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
-      propertyPath: monsters.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8250590786639912341, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
-      propertyPath: 'monsters.Array.data[4]'
-      value: 
-      objectReference: {fileID: 4011102508729867659, guid: 5950952147bd2094dae121e67f9cdabc, type: 3}
-    - target: {fileID: 8250590786639912341, guid: 1064e0b8bc22fae448823880fbc79b42, type: 3}
-      propertyPath: 'monsters.Array.data[5]'
-      value: 
-      objectReference: {fileID: 533556856602254599, guid: d59f16e4400a7f346b37e73389549880, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

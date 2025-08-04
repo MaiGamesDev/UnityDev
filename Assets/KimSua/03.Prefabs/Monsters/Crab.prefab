@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_Sprite: {fileID: -1491960360, guid: ed602c717ccb28349a07159b0b584884, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 7002858161998879537}
   - component: {fileID: 2042916257466171255}
   - component: {fileID: 3503844597602605038}
+  - component: {fileID: 5194676839972685872}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Untagged
@@ -334,3 +335,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.6032376}
   m_EdgeRadius: 0
+--- !u!114 &5194676839972685872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8562915915938588911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 510e686949d53a74dbc3d955f6e09716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 9135993778292191625}
+  knight: {fileID: 0}

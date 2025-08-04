@@ -309,7 +309,7 @@ public abstract class MonsterManager : MonoBehaviour
         StartCoroutine(AttackRoutine());
     }
 
-    IEnumerator AttackRoutine()
+    protected virtual IEnumerator AttackRoutine()
     {
         isAttacking = true;
         isMove = false;
