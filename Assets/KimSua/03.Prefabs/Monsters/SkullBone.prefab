@@ -342,7 +342,7 @@ MonoBehaviour:
   stateType: 0
   moveSpeed: 1
   monsterHp: 10
-  traceRange: 3
+  traceRange: 10
   attackRange: 1
   attackDamage: 3
   isAttacking: 0

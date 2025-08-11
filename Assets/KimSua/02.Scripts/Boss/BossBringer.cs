@@ -115,7 +115,7 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
             if (bossState == Boss1State.IDLE || bossState == Boss1State.WALK)
             {
-                float dirToPlayer = transform.position.x - target.position.x; // 보스 기준 플레이어가 어느 쪽에 있는지
+                // float dirToPlayer = transform.position.x - target.position.x; // 보스 기준 플레이어가 어느 쪽에 있는지
 
                 if (targetDist <= traceDist)
                 {

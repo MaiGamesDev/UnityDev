@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class BossFireWorm : MonoBehaviour, IBossDefaultPattern
 {
+    public enum Boss1State { Idle, Walk, Trace, Attack, Hit, Death }
+    public Boss1State bossState;
+
     public float hp { get; set; }
     public float attackDamage { get; set; }
     public float moveSpeed { get; set; }
@@ -20,26 +23,26 @@ public class BossFireWorm : MonoBehaviour, IBossDefaultPattern
 
     public void Idle()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void Walk()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void Hit(float damage)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void Death()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void DefaultAttack()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

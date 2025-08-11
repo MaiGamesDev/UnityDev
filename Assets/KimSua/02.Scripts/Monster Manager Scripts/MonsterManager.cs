@@ -22,7 +22,7 @@ public abstract class MonsterManager : MonoBehaviour
     public float monsterHp = 10f;
     protected float monsterMaxHp;
     protected Transform target;
-    bool isPlayerDead;
+    bool isPlayerDead = false;
 
     private bool isFacingRight = false;
     private float idleTime, walkTime, targetDist;
@@ -35,11 +35,13 @@ public abstract class MonsterManager : MonoBehaviour
     public float attackDamage = 3f;
 
     [HideInInspector] public bool isAttacking;
-    private bool isDead = false;
+
     protected string[] attackAnimations = { "Attack" };
     [SerializeField] private GameObject attackHitbox;
 
-    protected bool isMove;
+    protected bool isMove = true;
+    protected bool isHit = false;
+    private bool isDead = false;
 
     private ItemDropSpawner item;
 
@@ -74,8 +76,11 @@ public abstract class MonsterManager : MonoBehaviour
     void Update()
     {
         isPlayerDead = KnightController.isDead;
+        if (isPlayerDead) return;
 
         targetDist = Vector3.Distance(transform.position, target.position);
+
+        CheckBoundary(); // x범 위 제한
 
         switch (stateType)
         {
@@ -121,42 +126,69 @@ public abstract class MonsterManager : MonoBehaviour
         transform.localScale = scale;
     }
 
+    private void CheckBoundary()
+    {
+        if (transform.position.x >= 8f)
+        {
+            transform.position = new Vector3(8f, transform.position.y, transform.position.z);
+            moveDir = -1;
+            if (isFacingRight) Flip();
+        }
+        else if (transform.position.x <= -8f)
+        {
+            transform.position = new Vector3(-8f, transform.position.y, transform.position.z);
+            moveDir = 1;
+            if (!isFacingRight) Flip();
+        }
+    }
+
     protected void ChangeStateType(StateType newState)
     {
-        if (stateType != newState)
-            stateType = newState;
+        if (stateType == newState) return;
+
+        stateType = newState;
+
+        /*
+        switch (stateType)
+        {
+            case StateType.Idle:
+                animator.SetTrigger("Idle");
+                break;
+            case StateType.Move:
+            case StateType.Trace:
+                animator.SetTrigger("Run");
+                break;
+            case StateType.Attack:
+                break;
+        } */
     }
 
     IEnumerator FindPlayerRoutine()
     {
+        WaitForSeconds delay = new WaitForSeconds(0.2f);
+
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
-
-            if (stateType == StateType.Idle || stateType == StateType.Move)
+            if (target != null)
             {
-                if (targetDist <= traceRange)
+                float targetDist = Vector2.Distance(transform.position, target.position);
+
+                if (stateType == StateType.Idle || stateType == StateType.Move && targetDist <= traceRange)
                 {
-                    animator.SetTrigger("Run");
                     ChangeStateType(StateType.Trace);
                 }
-            }
 
-            else if (stateType == StateType.Trace)
-            {
-                if (targetDist > traceRange)
+                else if (stateType == StateType.Trace && targetDist > traceRange)
                 {
-                    timer = 0f;
-                    walkTime = Random.Range(1f, 5f);
-
-                    animator.SetTrigger("Run");
                     ChangeStateType(StateType.Move);
                 }
-            }
 
-            if (targetDist < attackRange)
-            {
-                ChangeStateType(StateType.Attack);
+                if (targetDist < attackRange && stateType != StateType.Attack)
+                {
+                    ChangeStateType(StateType.Attack);
+                }
+
+                yield return delay;
             }
         }
     }
@@ -171,10 +203,11 @@ public abstract class MonsterManager : MonoBehaviour
         if (timer >= idleTime)
         {
             timer = 0f;
+            isMove = true;
 
             if (targetDist <= traceRange)
             {
-                animator.SetTrigger("Run");
+                // animator.SetTrigger("Run");
                 ChangeStateType(StateType.Trace);
                 return;
             }
@@ -185,16 +218,14 @@ public abstract class MonsterManager : MonoBehaviour
                 Flip();
 
             walkTime = Random.Range(1f, 5f);
-            animator.SetTrigger("Run");
+            // animator.SetTrigger("Run");
             ChangeStateType(StateType.Move);
         }
     }
 
     void Move()
     {
-        isMove = true;
-
-        if (isMove)
+        if (isMove && stateType != StateType.Idle)
         {
             move = new Vector2(moveDir, 0);
 
@@ -204,22 +235,32 @@ public abstract class MonsterManager : MonoBehaviour
                 timer = 0f;
                 idleTime = Random.Range(1f, 5f);
 
-                animator.SetTrigger("Idle");
-                isMove = false;
+                // animator.SetTrigger("Idle");
                 ChangeStateType(StateType.Idle);
             }
-        }
-        else
-        {
-            move = Vector2.zero;
         }
     }
 
     void Trace()
     {
+        /*
         isMove = true;
+        animator.SetTrigger("Run");
+
+        if (targetDist > traceRange)
+        {
+            timer = 0f;
+            animator.SetTrigger("Idle");
+            ChangeStateType(StateType.Idle);
+        }
+
+        else if (targetDist < attackRange)
+        {
+            ChangeStateType(StateType.Attack);
+        } */
 
         Vector3 dirToPlayer = (target.position - transform.position).normalized;
+        transform.position += Vector3.right * dirToPlayer.x * moveSpeed * Time.deltaTime;
 
         if (canFly)
         {
@@ -234,42 +275,38 @@ public abstract class MonsterManager : MonoBehaviour
 
         if ((moveDir > 0 && !isFacingRight) || (moveDir < 0 && isFacingRight))
             Flip();
-
-        if (targetDist > traceRange)
-        {
-            animator.SetTrigger("Idle");
-            ChangeStateType(StateType.Idle);
-        }
-
-        else if (targetDist < attackRange)
-        {
-            isMove = false;
-            move = Vector2.zero;
-            ChangeStateType(StateType.Attack);
-        }
     }
 
 
     public IEnumerator Hit(float damage)
     {
-        if (isDead)
+        if (isDead || isHit)
             yield break;
 
+        isHit = true;
         isMove = false;
         SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
 
         monsterHp -= damage;
-
+        move = Vector2.zero;
 
         UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
 
 
         if (monsterHp <= 0)
+        {
             Death();
+            yield break;
+        }
 
         animator.SetTrigger("Hit");
         yield return new WaitForSeconds(GetAnimLegnth("Hit"));
 
+        animator.SetTrigger("Idle");
+        yield return new WaitForSeconds(0.5f);
+
+        ChangeStateType(StateType.Idle);
+        isHit = false;
         isMove = true;
     }
 
@@ -314,6 +351,7 @@ public abstract class MonsterManager : MonoBehaviour
         isAttacking = true;
         isMove = false;
 
+        move = Vector2.zero;
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
 
@@ -322,13 +360,10 @@ public abstract class MonsterManager : MonoBehaviour
         isAttacking = false;
         isMove = true;
 
-        yield return null;
-
         if (targetDist <= traceRange)
             ChangeStateType(StateType.Trace);
         else
             ChangeStateType(StateType.Idle);
-
     }
 
     public abstract float AttackDamage();

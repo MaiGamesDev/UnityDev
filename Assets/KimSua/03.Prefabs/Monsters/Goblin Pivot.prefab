@@ -209,7 +209,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!114 &2865223960699114533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,9 +222,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e112f7341320a4eba10547bbea5b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateType: 0
   moveSpeed: 1
   monsterHp: 10
-  traceRange: 5
+  traceRange: 3.5
   attackRange: 2
   attackDamage: 3
   isAttacking: 0
