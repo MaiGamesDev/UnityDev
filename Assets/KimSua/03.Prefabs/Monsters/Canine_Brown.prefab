@@ -191,13 +191,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateType: 0
-  moveSpeed: 7
-  monsterHp: 20
-  traceRange: 6
-  attackRange: 2
-  attackDamage: 20
-  isAttacking: 0
   attackHitbox: {fileID: 6282571291301002320}
+  isAttacking: 0
+  moveSpeed: 1
+  traceRange: 6
+  attackRange: 1
+  attackDamage: 20
+  monsterHp: 20
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
   sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
 --- !u!1 &6282571291301002320
@@ -228,8 +228,8 @@ Transform:
   m_GameObject: {fileID: 6282571291301002320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.735, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.88500005, y: 1, z: 1}
+  m_LocalPosition: {x: -0.5, y: 0.5, z: 0}
+  m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3060816558735357813}

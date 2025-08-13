@@ -1,8 +1,10 @@
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static BossBringer;
 using static UnityEditor.PlayerSettings;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public abstract class MonsterManager : MonoBehaviour
 {
@@ -14,36 +16,36 @@ public abstract class MonsterManager : MonoBehaviour
     Animator animator;
     Rigidbody2D monsterRb;
     Collider2D monsterColl;
+    ItemDropSpawner item;
+    Transform target;
+    [SerializeField] private GameObject attackHitbox;
 
-    protected bool canFly = false;
-    private float minFlightHeight = -2.35f;
-
-    [SerializeField] protected float moveSpeed = 1f;
-    public float monsterHp = 10f;
-    protected float monsterMaxHp;
-    protected Transform target;
+    protected bool canFly;
+    private bool isFacingRight = false;
+    protected bool isMove;
+    protected bool isTrace;
+    [HideInInspector] public bool isAttacking;
+    private bool isDead = false;
     bool isPlayerDead = false;
 
-    private bool isFacingRight = false;
-    private float idleTime, walkTime, targetDist;
-    private float moveDir;
-    private Vector2 move;
-    private float timer;
 
+    private float minFlightHeight = -2.35f;
+    [SerializeField] protected float moveSpeed = 1f;
     [SerializeField] private float traceRange = 5f;
     [SerializeField] private float attackRange = 2f;
     public float attackDamage = 3f;
 
-    [HideInInspector] public bool isAttacking;
-
+    public float monsterHp = 10f;
+    protected float monsterMaxHp;
     protected string[] attackAnimations = { "Attack" };
-    [SerializeField] private GameObject attackHitbox;
 
-    protected bool isMove = true;
-    protected bool isHit = false;
-    private bool isDead = false;
+    private float idleTime;
+    private float walkTime;
+    private float targetDist;
 
-    private ItemDropSpawner item;
+    private float moveDir;
+    private Vector2 moveVector;
+    private float timer;
 
     [SerializeField] private AudioClip sndHit;
     [SerializeField] private AudioClip sndDie;
@@ -69,7 +71,6 @@ public abstract class MonsterManager : MonoBehaviour
     void Start()
     {
         Init();
-        idleTime = Random.Range(1f, 5f);
         StartCoroutine(FindPlayerRoutine());
     }
 
@@ -78,9 +79,7 @@ public abstract class MonsterManager : MonoBehaviour
         isPlayerDead = KnightController.isDead;
         if (isPlayerDead) return;
 
-        targetDist = Vector3.Distance(transform.position, target.position);
-
-        CheckBoundary(); // x범 위 제한
+        CheckBoundary(); // x범위 제한
 
         switch (stateType)
         {
@@ -105,7 +104,7 @@ public abstract class MonsterManager : MonoBehaviour
 
         if (isMove)
         {
-            Vector2 velocity = new Vector2(move.x * moveSpeed, move.y * moveSpeed);
+            Vector2 velocity = new Vector2(moveVector.x * moveSpeed, moveVector.y * moveSpeed);
 
             if (canFly && transform.position.y <= minFlightHeight)
             {
@@ -147,48 +146,45 @@ public abstract class MonsterManager : MonoBehaviour
         if (stateType == newState) return;
 
         stateType = newState;
-
-        /*
-        switch (stateType)
-        {
-            case StateType.Idle:
-                animator.SetTrigger("Idle");
-                break;
-            case StateType.Move:
-            case StateType.Trace:
-                animator.SetTrigger("Run");
-                break;
-            case StateType.Attack:
-                break;
-        } */
     }
+
 
     IEnumerator FindPlayerRoutine()
     {
-        WaitForSeconds delay = new WaitForSeconds(0.2f);
-
         while (true)
         {
-            if (target != null)
-            {
-                float targetDist = Vector2.Distance(transform.position, target.position);
+            yield return new WaitForSeconds(0.02f);
 
-                if (stateType == StateType.Idle || stateType == StateType.Move && targetDist <= traceRange)
+            targetDist = Vector3.Distance(transform.position, target.position);
+
+            if (stateType == StateType.Idle || stateType == StateType.Move)
+            {
+                Vector3 monsterDir = Vector3.right * moveDir; // 몬스터가 바라보는 방향
+                Vector3 playerDir = (transform.position - target.position).normalized; // 플레이어가 바라보는 방향
+
+                float dotValue = Vector3.Dot(monsterDir, playerDir);
+                isTrace = dotValue < 0f; // -1이므로 마주본 상태
+
+                if (targetDist <= traceRange && isTrace)
                 {
+                    animator.SetBool("isRun", true);
+                    isMove = true;
                     ChangeStateType(StateType.Trace);
                 }
+            }
 
-                else if (stateType == StateType.Trace && targetDist > traceRange)
+            else if (stateType == StateType.Trace)
+            {
+                if (targetDist > traceRange)
                 {
-                    ChangeStateType(StateType.Move);
+                    animator.SetBool("isRun", false);
+                    ChangeStateType(StateType.Idle);
                 }
 
-                if (targetDist < attackRange && stateType != StateType.Attack)
+                if (targetDist <= attackRange)
                 {
                     ChangeStateType(StateType.Attack);
                 }
-
-                yield return delay;
             }
         }
     }
@@ -197,80 +193,58 @@ public abstract class MonsterManager : MonoBehaviour
     void Idle()
     {
         isMove = false;
-        move = Vector2.zero;
 
         timer += Time.deltaTime;
         if (timer >= idleTime)
         {
-            timer = 0f;
             isMove = true;
-
-            if (targetDist <= traceRange)
-            {
-                // animator.SetTrigger("Run");
-                ChangeStateType(StateType.Trace);
-                return;
-            }
+            timer = 0f;
 
             moveDir = Random.Range(0, 2) == 1 ? 1 : -1;
-
             if ((moveDir > 0 && !isFacingRight) || (moveDir < 0 && isFacingRight))
                 Flip();
 
             walkTime = Random.Range(1f, 5f);
-            // animator.SetTrigger("Run");
+            animator.SetBool("isRun", true);
             ChangeStateType(StateType.Move);
         }
     }
 
     void Move()
     {
-        if (isMove && stateType != StateType.Idle)
+        moveVector = new Vector2(moveDir, 0);
+
+        timer += Time.deltaTime;
+        if (timer >= walkTime)
         {
-            move = new Vector2(moveDir, 0);
+            timer = 0f;
+            idleTime = Random.Range(1f, 5f);
+            animator.SetBool("isRun", false);
+            ChangeStateType(StateType.Idle);
+        }
 
-            timer += Time.deltaTime;
-            if (timer >= walkTime)
-            {
-                timer = 0f;
-                idleTime = Random.Range(1f, 5f);
-
-                // animator.SetTrigger("Idle");
-                ChangeStateType(StateType.Idle);
-            }
+        // 범위 안으로 들어오면 Trace로 전환
+        if (targetDist <= traceRange)
+        {
+            ChangeStateType(StateType.Trace);
         }
     }
 
     void Trace()
     {
-        /*
         isMove = true;
-        animator.SetTrigger("Run");
-
-        if (targetDist > traceRange)
-        {
-            timer = 0f;
-            animator.SetTrigger("Idle");
-            ChangeStateType(StateType.Idle);
-        }
-
-        else if (targetDist < attackRange)
-        {
-            ChangeStateType(StateType.Attack);
-        } */
-
+        animator.SetBool("isRun", true);
         Vector3 dirToPlayer = (target.position - transform.position).normalized;
-        transform.position += Vector3.right * dirToPlayer.x * moveSpeed * Time.deltaTime;
 
         if (canFly)
         {
-            move = new Vector2(dirToPlayer.x, dirToPlayer.y);
+            moveVector = new Vector2(dirToPlayer.x, dirToPlayer.y);
             moveDir = dirToPlayer.x;
         }
         else
         {
+            moveVector = new Vector2(moveDir, 0);
             moveDir = dirToPlayer.x > 0 ? 1 : -1;
-            move = new Vector2(moveDir, 0);
         }
 
         if ((moveDir > 0 && !isFacingRight) || (moveDir < 0 && isFacingRight))
@@ -280,18 +254,14 @@ public abstract class MonsterManager : MonoBehaviour
 
     public IEnumerator Hit(float damage)
     {
-        if (isDead || isHit)
-            yield break;
+        if (isDead) yield break;
 
-        isHit = true;
         isMove = false;
         SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
 
         monsterHp -= damage;
-        move = Vector2.zero;
 
         UIManager.Instance.SetHpEnemy(monsterHp, monsterMaxHp);
-
 
         if (monsterHp <= 0)
         {
@@ -299,19 +269,19 @@ public abstract class MonsterManager : MonoBehaviour
             yield break;
         }
 
+        monsterRb.linearVelocity = Vector2.zero;
         animator.SetTrigger("Hit");
-        yield return new WaitForSeconds(GetAnimLegnth("Hit"));
-
-        animator.SetTrigger("Idle");
-        yield return new WaitForSeconds(0.5f);
+        
+        yield return new WaitForSeconds(GetAnimLegnth("Hit") + 1f);
 
         ChangeStateType(StateType.Idle);
-        isHit = false;
         isMove = true;
     }
 
     void Death()
     {
+        if (isDead) return;
+
         SoundManager.Instance.PlaySound(sndDie); // Die 사운드
 
         isDead = true;
@@ -350,20 +320,20 @@ public abstract class MonsterManager : MonoBehaviour
     {
         isAttacking = true;
         isMove = false;
+        animator.SetBool("isRun", true);
+        yield return null;
 
-        move = Vector2.zero;
+        monsterRb.linearVelocity = Vector2.zero;
+
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
-
         yield return new WaitForSeconds(GetAnimLegnth(randomAttack));
 
         isAttacking = false;
         isMove = true;
 
-        if (targetDist <= traceRange)
-            ChangeStateType(StateType.Trace);
-        else
-            ChangeStateType(StateType.Idle);
+        animator.SetBool("isRun", false);
+        ChangeStateType(StateType.Idle);
     }
 
     public abstract float AttackDamage();

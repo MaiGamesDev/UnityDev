@@ -4,9 +4,9 @@ public class Canine : MonsterManager
 {
     public override void Init()
     {
-        monsterHp = 7f;
+        monsterHp = 20f;
         monsterMaxHp = monsterHp;
-        moveSpeed = 1f;
+        moveSpeed = 5f;
         attackDamage = 3f;
     }
 
