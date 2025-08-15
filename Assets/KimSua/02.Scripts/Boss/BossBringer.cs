@@ -242,7 +242,6 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
         isAttack = false;
         isMove = true;
 
-        animator.SetBool("isWalk", false);
         ChangeState(Boss1State.IDLE);        
     }
 

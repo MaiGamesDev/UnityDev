@@ -257,6 +257,7 @@ public abstract class MonsterManager : MonoBehaviour
         if (isDead) yield break;
 
         isMove = false;
+        animator.SetBool("isRun", false);
         SoundManager.Instance.PlaySound(sndHit); // Hit 사운드
 
         monsterHp -= damage;
