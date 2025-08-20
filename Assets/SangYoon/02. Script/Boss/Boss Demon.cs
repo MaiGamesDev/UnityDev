@@ -2,18 +2,17 @@ using UnityEngine;
 
 public class BossDemon : MonoBehaviour, IBossDefaultPattern
 {
-    public enum Demon { Summon, IDLE, Walk}
-    public Demon slimeDemonState = Demon.IDLE;
+    public enum Demon { Sleep, Summon, IDLE, Walk}
+    public Demon DemonState = Demon.IDLE;
+
+    DemonSummon demonSummon;
 
 
     protected Animator animator;
     private Rigidbody2D slimeDemonRb;
 
-    private void Start()
-    {
-        slimeDemonRb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-    }
+
+
 
     public float hp { get; set; }
     public float attackDamage { get; set; }
@@ -25,11 +24,22 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
        this.attackDamage = attackDamage;
        this.moveSpeed = moveSpeed;
     }
+    private void Start()
+    {
+        slimeDemonRb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        demonSummon = GetComponent<DemonSummon>();
+
+        DemonState = Demon.Sleep;
+    }
 
     void Update()
     {
-        switch (slimeDemonState)
+        switch (DemonState)
         {
+            case Demon.Sleep:
+                Sleep();
+                break;
             case Demon.Summon:
                 Summon();
                 break;
@@ -42,25 +52,34 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            demonSummon.Summon();
+        }
+    }
+
+    void Sleep()
+    {
+
+    }
+    public void Summon()
+    {
+        animator.SetTrigger("Summon");
+        gameObject.SetActive(false);
+
+    }
+
     public void Idle()
     {
         animator.SetBool("is Walk", false);
-    }
-    public void Death()
-    {
-
     }
 
     public void DefaultAttack()
     {
 
     }
-
-    public void Hit(float damage)
-    {
-
-    }
-
 
     public void Walk()
     {
@@ -71,8 +90,12 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
         animator.SetBool("isWalk",true);
     }
 
-    public void Summon()
+    public void Death()
     {
-        DemonSummon demonSummon = GetComponent<DemonSummon>();
+
+    }
+    public void Hit(float damage)
+    {
+
     }
 }
