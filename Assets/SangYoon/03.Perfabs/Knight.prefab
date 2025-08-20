@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4902477401195372920}
   - component: {fileID: 6521349681896145352}
-  - component: {fileID: 2340781844663388706}
+  - component: {fileID: 9203931257595762412}
   m_Layer: 0
   m_Name: '[HtiBox] Attack'
   m_TagString: Attack
@@ -79,7 +79,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.838724, y: 2.0680013}
   m_EdgeRadius: 0
---- !u!114 &2340781844663388706
+--- !u!114 &9203931257595762412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,7 +172,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 2095961772, guid: d465f6f930095b949849cc2f735676ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

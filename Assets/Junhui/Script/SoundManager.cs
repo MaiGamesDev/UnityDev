@@ -38,7 +38,8 @@ public class SoundManager : MonoBehaviour
     public void PlaySound(AudioClip clip)
     {
         // 사운드 재생
-        audioSource.PlayOneShot(clip);
+        if (clip != null)
+            audioSource.PlayOneShot(clip);
     }
 
     public void PlayLoopSound(AudioClip clip)
@@ -46,6 +47,7 @@ public class SoundManager : MonoBehaviour
         // BGM 재생
         audioSource.loop = true;
         audioSource.clip = clip;
-        audioSource.Play();
+        if (clip != null)
+            audioSource.Play();
     }
 }

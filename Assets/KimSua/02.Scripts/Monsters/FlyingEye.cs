@@ -8,6 +8,8 @@ public class FlyingEye : MonsterManager
         monsterMaxHp = monsterHp;
         moveSpeed = 2f;
         attackDamage = 1f;
+
+        attackAnimations = new string[] { "Attack", "Attack2" };
     }
 
     public override float AttackDamage()
