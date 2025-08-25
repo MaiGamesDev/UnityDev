@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static BossBringer;
 using static UnityEditor.Progress;
@@ -26,16 +28,20 @@ public class BossFireWorm : MonoBehaviour, IBossDefaultPattern
     private float moveDir;
     private float targetDist;
 
-    private float currHp;
+    public float currHp;
 
     private float idleTime, walkTime;
     [SerializeField] private float traceDist = 10f;
     [SerializeField] private float attackDist = 7f;
 
     private bool isAttack;
+    private bool canDamage = false;
     private bool isMove = true;
 
     [SerializeField] private GameObject firePrefab;
+    [SerializeField] private GameObject exGroup;
+    [SerializeField] private AudioClip sndHit;
+    [SerializeField] private AudioClip sndDie;
 
     #endregion
 
@@ -148,10 +154,9 @@ public class BossFireWorm : MonoBehaviour, IBossDefaultPattern
                 }
             }
 
-            if (targetDist < attackDist && bossState != BossState.Attack)
+            if (targetDist < attackDist && !isAttack)
             {
-                if (bossState != BossState.Attack)
-                    anim.SetBool("isWalk", true);
+                anim.SetBool("isWalk", true);
 
                 StartCoroutine(AttackRoutine());
             }
@@ -223,7 +228,9 @@ public class BossFireWorm : MonoBehaviour, IBossDefaultPattern
     {
         if (bossState == BossState.Hit || bossState == BossState.Death) return;
 
+        SoundManager.Instance.PlaySound(sndHit);
         currHp -= damage;
+        UIManager.Instance.SetHpEnemy(currHp, hp);
 
         if (currHp > 0)
         {
@@ -249,6 +256,7 @@ public class BossFireWorm : MonoBehaviour, IBossDefaultPattern
 
     public void Death()
     {
+        SoundManager.Instance.PlaySound(sndDie);
         anim.SetTrigger("Death");
         fireWormColl.enabled = false;
         item.DropItem(transform.position);
@@ -266,7 +274,7 @@ public class BossFireWorm : MonoBehaviour, IBossDefaultPattern
     {
         if (KnightController.isDead) return;
 
-        if (bossState != BossState.Attack)
+        if (!isAttack)
             StartCoroutine(AttackRoutine());
     }
 
@@ -277,43 +285,96 @@ public class BossFireWorm : MonoBehaviour, IBossDefaultPattern
         anim.SetBool("isWalk", false);
         yield return null;
 
+        int ranValue = Random.Range(0, 10);
         anim.SetTrigger("Attack");
-        
-        FireBallSpawn();
-        yield return new WaitForSeconds(3f);
+
+        if (ranValue < 6)
+        {
+            FireBallSpawn();
+            yield return new WaitForSeconds(3f);
+        }
+        else
+        {
+            FireExplosion();
+            yield return new WaitForSeconds(3f);
+        }
 
         fireWormRb.linearVelocity = Vector2.zero;
 
-        isAttack = false;
         isMove = true;
+        isAttack = false;
 
         ChangeState(BossState.Idle);
     }
 
     public void FireBallSpawn()
     {
-        Vector3 spawnPos = new Vector3(transform.position.x, -1.6f, 0f);
+        int dir = (target.position.x > transform.position.x) ? 1 : -1;
+
+        float spawnOffsetX = 3f * dir;
+        Vector3 spawnPos = new Vector3(transform.position.x + spawnOffsetX, transform.position.y + 1f, transform.position.z);
         GameObject fireball = Instantiate(firePrefab, spawnPos, Quaternion.identity);
 
         var fireballScript = fireball.GetComponent<FireBall>();
         if (fireballScript != null)
         {
-            int dir = (target.position.x > transform.position.x) ? 1 : -1;
             fireballScript.Attack(attackDamage, dir);
         }
     }
 
+    public void FireExplosion()
+    {
+        int count = Random.Range(1, 4); // 1 ~ 3개 중 랜덤 생성
+        List<float> spawnXList = new List<float>();
+
+        // 1. 무조건 플레이어 위치에서 1개 생성
+        float playerX = target.position.x;
+        spawnXList.Add(playerX);
+        SpawnExplosin(playerX);
+
+        // 2. 나머지는 랜덤 x 좌표에서 생성
+        for (int i = 1; i < count; i++)
+        {
+            float ranPosX = Random.Range(-7f, 7f);
+
+            spawnXList.Add(ranPosX);
+            SpawnExplosin(ranPosX);
+        }
+    }
+
+    private void SpawnExplosin(float x)
+    {
+        Vector3 exSpawnPos = new Vector3(x, transform.position.y, transform.position.z);
+
+        GameObject explosion = Instantiate(exGroup, exSpawnPos, Quaternion.identity);
+
+        var expolosions = explosion.GetComponent<FireExplosion>();
+        if (expolosions != null)
+        {
+            expolosions.Attack(attackDamage);
+        }
+    }
+
+
     public void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.CompareTag("Player"))
+        if (other.collider.CompareTag("Player") && !canDamage)
         {
             var player = other.collider.GetComponent<KnightController>();
 
-            if (KnightController.isDead)
+            if (!KnightController.isDead)
+            {
                 player.TakeDamage(attackDamage);
+                StartCoroutine(DamageCooldown());
+            }
         }
     }
+
+    private IEnumerator DamageCooldown()
+    {
+        canDamage = true;
+        yield return new WaitForSeconds(0.3f);
+        canDamage = false;
+    }
     #endregion
-
-
 }
