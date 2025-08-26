@@ -12,10 +12,10 @@ public abstract class MonsterManager : MonoBehaviour
     public enum StateType { Idle, Move, Trace, Attack }
     public StateType stateType;
 
-    SpriteRenderer sRenderer;
-    Animator animator;
-    Rigidbody2D monsterRb;
-    Collider2D monsterColl;
+    protected SpriteRenderer sRenderer;
+    protected Animator animator;
+    protected Rigidbody2D monsterRb;
+    protected Collider2D monsterColl;
     ItemDropSpawner item;
     Transform target;
     [SerializeField] private GameObject attackHitbox;

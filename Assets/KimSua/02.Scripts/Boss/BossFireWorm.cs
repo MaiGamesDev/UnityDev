@@ -32,7 +32,7 @@ public class BossFireWorm : MonoBehaviour, IBossDefaultPattern
 
     private float idleTime, walkTime;
     [SerializeField] private float traceDist = 10f;
-    [SerializeField] private float attackDist = 7f;
+    [SerializeField] private float attackDist = 8f;
 
     private bool isAttack;
     private bool canDamage = false;
