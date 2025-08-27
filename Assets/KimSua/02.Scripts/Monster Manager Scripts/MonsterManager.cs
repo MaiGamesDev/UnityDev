@@ -9,14 +9,14 @@ using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 public abstract class MonsterManager : MonoBehaviour
 {
     #region 멤버변수
-    public enum StateType { Idle, Move, Trace, Attack }
+    public enum StateType { Idle, Move, Trace, Attack, Death }
     public StateType stateType;
 
     protected SpriteRenderer sRenderer;
     protected Animator animator;
     protected Rigidbody2D monsterRb;
     protected Collider2D monsterColl;
-    ItemDropSpawner item;
+    protected ItemDropSpawner item;
     Transform target;
     [SerializeField] private GameObject attackHitbox;
 
@@ -25,7 +25,7 @@ public abstract class MonsterManager : MonoBehaviour
     protected bool isMove;
     protected bool isTrace;
     [HideInInspector] public bool isAttacking;
-    private bool isDead = false;
+    protected bool isDead = false;
     bool isPlayerDead = false;
 
 
@@ -77,7 +77,7 @@ public abstract class MonsterManager : MonoBehaviour
     void Update()
     {
         isPlayerDead = KnightController.isDead;
-        if (isPlayerDead) return;
+        if (isPlayerDead || isDead) return;
 
         CheckBoundary(); // x범위 제한
 
@@ -94,6 +94,9 @@ public abstract class MonsterManager : MonoBehaviour
                 break;
             case StateType.Attack:
                 Attack();
+                break;
+            case StateType.Death:
+                Death();
                 break;
         }
     }
@@ -141,7 +144,7 @@ public abstract class MonsterManager : MonoBehaviour
         }
     }
 
-    protected void ChangeStateType(StateType newState)
+    protected virtual void ChangeStateType(StateType newState)
     {
         if (stateType == newState) return;
 
@@ -251,7 +254,7 @@ public abstract class MonsterManager : MonoBehaviour
             Flip();
     }
 
-
+    #region Hit
     public IEnumerator Hit(float damage)
     {
         if (isDead) yield break;
@@ -273,21 +276,27 @@ public abstract class MonsterManager : MonoBehaviour
         monsterRb.linearVelocity = Vector2.zero;
         animator.SetTrigger("Hit");
         
-        yield return new WaitForSeconds(GetAnimLegnth("Hit") + 1f);
+        yield return new WaitForSeconds(GetAnimLegnth("Hit") + 0.5f);
 
         ChangeStateType(StateType.Idle);
         isMove = true;
     }
 
-    void Death()
+    protected virtual void Death()
     {
         if (isDead) return;
+        StartCoroutine(DeathRoutine());
+    }
 
+    protected IEnumerator DeathRoutine()
+    {
         SoundManager.Instance.PlaySound(sndDie); // Die 사운드
 
+        stateType = StateType.Death;
         isDead = true;
 
         animator.SetTrigger("Death");
+        yield return new WaitForSeconds(GetAnimLegnth("Death") - 0.5f);
 
         if (CompareTag("Fly"))
             monsterRb.gravityScale = 1f;
@@ -297,8 +306,10 @@ public abstract class MonsterManager : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");
     }
 
-    // Attack
-    // ----------------------------------------------------------------------------------------
+
+    #endregion
+
+    #region Attack
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
@@ -338,6 +349,7 @@ public abstract class MonsterManager : MonoBehaviour
     }
 
     public abstract float AttackDamage();
+    #endregion
 
     float GetAnimLegnth(string stateName)
     {

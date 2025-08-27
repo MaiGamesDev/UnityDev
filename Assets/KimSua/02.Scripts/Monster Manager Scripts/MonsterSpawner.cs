@@ -33,7 +33,7 @@ public class MonsterSpawner : MonoBehaviour
 
         if (prefab.CompareTag("Fly"))
         {
-            spawnY = 1f;
+            spawnY = 0f;
         }
         else
         {

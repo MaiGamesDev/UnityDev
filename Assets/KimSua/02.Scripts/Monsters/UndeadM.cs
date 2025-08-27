@@ -12,8 +12,6 @@ public class UndeadM : MonsterManager
         monsterMaxHp = monsterHp;
         moveSpeed = 5f;
         attackDamage = 6f;
-
-        attackAnimations = new string[] { "Attack", "Spawn" };
     }
 
     public override float AttackDamage()
@@ -21,27 +19,21 @@ public class UndeadM : MonsterManager
         return attackDamage;
     }
 
-    protected override IEnumerator AttackRoutine()
+    protected override void Death()
     {
-        isAttacking = true;
-        isMove = false;
-        animator.SetBool("isRun", false);
-        monsterRb.linearVelocity = Vector2.zero;
-
-        yield return new WaitForSeconds(0.1f);
+        base.Death();
 
         if (summonPrefab != null)
         {
-            Vector3 spawnPos = summonSpawnPoint ? summonSpawnPoint.position : transform.position;
-            Summon newSummon = Instantiate(summonPrefab, spawnPos, Quaternion.identity);
-            newSummon.Init(GameObject.FindGameObjectWithTag("Player").transform);
+            int summonCount = Random.Range(2, 4);
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+
+            for (int i = 0; i < summonCount; i++)
+            {
+                float offsetX = Random.Range(-5f, 5f);
+                Vector3 spawnPos = (summonSpawnPoint ? summonSpawnPoint.position : transform.position) + new Vector3(offsetX, 1f, 0);
+                Summon newSummon = Instantiate(summonPrefab, spawnPos, Quaternion.identity);                
+            }
         }
-
-        yield return new WaitForSeconds(0.5f);
-
-        isAttacking = false;
-        isMove = true;
-        animator.SetBool("isRun", true);
-        ChangeStateType(StateType.Idle);
     }
 }
