@@ -1539,7 +1539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e766192804e8449b50e6d8d0381a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimeDemonState: 0
+  DemonState: 2
 --- !u!95 &1622862906
 Animator:
   serializedVersion: 7
@@ -1575,6 +1575,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1402701616758313276, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: DemonState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1402701616758313276, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
+      propertyPath: slimeDemonState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1281162122205319879, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
       propertyPath: m_Size.x
       value: 1.1725363
@@ -1597,7 +1605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 3815269550241251521, guid: 4f23e7b9b2c479842b2ccf8f7f1df21b, type: 3}
       propertyPath: m_LocalPosition.z

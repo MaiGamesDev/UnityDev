@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4902477401195372920}
   - component: {fileID: 6521349681896145352}
-  - component: {fileID: 2340781844663388706}
+  - component: {fileID: 9203931257595762412}
   m_Layer: 0
   m_Name: '[HtiBox] Attack'
   m_TagString: Attack
@@ -79,7 +79,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.838724, y: 2.0680013}
   m_EdgeRadius: 0
---- !u!114 &2340781844663388706
+--- !u!114 &9203931257595762412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 1790479029162464586}
   - component: {fileID: 8025069135995818696}
   - component: {fileID: 7870589068421446940}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Knight
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.8384994
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 5.3
