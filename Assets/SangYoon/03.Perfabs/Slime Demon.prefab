@@ -189,4 +189,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ae545c29954874497cda50efba783b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimeDemonState: 0
+  DemonState: 0
+  anim: {fileID: 0}

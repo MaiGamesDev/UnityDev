@@ -1,11 +1,24 @@
 using UnityEngine;
 
-public class DemonSummon : BossDemon
+public class DemonSummon : MonoBehaviour
 {
-    public void Summon()
-    {
-        animator.SetTrigger("Summon");
-        gameObject.SetActive(false);
+    public BossDemon bossDemon;
 
+
+    private void Awake()
+    {
+        bossDemon = FindFirstObjectByType<BossDemon>();
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        SummonTriggerEnter(other);
+    }
+    private void SummonTriggerEnter(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            bossDemon.anim.enabled = true;
+            gameObject.SetActive(false);
+        }
     }
 }

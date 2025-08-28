@@ -1,48 +1,45 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
-public class BossDemon : MonoBehaviour, IBossDefaultPattern
+public class BossDemon : MonoBehaviour
 {
-    public enum Demon { Sleep, Summon, IDLE, Walk}
+    public enum Demon { IDLE, Walk}
     public Demon DemonState = Demon.IDLE;
 
-    DemonSummon demonSummon;
+    public float hp = 500f;
+    public float defaultAttackDamage = 10f;
+    public float moveSpeed = 1.4f;
+    public float skillDamage { get; private set; }
 
+    public Animator anim;
+    private Rigidbody2D DemonRb;
+    private DemonSummon damonSummon;
 
-    protected Animator animator;
-    private Rigidbody2D slimeDemonRb;
-
-
-
-
-    public float hp { get; set; }
-    public float attackDamage { get; set; }
-    public float moveSpeed { get; set; }
+    [SerializeField] private Transform target;
 
     protected virtual void Init(float hp, float attackDamage, float moveSpeed)
     {
        this.hp = hp;
-       this.attackDamage = attackDamage;
+       this.defaultAttackDamage = attackDamage;
        this.moveSpeed = moveSpeed;
+    }
+
+    private void Awake()
+    {
+        DemonRb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        damonSummon = GetComponent<DemonSummon>();
+
+        anim.enabled = false;
     }
     private void Start()
     {
-        slimeDemonRb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        demonSummon = GetComponent<DemonSummon>();
-
-        DemonState = Demon.Sleep;
     }
 
     void Update()
     {
         switch (DemonState)
         {
-            case Demon.Sleep:
-                Sleep();
-                break;
-            case Demon.Summon:
-                Summon();
-                break;
             case Demon.IDLE:
                 Idle();
                 break;
@@ -52,50 +49,20 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            demonSummon.Summon();
-        }
-    }
-
-    void Sleep()
-    {
-
-    }
-    public void Summon()
-    {
-        animator.SetTrigger("Summon");
-        gameObject.SetActive(false);
-
-    }
 
     public void Idle()
     {
-        animator.SetBool("is Walk", false);
-    }
-
-    public void DefaultAttack()
-    {
-
+        anim.SetTrigger("Idle");
     }
 
     public void Walk()
     {
-        float x = Input.GetAxis("Horizontal");
-        float moveHori = x * moveSpeed * Time.deltaTime;
-        transform.position += new Vector3(moveHori, 0, 0);
+        if (anim == null)
+            return;
 
-        animator.SetBool("isWalk",true);
-    }
+        Vector3 dir = (target.position - transform.position).normalized;
+        transform.position += dir * moveSpeed * Time.deltaTime;
 
-    public void Death()
-    {
-
-    }
-    public void Hit(float damage)
-    {
-
+        anim.SetBool("isWalk", true);
     }
 }
