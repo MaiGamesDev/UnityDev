@@ -45,7 +45,7 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
     [SerializeField] private AudioClip sndDie;
     #endregion
 
-    // --------------------------------------------------------------------
+    #region Default
 
     void Awake()
     {
@@ -103,8 +103,19 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
         transform.localScale = scale;
     }
 
-    // --------------------------------------------------------------------
+    private void DisableSelf()
+    {
+        gameObject.SetActive(false);
+    }
 
+    private void ChangeState(Boss1State newState)
+    {
+        if (bossState != newState)
+            bossState = newState;
+    }
+    #endregion
+
+    #region Move
 
     IEnumerator FindPlayerRoutine()
     {
@@ -205,9 +216,9 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
 
         moveDir = direction;
     }
+    #endregion
 
-    // Attack
-    // ----------------------------------------------------------------------------------------
+    #region Attack
 
     public void DefaultAttack()
     {
@@ -270,10 +281,9 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
                 player.TakeDamage(attackDamage);
         }
     }
+    #endregion
 
-
-    // Hit
-    // ----------------------------------------------------------------------------------------
+    #region Hit
 
     public void Hit(float damage)
     {
@@ -320,14 +330,5 @@ public class BossBringer : MonoBehaviour, IBossDefaultPattern
         Invoke("DisableSelf", 1f); // 1초 뒤 실행        
     }
 
-    private void DisableSelf()
-    {
-        gameObject.SetActive(false);
-    }
-
-    private void ChangeState(Boss1State newState)
-    {
-        if (bossState != newState)
-            bossState = newState;
-    }
+    #endregion    
 }

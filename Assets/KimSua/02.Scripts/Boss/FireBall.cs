@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class FireBall : MonoBehaviour
@@ -9,6 +10,8 @@ public class FireBall : MonoBehaviour
 
     private float minX = -9f;
     private float maxX = 9f;
+
+    private bool isFireSpawn;
 
     void Start()
     {
@@ -26,14 +29,25 @@ public class FireBall : MonoBehaviour
         }
     }
 
-    public void Attack(float fireDamage, int dir)
+    public void Attack(float damage, int moveDir)
     {
+        StartCoroutine(AttackRoutine(damage, moveDir));
+    }
+
+    IEnumerator AttackRoutine(float fireDamage, int dir)
+    {
+        isFireSpawn = true;
+
         damage = fireDamage;
         moveDir = dir;
 
         Vector3 scale = transform.localScale;
         scale.x = dir > 0 ? 1 : -1;
         transform.localScale = scale;
+
+        yield return new WaitForSeconds(1f);
+
+        isFireSpawn = false;
     }
 
     public void OnTriggerEnter2D(Collider2D other)
