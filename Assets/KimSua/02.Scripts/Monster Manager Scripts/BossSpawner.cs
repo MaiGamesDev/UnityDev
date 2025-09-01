@@ -8,13 +8,9 @@ public class BossSpawner : MonoBehaviour
     [SerializeField] private Transform bossSpawn;
     public List<GameObject> bossPrefabs = new List<GameObject>();
 
-    IEnumerator Start()
+    void Start()
     {
-        for (int i = 0; i < 1; i++)
-        {
-            SpawnBoss();
-        }
-        yield return new WaitForSeconds(0.5f);
+        SpawnBoss();
     }
 
     private void SpawnBoss()
