@@ -45,6 +45,7 @@ public abstract class MonsterManager : MonoBehaviour
     [SerializeField] private AudioClip sndHit;
     [SerializeField] private AudioClip sndDie;
 
+    private MonsterPool monsterPool;
     public abstract void Init();
     #endregion
     // ----------------------------------------------------------------------------------------
@@ -61,6 +62,8 @@ public abstract class MonsterManager : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
         canFly = gameObject.CompareTag("Fly");
+
+        monsterPool = FindFirstObjectByType<MonsterPool>();
     }
 
     void Start()
@@ -297,7 +300,8 @@ public abstract class MonsterManager : MonoBehaviour
             monsterRb.gravityScale = 1f;
 
         item.DropItem(transform.position);
-        gameObject.SetActive(false);
+
+        monsterPool.ReturnPool(gameObject);
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");
     }
 

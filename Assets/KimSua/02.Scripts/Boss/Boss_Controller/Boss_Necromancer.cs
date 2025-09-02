@@ -5,6 +5,7 @@ public class Boss_Necromancer : BossController
 {
     [SerializeField] private GameObject firePrefab;
     [SerializeField] private GameObject firePrefab2;
+    [SerializeField] private GameObject evilWizard;
     [HideInInspector] public float fireDamage;
 
     protected override void SetupStrategies()
@@ -22,6 +23,14 @@ public class Boss_Necromancer : BossController
         traceDist = 8f;
         attackDist = 6f;
         attackCooldown = 2f;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y, 0);
+        Instantiate(evilWizard, spawnPos, Quaternion.identity);
     }
 
     void OnTriggerEnter2D(Collider2D other)

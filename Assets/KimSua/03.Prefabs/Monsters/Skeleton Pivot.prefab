@@ -191,13 +191,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateType: 0
+  attackHitbox: {fileID: 5645418471396783561}
+  isAttacking: 0
   moveSpeed: 1.5
-  monsterHp: 10
   traceRange: 5
   attackRange: 3
   attackDamage: 3
-  isAttacking: 0
-  attackHitbox: {fileID: 5645418471396783561}
+  monsterHp: 10
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
   sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
 --- !u!1 &5645418471396783561
@@ -358,6 +358,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7845290738687028838}
+  - component: {fileID: -8503678021687411382}
   m_Layer: 9
   m_Name: Skeleton Pivot
   m_TagString: Untagged
@@ -381,3 +382,15 @@ Transform:
   - {fileID: 2109856122883592743}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8503678021687411382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7851126675638324410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa008e3a6459db342bed055bdcc0b83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

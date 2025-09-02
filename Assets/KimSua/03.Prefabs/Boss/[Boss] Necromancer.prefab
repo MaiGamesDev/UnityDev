@@ -205,4 +205,5 @@ MonoBehaviour:
   isFacingRight: 0
   firePrefab: {fileID: 6588361618706121397, guid: d10bf13f2866ee9419576b21555a4d88, type: 3}
   firePrefab2: {fileID: 283513770709589963, guid: c9f7b12f9172156498d97874b8535de9, type: 3}
+  evilWizard: {fileID: 5898840420712833869, guid: 2fb6c414598ef354aad910237e09d63f, type: 3}
   fireDamage: 0
