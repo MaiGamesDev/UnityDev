@@ -74,4 +74,4 @@ MonoBehaviour:
   - {fileID: 5175649836090931880, guid: 165393d968197f24997823de15d3b171, type: 3}
   - {fileID: 8797413788503479989, guid: fd414c58bcecd6e47b2591a508156127, type: 3}
   parent: {fileID: 7211332613623202523}
-  initialCount: 50
+  initialCount: 10
