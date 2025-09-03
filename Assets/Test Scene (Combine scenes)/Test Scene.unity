@@ -1307,6 +1307,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3933526872409426527, guid: e92547602948042498c0105937129873, type: 3}
+      propertyPath: m_Size.x
+      value: 3.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933526872409426527, guid: e92547602948042498c0105937129873, type: 3}
+      propertyPath: m_Size.y
+      value: 3.95
+      objectReference: {fileID: 0}
     - target: {fileID: 4812473804786306983, guid: e92547602948042498c0105937129873, type: 3}
       propertyPath: target
       value: 
@@ -1318,6 +1326,10 @@ PrefabInstance:
     - target: {fileID: 4812473804786306983, guid: e92547602948042498c0105937129873, type: 3}
       propertyPath: DemonState
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7280622181815430008, guid: e92547602948042498c0105937129873, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
