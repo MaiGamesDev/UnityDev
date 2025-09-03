@@ -11,8 +11,6 @@ public class FireBall : MonoBehaviour
     private float minX = -9f;
     private float maxX = 9f;
 
-    private bool isFireSpawn;
-
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -36,8 +34,6 @@ public class FireBall : MonoBehaviour
 
     IEnumerator AttackRoutine(float fireDamage, int dir)
     {
-        isFireSpawn = true;
-
         damage = fireDamage;
         moveDir = dir;
 
@@ -46,8 +42,6 @@ public class FireBall : MonoBehaviour
         transform.localScale = scale;
 
         yield return new WaitForSeconds(1f);
-
-        isFireSpawn = false;
     }
 
     public void OnTriggerEnter2D(Collider2D other)
