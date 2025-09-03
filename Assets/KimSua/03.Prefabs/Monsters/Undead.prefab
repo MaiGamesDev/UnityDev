@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 6078860839868320218}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8041, y: 1.9544, z: 0}
-  m_LocalScale: {x: 1.6838055, y: 2.9170685, z: 1}
+  m_LocalPosition: {x: 0.0967, y: 1.7078, z: 0}
+  m_LocalScale: {x: 3.0985997, y: 3.4103003, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4920836821881090617}
@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 4457024203426019463}
   - component: {fileID: 1028320074704001052}
   - component: {fileID: 697730604208817531}
+  - component: {fileID: 6842462865240851149}
   m_Layer: 9
   m_Name: Undead
   m_TagString: Fly
@@ -280,13 +281,13 @@ MonoBehaviour:
   isAttacking: 0
   moveSpeed: 1
   traceRange: 5
-  attackRange: 2
+  attackRange: 1.2
   attackDamage: 6
   monsterHp: 20
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
   sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
   summonPrefab: {fileID: 4655815063721653261, guid: fb6883c73db49d5448d30382b97c9471, type: 3}
-  summonSpawnPoint: {fileID: 0}
+  summonSpawnPoint: {fileID: 4920836821881090617}
 --- !u!70 &1028320074704001052
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -351,3 +352,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6842462865240851149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8797413788503479989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa008e3a6459db342bed055bdcc0b83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

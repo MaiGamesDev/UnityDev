@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 6548469791253870321}
   - component: {fileID: 5788987378839247718}
   - component: {fileID: 1272875168160430723}
+  - component: {fileID: 2320727375541424347}
   m_Layer: 9
   m_Name: Flying Eye
   m_TagString: Fly
@@ -339,12 +340,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571380192442b1e4a99298d8481fe75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateType: 0
+  attackHitbox: {fileID: 2710430203552141271}
+  isAttacking: 0
   moveSpeed: 3
-  monsterHp: 10
   traceRange: 10
   attackRange: 2
   attackDamage: 3
-  isAttacking: 0
-  attackHitbox: {fileID: 2710430203552141271}
+  monsterHp: 10
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
   sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
+--- !u!114 &2320727375541424347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3648604802589235218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa008e3a6459db342bed055bdcc0b83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

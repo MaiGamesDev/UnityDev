@@ -1236,8 +1236,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Knight
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2340781844663388706, guid: 894013562d2e41b4d93d58235a317813, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

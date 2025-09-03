@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7211332613623202523}
   - component: {fileID: 8250590786639912341}
+  - component: {fileID: 2316670694819921618}
   m_Layer: 0
   m_Name: Monster Spawner
   m_TagString: Untagged
@@ -44,19 +45,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8410af3d59197254288642d560d38f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsters:
-  - {fileID: 3648604802589235218, guid: 0799d8ddeb6f53e4e991fae1fc00a5d1, type: 3}
-  - {fileID: 218387715862983509, guid: a0600f599ebe43f4b817b44f8f6b9117, type: 3}
-  - {fileID: 5672142484564556630, guid: 6266c01b7a5a4ee4c8aafecb5522a82f, type: 3}
-  - {fileID: 7851126675638324410, guid: 43942a60e33803d4693fb3b0ffd044c9, type: 3}
-  - {fileID: 4011102508729867659, guid: 5950952147bd2094dae121e67f9cdabc, type: 3}
-  - {fileID: 533556856602254599, guid: d59f16e4400a7f346b37e73389549880, type: 3}
-  - {fileID: 5175649836090931880, guid: 165393d968197f24997823de15d3b171, type: 3}
+  pool: {fileID: 2316670694819921618}
+  minDistance: 3
+--- !u!114 &2316670694819921618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290028824045682903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d9aaed398545cc4da6b089f8d5b6bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPrefabs:
   - {fileID: 6624444882702849261, guid: a2a60ebc48121e047a047e3c39eba493, type: 3}
-  - {fileID: 7760327717815237464, guid: c3351174b7b842746834cb7a55542ad9, type: 3}
   - {fileID: 3417234555275004706, guid: 8cf66aa0174a5cf4e81c9310c7beee92, type: 3}
   - {fileID: 724962135598635749, guid: c10841383f61f2b4191f7fd6be6660da, type: 3}
   - {fileID: 1701621865504031151, guid: 26af4aae178da494ab6fe44a4aa5da25, type: 3}
+  - {fileID: 4011102508729867659, guid: 5950952147bd2094dae121e67f9cdabc, type: 3}
+  - {fileID: 3648604802589235218, guid: 0799d8ddeb6f53e4e991fae1fc00a5d1, type: 3}
+  - {fileID: 218387715862983509, guid: a0600f599ebe43f4b817b44f8f6b9117, type: 3}
+  - {fileID: 5672142484564556630, guid: 6266c01b7a5a4ee4c8aafecb5522a82f, type: 3}
+  - {fileID: 533556856602254599, guid: d59f16e4400a7f346b37e73389549880, type: 3}
+  - {fileID: 7851126675638324410, guid: 43942a60e33803d4693fb3b0ffd044c9, type: 3}
+  - {fileID: 7760327717815237464, guid: c3351174b7b842746834cb7a55542ad9, type: 3}
+  - {fileID: 5175649836090931880, guid: 165393d968197f24997823de15d3b171, type: 3}
   - {fileID: 8797413788503479989, guid: fd414c58bcecd6e47b2591a508156127, type: 3}
-  monster: {fileID: 7211332613623202523}
-  minDistance: 3
+  - {fileID: 2587029465628571382, guid: 808ec5e639f924843a9f32a8398df51f, type: 3}
+  parent: {fileID: 7211332613623202523}
+  initialCount: 10

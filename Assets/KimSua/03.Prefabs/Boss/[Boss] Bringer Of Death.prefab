@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a5422212f1eefe4a8625c285f4a56c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossBringer: {fileID: 4739460499155020827}
+  bossBringer: {fileID: 8855150534864655990}
 --- !u!1 &982502948131388191
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,9 +159,9 @@ GameObject:
   - component: {fileID: 9222121827996766011}
   - component: {fileID: 598138055409740977}
   - component: {fileID: 5546371699038196575}
-  - component: {fileID: 4739460499155020827}
   - component: {fileID: 2165405241457611117}
   - component: {fileID: 5612474021074337649}
+  - component: {fileID: 8855150534864655990}
   m_Layer: 11
   m_Name: '[Boss] Bringer Of Death'
   m_TagString: Untagged
@@ -262,27 +262,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4739460499155020827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 982502948131388191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98eb6c93c9881149aa461c7e17d91f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossState: 0
-  spellPrefab: {fileID: 6557012180414985569, guid: 19b79eef0a89fc8468e3c0599284a78d, type: 3}
-  target: {fileID: 0}
-  currHp: 0
-  spellDamage: 0
-  traceDist: 8
-  attackDist: 3
-  sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
-  sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
 --- !u!50 &2165405241457611117
 Rigidbody2D:
   serializedVersion: 5
@@ -347,3 +326,31 @@ CapsuleCollider2D:
   m_Offset: {x: 0.2, y: 1.18}
   m_Size: {x: 1.25, y: 2.25}
   m_Direction: 0
+--- !u!114 &8855150534864655990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982502948131388191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8046405a6fdfaf4ebe410c0fddb05fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currHp: 0
+  traceDist: 8
+  attackDist: 3
+  attackCooldown: 3
+  sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
+  sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
+  target: {fileID: 0}
+  targetDist: 0
+  moveDir: 0
+  timer: 0
+  lastAttackTime: 0
+  isMove: 0
+  isAttack: 0
+  isFacingRight: 0
+  spellPrefab: {fileID: 6557012180414985569, guid: 19b79eef0a89fc8468e3c0599284a78d, type: 3}
+  spellDamage: 0

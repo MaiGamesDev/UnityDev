@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossSpawn: {fileID: 7594939995399859321}
   bossPrefabs:
-  - {fileID: 982502948131388191, guid: 784b0e2819753d24f8fb732bc9fb27c3, type: 3}
-  - {fileID: 5045184512509385096, guid: f866ab35504ffe143aedd33583a8f30a, type: 3}
+  - {fileID: 982502948131388191, guid: 1f088acac4ca8fa43b3b079e884244fa, type: 3}
+  - {fileID: 5045184512509385096, guid: cdbf93aafba4a854fae08c7eb081f4b3, type: 3}
+  - {fileID: 3745024328246613479, guid: 040b7a571ffa7ff4ea5b9ed17a398328, type: 3}

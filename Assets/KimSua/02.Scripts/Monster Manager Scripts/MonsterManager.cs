@@ -1,10 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static BossBringer;
-using static UnityEditor.PlayerSettings;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public abstract class MonsterManager : MonoBehaviour
 {
@@ -50,6 +45,7 @@ public abstract class MonsterManager : MonoBehaviour
     [SerializeField] private AudioClip sndHit;
     [SerializeField] private AudioClip sndDie;
 
+    private MonsterPool monsterPool;
     public abstract void Init();
     #endregion
     // ----------------------------------------------------------------------------------------
@@ -66,11 +62,14 @@ public abstract class MonsterManager : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
         canFly = gameObject.CompareTag("Fly");
+
+        monsterPool = FindFirstObjectByType<MonsterPool>();
     }
 
     void Start()
     {
         Init();
+        stateType = StateType.Idle;
         StartCoroutine(FindPlayerRoutine());
     }
 
@@ -274,11 +273,11 @@ public abstract class MonsterManager : MonoBehaviour
         }
 
         monsterRb.linearVelocity = Vector2.zero;
-        animator.SetTrigger("Hit");
-        
-        yield return new WaitForSeconds(GetAnimLegnth("Hit") + 0.5f);
+        animator.SetTrigger("Hit");        
+        yield return new WaitForSeconds(GetAnimLegnth("Hit") + 0.7f);
 
-        ChangeStateType(StateType.Idle);
+        ChangeStateType(StateType.Move);
+        animator.SetBool("isRun", true);
         isMove = true;
     }
 
@@ -302,7 +301,8 @@ public abstract class MonsterManager : MonoBehaviour
             monsterRb.gravityScale = 1f;
 
         item.DropItem(transform.position);
-        gameObject.SetActive(false);
+
+        monsterPool.ReturnPool(gameObject);
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");
     }
 
@@ -332,7 +332,7 @@ public abstract class MonsterManager : MonoBehaviour
     {
         isAttacking = true;
         isMove = false;
-        animator.SetBool("isRun", true);
+        animator.SetBool("isRun", false);
         yield return null;
 
         monsterRb.linearVelocity = Vector2.zero;
@@ -340,12 +340,11 @@ public abstract class MonsterManager : MonoBehaviour
         string randomAttack = attackAnimations[Random.Range(0, attackAnimations.Length)];
         animator.SetTrigger(randomAttack);
         yield return new WaitForSeconds(GetAnimLegnth(randomAttack));
+        ChangeStateType(StateType.Trace);
 
         isAttacking = false;
         isMove = true;
-
-        animator.SetBool("isRun", false);
-        ChangeStateType(StateType.Idle);
+        animator.SetBool("isRun", true);
     }
 
     public abstract float AttackDamage();

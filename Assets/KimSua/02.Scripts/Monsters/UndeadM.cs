@@ -25,7 +25,7 @@ public class UndeadM : MonsterManager
 
         if (summonPrefab != null)
         {
-            int summonCount = Random.Range(2, 4);
+            int summonCount = Random.Range(1, 4);
             Transform player = GameObject.FindGameObjectWithTag("Player").transform;
 
             for (int i = 0; i < summonCount; i++)
