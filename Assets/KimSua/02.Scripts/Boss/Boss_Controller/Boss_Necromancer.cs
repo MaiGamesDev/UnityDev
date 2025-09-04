@@ -78,7 +78,7 @@ public class Boss_Necromancer : BossController
 
         fire2.GetComponent<NecroFire>().Setup(fireDamage);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.9f);
 
         Destroy(fire2);
     }

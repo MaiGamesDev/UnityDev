@@ -42,8 +42,8 @@ public abstract class MonsterManager : MonoBehaviour
     private Vector2 moveVector;
     private float timer;
 
-    [SerializeField] private AudioClip sndHit;
-    [SerializeField] private AudioClip sndDie;
+    [SerializeField] protected AudioClip sndHit;
+    [SerializeField] protected AudioClip sndDie;
 
     private MonsterPool monsterPool;
     public abstract void Init();
@@ -287,7 +287,7 @@ public abstract class MonsterManager : MonoBehaviour
         StartCoroutine(DeathRoutine());
     }
 
-    protected IEnumerator DeathRoutine()
+    protected virtual IEnumerator DeathRoutine()
     {
         SoundManager.Instance.PlaySound(sndDie); // Die 사운드
 
@@ -300,7 +300,7 @@ public abstract class MonsterManager : MonoBehaviour
         if (CompareTag("Fly"))
             monsterRb.gravityScale = 1f;
 
-        item.DropItem(transform.position);
+        item.DropItem(transform.position, gameObject);
 
         monsterPool.ReturnPool(gameObject);
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");
@@ -350,7 +350,7 @@ public abstract class MonsterManager : MonoBehaviour
     public abstract float AttackDamage();
     #endregion
 
-    float GetAnimLegnth(string stateName)
+    public float GetAnimLegnth(string stateName)
     {
         foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
         {

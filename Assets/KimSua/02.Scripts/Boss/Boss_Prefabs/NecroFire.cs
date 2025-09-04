@@ -25,7 +25,7 @@ public class NecroFire : MonoBehaviour
         }
     }
 
-    public void DestroySpell()
+    public void DestroyFire()
     {
         Destroy(gameObject);
     }

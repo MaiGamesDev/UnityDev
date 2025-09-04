@@ -213,7 +213,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
         bossColl.enabled = false;
         bossRb.gravityScale = 0f;
 
-        item.DropItem(transform.position);
+        item.DropItem(transform.position, gameObject);
 
         Destroy(gameObject, 1f);
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");
