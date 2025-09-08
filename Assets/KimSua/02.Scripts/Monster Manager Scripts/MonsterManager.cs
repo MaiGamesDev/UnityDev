@@ -244,7 +244,7 @@ public abstract class MonsterManager : MonoBehaviour
             moveDir = dirToPlayer.x;
         }
         else
-        {
+        {            
             moveVector = new Vector2(moveDir, 0);
             moveDir = dirToPlayer.x > 0 ? 1 : -1;
         }
@@ -312,12 +312,14 @@ public abstract class MonsterManager : MonoBehaviour
     #region Attack
     public void OnTriggerEnter2D(Collider2D other)
     {
+        if (this.CompareTag("Fly")) return;
+
         if (other.CompareTag("Player"))
         {
             var player = other.GetComponent<KnightController>();
 
             if (!isPlayerDead)
-                player.TakeDamage(AttackDamage());
+                player.TakeDamage(AttackDamage());            
         }
     }
 

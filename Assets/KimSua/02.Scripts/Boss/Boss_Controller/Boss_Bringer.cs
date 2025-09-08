@@ -19,7 +19,7 @@ public class Boss_Bringer : BossController
         moveSpeed = 1f;
         traceDist = 8f;
         attackDist = 5f;
-        attackCooldown = 3f;
+        attackCooldown = 2f;
     }
 
     void OnTriggerEnter2D(Collider2D other)

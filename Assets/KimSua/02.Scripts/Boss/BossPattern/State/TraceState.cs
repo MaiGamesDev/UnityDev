@@ -20,6 +20,13 @@ public class TraceState : IBossState
             boss.Flip();
 
         boss.moveDir = direction;
+
+        // Trace 중 공격 조건 체크
+        if (boss.targetDist <= boss.attackDist && Time.time - boss.lastAttackTime >= boss.attackCooldown)
+        {
+            boss.lastAttackTime = Time.time;
+            boss.ChangeState<AttackState>();
+        }
     }
 
     public void StateExit(BossController boss) { }

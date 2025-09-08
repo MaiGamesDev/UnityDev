@@ -22,7 +22,7 @@ public class Boss_Necromancer : BossController
         moveSpeed = 2f;
         traceDist = 8f;
         attackDist = 6f;
-        attackCooldown = 2f;
+        attackCooldown = 5f;
     }
 
     protected override void Start()

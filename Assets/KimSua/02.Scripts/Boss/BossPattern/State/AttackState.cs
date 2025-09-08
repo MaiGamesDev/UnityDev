@@ -13,7 +13,7 @@ public class AttackState : IBossState
 
     public virtual void StateExecute(BossController boss)
     {
-
+        boss.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
     }
 
     public void StateExit(BossController boss)
