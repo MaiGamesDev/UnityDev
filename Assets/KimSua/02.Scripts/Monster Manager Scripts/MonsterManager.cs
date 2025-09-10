@@ -45,7 +45,6 @@ public abstract class MonsterManager : MonoBehaviour
     [SerializeField] protected AudioClip sndHit;
     [SerializeField] protected AudioClip sndDie;
 
-    private MonsterPool monsterPool;
     public abstract void Init();
     #endregion
     // ----------------------------------------------------------------------------------------
@@ -62,8 +61,6 @@ public abstract class MonsterManager : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
         canFly = gameObject.CompareTag("Fly");
-
-        monsterPool = FindFirstObjectByType<MonsterPool>();
     }
 
     void Start()
@@ -129,15 +126,15 @@ public abstract class MonsterManager : MonoBehaviour
 
     private void CheckBoundary()
     {
-        if (transform.position.x >= 8f)
+        if (transform.position.x >= 22f)
         {
-            transform.position = new Vector3(8f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(22f, transform.position.y, transform.position.z);
             moveDir = -1;
             if (isFacingRight) Flip();
         }
-        else if (transform.position.x <= -8f)
+        else if (transform.position.x <= -8.2f)
         {
-            transform.position = new Vector3(-8f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-8.2f, transform.position.y, transform.position.z);
             moveDir = 1;
             if (!isFacingRight) Flip();
         }
@@ -244,7 +241,7 @@ public abstract class MonsterManager : MonoBehaviour
             moveDir = dirToPlayer.x;
         }
         else
-        {            
+        {
             moveVector = new Vector2(moveDir, 0);
             moveDir = dirToPlayer.x > 0 ? 1 : -1;
         }
@@ -273,7 +270,7 @@ public abstract class MonsterManager : MonoBehaviour
         }
 
         monsterRb.linearVelocity = Vector2.zero;
-        animator.SetTrigger("Hit");        
+        animator.SetTrigger("Hit");
         yield return new WaitForSeconds(GetAnimLegnth("Hit") + 0.7f);
 
         ChangeStateType(StateType.Move);
@@ -294,16 +291,20 @@ public abstract class MonsterManager : MonoBehaviour
         stateType = StateType.Death;
         isDead = true;
 
-        animator.SetTrigger("Death");
-        yield return new WaitForSeconds(GetAnimLegnth("Death") - 0.5f);
+        // StopAllCoroutines();
+        if (item != null) item.DropItem(transform.position, gameObject);
+        gameObject.layer = LayerMask.NameToLayer("DeadMonster");
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Death");
+            yield return new WaitForSeconds(GetAnimLegnth("Death") - 0.5f);
+        }
 
         if (CompareTag("Fly"))
             monsterRb.gravityScale = 1f;
 
-        item.DropItem(transform.position, gameObject);
-
-        monsterPool.ReturnPool(gameObject);
-        gameObject.layer = LayerMask.NameToLayer("DeadMonster");
+        Destroy(gameObject);
     }
 
 
@@ -319,7 +320,7 @@ public abstract class MonsterManager : MonoBehaviour
             var player = other.GetComponent<KnightController>();
 
             if (!isPlayerDead)
-                player.TakeDamage(AttackDamage());            
+                player.TakeDamage(AttackDamage());
         }
     }
 

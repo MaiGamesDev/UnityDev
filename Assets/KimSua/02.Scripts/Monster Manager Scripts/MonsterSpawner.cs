@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    [SerializeField] private ObjectPoolQueue pool;
-    [SerializeField] private float minDistance = 3f;
-
+    public List<GameObject> monsters = new List<GameObject>();
+    [SerializeField] private Transform monster;
     private Transform player;
+    [SerializeField] private float minDistance = 3f;
 
     void Awake()
     {
@@ -24,14 +24,28 @@ public class MonsterSpawner : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
-    void SpawnMonster() // 풀에서 꺼내는 역할
+    void SpawnMonster()
     {
-        float randomX = Random.Range(-2f, 9f);
-        Vector3 createPos = new Vector3(randomX, 0f, 0);
+        var randomIndex = Random.Range(0, monsters.Count);
+        GameObject prefab = monsters[randomIndex];
+        float randomX = Random.Range(-2f, 18f);
+        float spawnY;
+
+        if (prefab.CompareTag("Fly"))
+        {
+            spawnY = 0f;
+        }
+        else
+        {
+            spawnY = -3f;
+        }
+
+        Vector3 createPos = new Vector3(randomX, spawnY, 0);
 
         if (Vector2.Distance(player.position, createPos) >= minDistance)
         {
-            pool.DequeueObject(createPos, Quaternion.identity);
+            Instantiate(prefab, createPos, Quaternion.identity, monster);
+            return;
         }
     }
 }

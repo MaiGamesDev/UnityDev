@@ -3,7 +3,7 @@ using UnityEngine;
 public class MoveStrategy : IBossMoveStrategy
 {
     private float minX = -8f;
-    private float maxX = 8f;
+    private float maxX = 22f;
 
     public void Move(BossController boss, Vector3 direction)
     {
