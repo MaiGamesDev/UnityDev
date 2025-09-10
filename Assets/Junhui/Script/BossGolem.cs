@@ -34,6 +34,8 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
 
     void Start()
     {
+        transform.position = new Vector2(6,-3);
+
         currHp = hp;
         target = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
