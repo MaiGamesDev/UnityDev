@@ -17,7 +17,9 @@ public class ItemDropSpawner : MonoBehaviour
 
     public void DropItem(Vector3 dropPos, GameObject owner)
     {
-        string layerName = LayerMask.LayerToName(owner.layer);        
+        Debug.Log($"DropItem 호출됨 - 위치: {dropPos}, 오너: {owner.name}");
+        string layerName = LayerMask.LayerToName(owner.layer);
+        Debug.Log($"오너 레이어: {layerName} (레이어 번호: {owner.layer})");
 
         int dropCount = 1;
 
@@ -30,11 +32,21 @@ public class ItemDropSpawner : MonoBehaviour
             dropCount = Random.Range(1, 4);
         }
 
+        Debug.Log($"드롭할 아이템 개수: {dropCount}");
+
+        // coins 배열 상태 확인
+        if (coins == null || coins.Length == 0)
+        {
+            Debug.LogError("coins 배열이 null이거나 비어있습니다!");
+            return;
+        }
+
         for (int i = 0; i < dropCount; i++)
         {
             var randomIndex = Random.Range(0, coins.Length);
 
             GameObject item = Instantiate(coins[randomIndex], dropPos, Quaternion.identity);
+            Debug.Log($"아이템 생성됨: {item.name}");
             Rigidbody2D itemRb = item.GetComponent<Rigidbody2D>();
 
             float angle = Random.Range(0f, 360f);

@@ -611,6 +611,7 @@ MonoBehaviour:
   NoticeText: {fileID: 9164052223834215547}
   HpEnemy: {fileID: 7685622054775899012}
   HpEnemyParent: {fileID: 2116749595020351135}
+  uiCanvas: {fileID: 6148505324451521400}
 --- !u!1 &6443203779609576978
 GameObject:
   m_ObjectHideFlags: 0

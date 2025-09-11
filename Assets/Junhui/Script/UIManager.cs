@@ -6,13 +6,11 @@ using System.Collections;
 public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
-
-
     public static UIManager Instance
     {
         get
         {
-            if (instance == null) instance = new UIManager();
+            if (instance == null) instance = FindFirstObjectByType<UIManager>();
             return instance;
         }
     }
@@ -24,9 +22,10 @@ public class UIManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (instance != this)
         {
             Destroy(gameObject);
+            return;
         }
     }
 
@@ -36,10 +35,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI NoticeText;
     public RawImage HpEnemy;
     public GameObject HpEnemyParent;
+    [SerializeField] private Canvas uiCanvas;
 
     void OnEnable()
     {
         Init();
+        ShowUI();
     }
 
     private void Start()
@@ -115,6 +116,17 @@ public class UIManager : MonoBehaviour
         // »ç¸Á
 
         ShowNotice("Á×¾î¹ö·È´Ù...");
+    }
 
+    public void HideUI()
+    {
+        if (uiCanvas != null)
+            uiCanvas.gameObject.SetActive(false);
+    }
+
+    public void ShowUI()
+    {
+        if (uiCanvas != null)
+            uiCanvas.gameObject.SetActive(true);
     }
 }

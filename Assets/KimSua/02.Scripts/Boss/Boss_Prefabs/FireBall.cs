@@ -9,7 +9,7 @@ public class FireBall : MonoBehaviour
     private int moveDir = -1;
 
     private float minX = -9f;
-    private float maxX = 9f;
+    private float maxX = 23f;
 
     void Start()
     {

@@ -133,7 +133,6 @@ public class BossGolem : MonoBehaviour, IBossDefaultPattern
 
     public void LeftRush()
     {
-        Debug.Log("left");
         transform.localScale = new Vector3(-1, 1, 1);
         Vector2 pos = new Vector2(-6, -3);
         transform.position = Vector2.MoveTowards(transform.position, pos, Time.deltaTime * rushSpeed);

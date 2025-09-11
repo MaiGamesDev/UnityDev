@@ -291,8 +291,11 @@ public abstract class MonsterManager : MonoBehaviour
         stateType = StateType.Death;
         isDead = true;
 
-        // StopAllCoroutines();
-        if (item != null) item.DropItem(transform.position, gameObject);
+        // GameManager를 통해 ItemDropSpawner 접근
+        if (GameManager.Instance != null && GameManager.Instance.ItemDropSpawner != null)
+        {
+            GameManager.Instance.ItemDropSpawner.DropItem(transform.position, gameObject);            
+        }
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");
 
         if (animator != null)
@@ -306,8 +309,6 @@ public abstract class MonsterManager : MonoBehaviour
 
         Destroy(gameObject);
     }
-
-
     #endregion
 
     #region Attack

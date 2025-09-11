@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateType: 0
-  attackHitbox: {fileID: 0}
+  attackHitbox: {fileID: 4931545151377804102}
   isAttacking: 0
   moveSpeed: 1
   traceRange: 5
