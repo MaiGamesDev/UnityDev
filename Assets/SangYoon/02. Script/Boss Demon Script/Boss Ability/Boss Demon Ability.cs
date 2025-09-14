@@ -4,13 +4,13 @@ namespace BossAllStatus
 {
     public class BossDemonAbility : MonoBehaviour
     {
-        [SerializeField] private float HP = 500f;
+        public float hp = 500f;
 
         [Header("Attack & Skills Damage")]
-        [SerializeField] private float AttackDamage = 10f;
-        [SerializeField] private float SmashDamage = 30f;
-        [SerializeField] private float FireBreathDamage = 20f;
-        [SerializeField] private float FireBallDamage = 50f;
+        public readonly float attackDamage = 10f;
+        public readonly float smashDamage = 30f;
+        public readonly float fireBreathDamage = 20f;
+        public readonly float fireBallDamage = 50f;
 
     }
 
@@ -18,16 +18,22 @@ namespace BossAllStatus
     {
 
         [Header("Skill Cooldowns")]
-        [SerializeField] private float SmashCooldown = 6;
-        [SerializeField] private float FireBreathCooldown = 10;
-        [SerializeField] private float FireBallCooldown = 17;
+        public readonly float smashCooldown = 6;
+        public readonly float fireBreathCooldown = 10;
+        public readonly float fireBallCooldown = 17;
 
         [Header("Skill Cast Times")]
-        [SerializeField] private float SmashCastTime = 1.05f;
-        [SerializeField] private float FireBreathCastTime = 1.07f;
-        [SerializeField] private float FireBallCastTime = 9f;
-        
-        [SerializeField] private float moveSpeed = 1f;
+        public readonly float smashCastTime = 1.05f;
+        public readonly float fireBreathCastTime = 1.07f;
+        public readonly float fireBallCastTime = 9f;
+
+        [Header("Skill Range")]
+        public readonly float smashRange = 1.05f;
+        public readonly float fireBreathRange = 1.07f;
+        public readonly float fireBallRange = 9f;
+
+        public readonly float moveSpeed = 1f;
+
 
     }
 
@@ -43,12 +49,6 @@ namespace BossAllStatus
             {
 
             }
-            return;
-        }
-
-        public void CastSkill()
-        {
-
         }
     }
 }

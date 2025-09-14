@@ -1,11 +1,12 @@
 using UnityEngine;
-
+using BossAllStatus;
 namespace DemonBoss
 {
     public class AttackState : IDemonState
     {
-        public readonly float attackDemage = 10f; 
         private BossStateMachine bsm;
+        private BossDemonAbility demonAbil;
+
         public AttackState(BossStateMachine bsm)
         {
             this.bsm = bsm;
@@ -21,17 +22,28 @@ namespace DemonBoss
         {
 
             bsm.LookTarget();
+
+            //
             float dist = Vector2.Distance(bsm.transform.position, bsm.target.position);
 
             if (dist > bsm.attackDist)
             {
                 bsm.ChangeState<IdleState>();
+                BossAttack("Player", demonAbil.attackDamage);
             }
         }
 
         public void OnExit()
         {
 
+        }
+
+        public void BossAttack(Collider2D other, float damage)
+        {
+            if (other.CompareTag("Player"))
+            {
+                GameManager.Instance.hp -= damage;
+            }
         }
     }
 }

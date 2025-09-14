@@ -20,14 +20,16 @@ namespace DemonBoss
             bsm.anim.SetTrigger("Death");
         }
 
+        public void OnState()
+        {
+            bsm.LookTarget();
+
+            // 상호작용이 안되도록 하면 될듯?
+        }
         public void OnExit()
         {
 
         }
 
-        public void OnState()
-        {
-
-        }
     }
 }

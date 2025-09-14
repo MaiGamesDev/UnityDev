@@ -1,3 +1,4 @@
+using BossAllStatus;
 using UnityEngine;
 
 namespace DemonBoss
@@ -5,6 +6,8 @@ namespace DemonBoss
     public class HitState : IDemonState
     {
         private BossStateMachine bsm;
+        private KnightController knight;
+        private BossDemonAbility demonAbil;
 
         public HitState(BossStateMachine bsm)
         {
@@ -19,13 +22,26 @@ namespace DemonBoss
 
         public void OnState()
         {
-            //if (KnightController.)
-            bsm.anim.SetBool("isHIt", true);
-            // 기사 캐릭터 공격했을 때 메서드 들고와서 HP깍아야함
+            bsm.LookTarget();
+            TakeDamage(knight.defaultDamage);
         }
         public void OnExit()
         {
 
+        }
+
+        private void TakeDamage(float damage)
+        {
+            if (demonAbil.hp > 0)
+            {
+                bsm.anim.SetBool("isHIt", true);
+                demonAbil.hp -= damage;
+            }
+            else
+            {
+                bsm.anim.SetBool("isHIt", false);
+                bsm.ChangeState<DeathState>();
+            }
         }
     }
 }

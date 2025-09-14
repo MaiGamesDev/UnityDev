@@ -23,6 +23,7 @@ namespace DemonBoss
 
         public void OnState()
         {
+            bsm.LookTarget();
 
         }
     }
