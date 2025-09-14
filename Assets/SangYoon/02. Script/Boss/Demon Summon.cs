@@ -16,16 +16,16 @@ public class DemonSummon : MonoBehaviour
     }
     private IEnumerator SummonTriggerEnterRoutine(Collider2D other)
     {
-        bossDemon.isIdle = false;
-        bossDemon.isWalk = false;
-        bossDemon.isAttack = false;
+        bossDemon.isIdle = true;
+        bossDemon.anim.SetBool("isWalk", false);
+        bossDemon.anim.SetBool("isAttack", false);
 
         if (other.CompareTag("Player"))
         {
             bossDemon.anim.enabled = true;
             yield return new WaitForSeconds(2f);
+            bossDemon.isIdle = false;
 
-            bossDemon.isIdle = true;
             bossDemon.bossState = BossDemon.BossState.Idle;
             gameObject.SetActive(false);
         }

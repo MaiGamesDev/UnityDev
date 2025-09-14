@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using Unity.VisualScripting;
@@ -6,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BossDemon : MonoBehaviour, IBossDefaultPattern
 {
-    public enum BossState { Idle, Walk, DefaultAttack, }
+    public enum BossState { Idle, Walk, DefaultAttack, Hit, Death}
     public BossState bossState;
 
     public float hp { get; set; } = 500f;
@@ -14,13 +15,11 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
     public float moveSpeed { get; set; } = 1.4f;
     public float skillDamage { get; private set; }
 
-    public bool isIdle = true;
-    public bool isWalk = true;
-    public bool isAttack = true;
-
     private float attackDist = 3.85f;
 
-    public float idleTime = 1f;
+    public bool isIdle = false;
+
+    public float idleTime = 5f;
     private float walkTime = 3f;
     private float attackTime = 1f;
 
@@ -28,8 +27,10 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
     private float stateTimer;
 
     public Animator anim;
-    private Rigidbody2D DemonRb;
+    private Rigidbody2D demonRb;
+    private Collider2D demonCol;
     private DemonSummon damonSummon;
+    private KnightController knight;
 
     [SerializeField] private Transform target;
 
@@ -42,9 +43,10 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
 
     private void Awake()
     {
-        DemonRb = GetComponent<Rigidbody2D>();
+        demonRb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         damonSummon = GetComponent<DemonSummon>();
+        demonCol = GetComponent<Collider2D>();
 
         anim.enabled = false;
     }
@@ -69,6 +71,14 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
             case BossState.DefaultAttack:
                 DefaultAttack();
                 break;
+
+            case BossState.Hit:
+                Hit(1);
+                break;
+
+            case BossState.Death:
+                Death();
+                break;
         }
     }
 
@@ -89,7 +99,7 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
             //stateTimer = Time.deltaTime; // 유사시 바로 사용할거라 주석 처리해두었음
             return;
         }
-        if (target != null && stateTimer >= walkTime && bossState != BossState.Idle && bossState != BossState.DefaultAttack)
+        if (target == null && stateTimer >= walkTime && bossState != BossState.Idle && bossState != BossState.DefaultAttack && isIdle)
         {
             ChangeState(BossState.Idle);
             //stateTimer = 0; // 유사시 바로 사용할거라 주석 처리해두었음
@@ -105,9 +115,13 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
     public void Idle()
     {
         LookTarget();
-        anim.SetBool("isWalk", false);
-        anim.SetBool("isAttack", false);
-        anim.SetTrigger("Idle");
+
+        if (isIdle)
+        {
+            anim.SetBool("isWalk", false);
+            anim.SetBool("isAttack", false);
+            anim.SetTrigger("Idle");
+        }
 
         stateTimer += Time.deltaTime;
         if (stateTimer >= idleTime)
@@ -124,8 +138,8 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
         Vector3 dir = (target.position - transform.position).normalized;
         transform.position += dir * moveSpeed * Time.deltaTime;
 
-        anim.SetBool("isWalk", true);
         anim.SetBool("isAttack", false);
+        anim.SetBool("isWalk", true);
 
         stateTimer += Time.deltaTime;
     }
@@ -133,9 +147,16 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
 
     public void DefaultAttack()
     {
+        
         LookTarget();
+
+        StartCoroutine(AttackRoutine());
+    }
+    public IEnumerator AttackRoutine()
+    {
         anim.SetBool("isWalk", false);
         anim.SetBool("isAttack", true);
+        yield return new WaitForSeconds(attackTime);
 
         stateTimer += Time.deltaTime;
         if (stateTimer >= attackTime)
@@ -146,19 +167,32 @@ public class BossDemon : MonoBehaviour, IBossDefaultPattern
             ChangeState(BossState.Idle);
         }
     }
-    //IEnumerator AttackRoutine()
-    //{
-
-    //}
 
     public void Hit(float damage)
     {
-
+        if (hp > 0)
+        {
+            HitRoutine();
+            hp -= damage;
+        }
+        else
+        {
+            Death();
+        }
+    }
+    IEnumerator HitRoutine()
+    {
+        anim.SetBool("isWalk", false);
+        anim.SetBool("isAttack", false);
+        anim.SetTrigger("Hit");
+        yield return new WaitForSeconds(0.5f);
     }
 
     public void Death()
     {
-
+        anim.SetBool("isWalk", false);
+        anim.SetBool("isAttack", false);
+        anim.SetTrigger("Death");
     }
 
     /// <summary>
