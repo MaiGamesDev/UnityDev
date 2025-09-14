@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1837557298678026677}
   - component: {fileID: 8212208412770511385}
   - component: {fileID: 844264384716548550}
-  - component: {fileID: -7638622117899392059}
   m_Layer: 9
   m_Name: Canine_Brown
   m_TagString: Untagged
@@ -201,18 +200,6 @@ MonoBehaviour:
   monsterHp: 20
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
   sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
---- !u!114 &-7638622117899392059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 724962135598635749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa008e3a6459db342bed055bdcc0b83b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6282571291301002320
 GameObject:
   m_ObjectHideFlags: 0

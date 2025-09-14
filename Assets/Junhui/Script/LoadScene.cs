@@ -25,10 +25,22 @@ public class LoadScene : MonoBehaviour
             }
         }
 
-        if (noUI)
-            UIManager.Instance.gameObject.SetActive(false);
-        else
-            UIManager.Instance.gameObject.SetActive(true);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (UIManager.Instance != null)
+        {
+            if (noUI)
+                UIManager.Instance.ShowUI();
+            else
+                UIManager.Instance.HideUI();
+
+            UIManager.Instance.ResetHp();
+            UIManager.Instance.HpEnemyParent.gameObject.SetActive(false);
+        }
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

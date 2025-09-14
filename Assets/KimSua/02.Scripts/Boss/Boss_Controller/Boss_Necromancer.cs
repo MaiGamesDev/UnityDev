@@ -22,7 +22,7 @@ public class Boss_Necromancer : BossController
         moveSpeed = 2f;
         traceDist = 8f;
         attackDist = 6f;
-        attackCooldown = 2f;
+        attackCooldown = 5f;
     }
 
     protected override void Start()
@@ -78,7 +78,7 @@ public class Boss_Necromancer : BossController
 
         fire2.GetComponent<NecroFire>().Setup(fireDamage);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.9f);
 
         Destroy(fire2);
     }

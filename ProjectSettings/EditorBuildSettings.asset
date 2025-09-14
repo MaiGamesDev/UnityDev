@@ -21,8 +21,29 @@ EditorBuildSettings:
     path: Assets/Junhui/Scene/MapHome.unity
     guid: 42f7bd484af635c4d81250f5ca278153
   - enabled: 1
-    path: Assets/Junhui/Scene/MapForest.unity
+    path: Assets/Maps/MapForest.unity
     guid: 8455377a6eb4e1949811d59baab4a3b6
+  - enabled: 1
+    path: Assets/Maps/MapForestBoss.unity
+    guid: f418447f9c82b96458c628f6b118e749
+  - enabled: 1
+    path: Assets/Maps/MapAbyss.unity
+    guid: 5a1c39965f5bff847aebf65df52a8466
+  - enabled: 1
+    path: Assets/Maps/MapAbyssBoss.unity
+    guid: 6d89155c7cb09904ea1d648cd5e8731f
+  - enabled: 1
+    path: Assets/Maps/MapCave.unity
+    guid: 30bd985770b7ab74f99858fdd341067b
+  - enabled: 1
+    path: Assets/Maps/MapCaveBoss.unity
+    guid: e23ae3b0c29b9984e89c9f13c33df7eb
+  - enabled: 1
+    path: Assets/Maps/MapCemetery.unity
+    guid: b9406426723c89e44ab19ccb7f7bd720
+  - enabled: 1
+    path: Assets/Maps/MapCemeteryBoss.unity
+    guid: e48621ebd2a27774dbbe28f074bbba5f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

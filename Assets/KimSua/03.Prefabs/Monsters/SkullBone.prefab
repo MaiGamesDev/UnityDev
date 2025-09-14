@@ -163,7 +163,6 @@ GameObject:
   - component: {fileID: 1896941334976977151}
   - component: {fileID: 4087669165853824966}
   - component: {fileID: 7929497412497559548}
-  - component: {fileID: -4945194950230919640}
   m_Layer: 9
   m_Name: SkullBone
   m_TagString: Fly
@@ -350,15 +349,3 @@ MonoBehaviour:
   monsterHp: 10
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
   sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
---- !u!114 &-4945194950230919640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7760327717815237464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa008e3a6459db342bed055bdcc0b83b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

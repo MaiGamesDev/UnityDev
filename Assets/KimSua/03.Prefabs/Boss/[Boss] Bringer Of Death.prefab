@@ -341,7 +341,7 @@ MonoBehaviour:
   currHp: 0
   traceDist: 8
   attackDist: 3
-  attackCooldown: 3
+  attackCooldown: 2
   sndHit: {fileID: 8300000, guid: cc5e84735c87346458182bc032cbf7ac, type: 3}
   sndDie: {fileID: 8300000, guid: c3fbb332f00ef004ebf3e319102b414b, type: 3}
   target: {fileID: 0}

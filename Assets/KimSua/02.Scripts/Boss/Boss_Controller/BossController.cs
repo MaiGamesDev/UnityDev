@@ -14,8 +14,8 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
 
     [Header("Dist Settings")]
     public float traceDist = 8f;
-    [SerializeField] protected float attackDist = 3f;
-    [SerializeField] protected float attackCooldown = 3f;
+    public float attackDist = 3f;
+    public float attackCooldown = 2f;
 
     [Header("Audio")]
     [SerializeField] protected AudioClip sndHit;
@@ -125,6 +125,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
             InitStates();
         }
 
+        // 딕셔너리에 key값(타입)이 존재하면 true 반환, 해당 value를 out 변수에 담음
         if (states.TryGetValue(typeof(T), out IBossState newState))
         {
             currentState?.StateExit(this);
@@ -213,7 +214,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
         bossColl.enabled = false;
         bossRb.gravityScale = 0f;
 
-        item.DropItem(transform.position);
+        item.DropItem(transform.position, gameObject);
 
         Destroy(gameObject, 1f);
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");

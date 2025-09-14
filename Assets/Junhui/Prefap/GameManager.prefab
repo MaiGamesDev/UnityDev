@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: 1293.5864, y: 667.8502, z: -4.7974296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2387599343393892596}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4451943902619833724
@@ -44,8 +45,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d3013a4ea24204287549dc6be44a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemDropSpawner: {fileID: 7336610835643964467}
   hp: 100
   maxHp: 100
   gold: 0
   damage: 1
   unlockedMapCount: 2
+--- !u!1001 &2859609007639625042
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7167883599848574363}
+    m_Modifications:
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5302837649801101340, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+      propertyPath: m_Name
+      value: Item Drop Spawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+--- !u!4 &2387599343393892596 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 472081700515419558, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+  m_PrefabInstance: {fileID: 2859609007639625042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7336610835643964467 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4791759165570343265, guid: 40c7d01a29b8db24393d6576b79091b6, type: 3}
+  m_PrefabInstance: {fileID: 2859609007639625042}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e64e15a15cd55d43b8d1c4a3ce88dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -13,19 +13,13 @@ public class HitBoxController : MonoBehaviour
 
         if (monster != null)
         {
-            Debug.Log("몬스터 공격");
             StartCoroutine(monster.Hit(knight.defaultDamage));
         }
 
 
         if (bossPattern != null)
         {
-            Debug.Log("보스 공격");
             bossPattern.Hit(knight.defaultDamage);
-        }
-        else
-        {
-            Debug.Log("보스를 찾지 못함");
         }
     }
 }

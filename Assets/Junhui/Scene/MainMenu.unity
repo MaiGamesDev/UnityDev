@@ -1397,7 +1397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGMMainMenu: {fileID: 8300000, guid: 940665090a77e2f43a43c3edbe6e3b00, type: 3}
-  sceneName: MapHome
+  sceneName: MapForest
   BGM: {fileID: 8300000, guid: e267e9795f60ad749b0e1e042faf9066, type: 3}
 --- !u!4 &1880482897
 Transform:

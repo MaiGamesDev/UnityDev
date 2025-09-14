@@ -3,8 +3,10 @@ using UnityEngine;
 //Game Manager ½Ì±ÛÅæ
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    [SerializeField] private ItemDropSpawner itemDropSpawner;
+    public ItemDropSpawner ItemDropSpawner => itemDropSpawner;
 
+    private static GameManager instance;
 
     public static GameManager Instance
     {

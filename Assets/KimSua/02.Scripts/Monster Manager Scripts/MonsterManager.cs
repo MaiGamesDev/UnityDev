@@ -42,10 +42,9 @@ public abstract class MonsterManager : MonoBehaviour
     private Vector2 moveVector;
     private float timer;
 
-    [SerializeField] private AudioClip sndHit;
-    [SerializeField] private AudioClip sndDie;
+    [SerializeField] protected AudioClip sndHit;
+    [SerializeField] protected AudioClip sndDie;
 
-    private MonsterPool monsterPool;
     public abstract void Init();
     #endregion
     // ----------------------------------------------------------------------------------------
@@ -62,8 +61,6 @@ public abstract class MonsterManager : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
         canFly = gameObject.CompareTag("Fly");
-
-        monsterPool = FindFirstObjectByType<MonsterPool>();
     }
 
     void Start()
@@ -129,15 +126,15 @@ public abstract class MonsterManager : MonoBehaviour
 
     private void CheckBoundary()
     {
-        if (transform.position.x >= 8f)
+        if (transform.position.x >= 22f)
         {
-            transform.position = new Vector3(8f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(22f, transform.position.y, transform.position.z);
             moveDir = -1;
             if (isFacingRight) Flip();
         }
-        else if (transform.position.x <= -8f)
+        else if (transform.position.x <= -8.2f)
         {
-            transform.position = new Vector3(-8f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-8.2f, transform.position.y, transform.position.z);
             moveDir = 1;
             if (!isFacingRight) Flip();
         }
@@ -273,7 +270,7 @@ public abstract class MonsterManager : MonoBehaviour
         }
 
         monsterRb.linearVelocity = Vector2.zero;
-        animator.SetTrigger("Hit");        
+        animator.SetTrigger("Hit");
         yield return new WaitForSeconds(GetAnimLegnth("Hit") + 0.7f);
 
         ChangeStateType(StateType.Move);
@@ -287,31 +284,38 @@ public abstract class MonsterManager : MonoBehaviour
         StartCoroutine(DeathRoutine());
     }
 
-    protected IEnumerator DeathRoutine()
+    protected virtual IEnumerator DeathRoutine()
     {
         SoundManager.Instance.PlaySound(sndDie); // Die 사운드
 
         stateType = StateType.Death;
         isDead = true;
 
-        animator.SetTrigger("Death");
-        yield return new WaitForSeconds(GetAnimLegnth("Death") - 0.5f);
+        // GameManager를 통해 ItemDropSpawner 접근
+        if (GameManager.Instance != null && GameManager.Instance.ItemDropSpawner != null)
+        {
+            GameManager.Instance.ItemDropSpawner.DropItem(transform.position, gameObject);            
+        }
+        gameObject.layer = LayerMask.NameToLayer("DeadMonster");
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Death");
+            yield return new WaitForSeconds(GetAnimLegnth("Death") - 0.5f);
+        }
 
         if (CompareTag("Fly"))
             monsterRb.gravityScale = 1f;
 
-        item.DropItem(transform.position);
-
-        monsterPool.ReturnPool(gameObject);
-        gameObject.layer = LayerMask.NameToLayer("DeadMonster");
+        Destroy(gameObject);
     }
-
-
     #endregion
 
     #region Attack
     public void OnTriggerEnter2D(Collider2D other)
     {
+        if (this.CompareTag("Fly")) return;
+
         if (other.CompareTag("Player"))
         {
             var player = other.GetComponent<KnightController>();
@@ -350,7 +354,7 @@ public abstract class MonsterManager : MonoBehaviour
     public abstract float AttackDamage();
     #endregion
 
-    float GetAnimLegnth(string stateName)
+    public float GetAnimLegnth(string stateName)
     {
         foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
         {
