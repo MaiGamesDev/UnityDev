@@ -1,3 +1,4 @@
+using BossAllStatus;
 using UnityEngine;
 
 namespace DemonBoss
@@ -5,6 +6,8 @@ namespace DemonBoss
     public class SmashState : IDemonState
     {
         private BossStateMachine bsm;
+        private BossDemonAbility demonAbil;
+        private AttackTrigger attackTrigger;
 
         public SmashState(BossStateMachine bsm)
         {
@@ -15,16 +18,21 @@ namespace DemonBoss
         {
 
         }
+        public void OnState()
+        {
+            bsm.LookTarget();
+
+        }
 
         public void OnExit()
         {
 
         }
 
-        public void OnState()
-        {
-            bsm.LookTarget();
 
+        public void OnAnimationEventTrigger()
+        {
+            attackTrigger.EnableAttack(demonAbil.smashDamage);
         }
     }
 }

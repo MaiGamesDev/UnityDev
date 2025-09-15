@@ -38,6 +38,12 @@ namespace DemonBoss
 
         public void OnExit()
         {
+            bsm.anim.SetBool("isWalk", false);
+        }
+
+        public void OnAnimationEventTrigger()
+        {
+
         }
     }
 }

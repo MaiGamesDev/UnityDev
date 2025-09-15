@@ -6,6 +6,7 @@ namespace DemonBoss
     {
         private BossStateMachine bsm;
         private BossDemonAbility demonAbil;
+        private AttackTrigger attackTrigger;
 
         public AttackState(BossStateMachine bsm)
         {
@@ -23,27 +24,22 @@ namespace DemonBoss
 
             bsm.LookTarget();
 
-            //
-            float dist = Vector2.Distance(bsm.transform.position, bsm.target.position);
 
+            float dist = Vector2.Distance(bsm.transform.position, bsm.target.position);
             if (dist > bsm.attackDist)
             {
                 bsm.ChangeState<IdleState>();
-                // BossAttack("Player", demonAbil.attackDamage);
             }
         }
 
         public void OnExit()
         {
-
+            bsm.anim.SetBool("isAttack", false);
         }
 
-        public void BossAttack(Collider2D other, float damage)
+        public void OnAnimationEventTrigger()
         {
-            if (other.CompareTag("Player"))
-            {
-                GameManager.Instance.hp -= damage;
-            }
+            attackTrigger.EnableAttack(demonAbil.attackDamage);
         }
     }
 }

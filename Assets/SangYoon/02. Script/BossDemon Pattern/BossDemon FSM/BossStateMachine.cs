@@ -20,9 +20,16 @@ public class BossStateMachine : MonoBehaviour
     public Animator anim;
 
     public float moveSpeed = 1f;
+
+    private IDemonState currentState;
+    public AttackTrigger attackTrigger;
+
+    public Vector3 fireBallPos;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        fireBallPos = new Vector3(2.15f, -1.15f, 0f);
 
         states = new Dictionary<Type, IDemonState> { 
             { typeof(DemonBoss.IdleState),       new DemonBoss.IdleState(this)},
@@ -60,6 +67,20 @@ public class BossStateMachine : MonoBehaviour
         Vector3 product = target.position - transform.position;
         Vector3 scale = transform.localScale;
         scale.x = product.x > 0 ? -1 : 1;
+        fireBallPos.x = product.x > 0 ? -1 : 1;
         transform.localScale = scale;
+    }
+
+    /// <summary>
+    /// 애니메이션 클립으로 메서드 추가해서 각 상태의 공격 데미지를 다르게 주기위함
+    /// </summary>
+    public void AnimationEventTrigger()
+    {
+        currentState?.OnAnimationEventTrigger();
+    }
+
+    public void OnGround()
+    {
+
     }
 }

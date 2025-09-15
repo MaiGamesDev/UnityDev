@@ -31,5 +31,9 @@ namespace DemonBoss
 
         }
 
+        public void OnAnimationEventTrigger()
+        {
+
+        }
     }
 }

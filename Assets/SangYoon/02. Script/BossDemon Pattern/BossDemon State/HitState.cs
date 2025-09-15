@@ -25,10 +25,6 @@ namespace DemonBoss
             bsm.LookTarget();
             TakeDamage(knight.defaultDamage);
         }
-        public void OnExit()
-        {
-
-        }
 
         private void TakeDamage(float damage)
         {
@@ -42,6 +38,15 @@ namespace DemonBoss
                 bsm.anim.SetBool("isHIt", false);
                 bsm.ChangeState<DeathState>();
             }
+        }
+        public void OnExit()
+        {
+            bsm.anim.SetBool("isHIt", false);
+        }
+
+        public void OnAnimationEventTrigger()
+        {
+
         }
     }
 }

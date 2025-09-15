@@ -36,5 +36,10 @@ namespace DemonBoss
         {
             bsm.idleTime = 0.5f;
         }
+
+        public void OnAnimationEventTrigger()
+        {
+
+        }
     }
 }
