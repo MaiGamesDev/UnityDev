@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
 
     public void Hurt(float value)
     {
-        //Àû Ã¼·Â °¨¼Ò
+        // ì  ì²´ë ¥ ê°ì†Œ
         hp -= value;
         UIManager.Instance.SetHpEnemy(hp, maxHp);
     }

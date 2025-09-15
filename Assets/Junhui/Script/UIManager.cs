@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
 
     public void SetHp(float value)
     {
-        // hp ¼³Á¤
+        // hp ì„¤ì •
 
         GameManager.Instance.hp = value;
         if (value >= 0)
@@ -71,23 +71,23 @@ public class UIManager : MonoBehaviour
     }
     public void ResetHp()
     {
-        // hp¸¦ maxhp·Î ¸®¼Â
+        // hpë¥¼ maxhpë¡œ ë¦¬ì…‹
 
         SetHp(GameManager.Instance.maxHp);
     }
     public void SetGold(float value)
     {
-        // gold ¼³Á¤
+        // gold ì„¤ì •
 
         GameManager.Instance.gold = value;
         if (value >= 0)
         {
-            Gold.text = $"¼ÒÁö±Ý : {value} gold";
+            Gold.text = $"ì†Œì§€ê¸ˆ : {value} gold";
         }
     }
     public void SetHpEnemy(float value, float maxValue)
     {
-        //HpEnemy ³Êºñ ¼³Á¤
+        //HpEnemy ë„ˆë¹„ ì„¤ì •
         HpEnemyParent.gameObject.SetActive(true);
         var result = value / maxValue * 100;
         HpEnemy.GetComponent<RectTransform>().sizeDelta = new Vector2(result * 5f, 18);
@@ -103,7 +103,7 @@ public class UIManager : MonoBehaviour
     }
     public IEnumerator ShowNoticeCorutine(string value)
     {
-        //¾È³»Ã¢ Ç¥½Ã
+        //ì•ˆë‚´ì°½ í‘œì‹œ
 
         NoticeText.text = value;
         Notice.gameObject.SetActive(true);
@@ -113,9 +113,7 @@ public class UIManager : MonoBehaviour
     }
     public void Die()
     {
-        // »ç¸Á
-
-        ShowNotice("Á×¾î¹ö·È´Ù...");
+        ShowNotice("ì£½ì–´ë²„ë ¸ë‹¤...");
     }
 
     public void HideUI()

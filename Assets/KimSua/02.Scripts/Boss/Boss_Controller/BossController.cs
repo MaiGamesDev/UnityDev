@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour, IBossDefaultPattern
 {
-    #region ¸â¹öº¯¼ö
+    #region ë©¤ë²„ë³€ìˆ˜
     [Header("Boss Stats")]
     public float hp { get; set; }
     public float attackDamage { get; set; }
@@ -30,7 +30,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
     #endregion
 
     private IBossState currentState;
-    // key : »óÅÂ Å¬·¡½º Å¸ÀÔ, value : ½ÇÁ¦ »óÅÂ
+    // key : ìƒíƒœ í´ë˜ìŠ¤ íƒ€ì…, value : ì‹¤ì œ ìƒíƒœ
     private Dictionary<Type, IBossState> states;
 
     public IBossAttackStrategy attackStrategy;
@@ -72,7 +72,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
 
     protected virtual void SetupStats()
     {
-        // ±âº» ½ºÅÈ ¼³Á¤
+        // ê¸°ë³¸ ìŠ¤íƒ¯ ì„¤ì •
         hp = 50f;
         attackDamage = 10f;
         moveSpeed = 1f;
@@ -117,7 +117,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
         gameObject.SetActive(false);
     }
 
-    // ¹İµå½Ã IBossState ÀÎÅÍÆäÀÌ½º¸¦ ±¸ÇöÇÑ Å¬·¡½º
+    // ë°˜ë“œì‹œ IBossState ì¸í„°í˜ì´ìŠ¤ë¥¼ êµ¬í˜„í•œ í´ë˜ìŠ¤
     public void ChangeState<T>() where T : IBossState
     {
         if (states == null)
@@ -125,7 +125,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
             InitStates();
         }
 
-        // µñ¼Å³Ê¸®¿¡ key°ª(Å¸ÀÔ)ÀÌ Á¸ÀçÇÏ¸é true ¹İÈ¯, ÇØ´ç value¸¦ out º¯¼ö¿¡ ´ãÀ½
+        // ë”•ì…”ë„ˆë¦¬ì— keyê°’(íƒ€ì…)ì´ ì¡´ì¬í•˜ë©´ true ë°˜í™˜, í•´ë‹¹ valueë¥¼ out ë³€ìˆ˜ì— ë‹´ìŒ
         if (states.TryGetValue(typeof(T), out IBossState newState))
         {
             currentState?.StateExit(this);
@@ -140,7 +140,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
         {
             yield return null;
 
-            // State ÀüÈ¯ ·ÎÁ÷
+            // State ì „í™˜ ë¡œì§
             if (currentState is IdleState || currentState is WalkState)
             {
                 if (targetDist <= traceDist)
@@ -156,7 +156,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
                 }
             }
 
-            // °ø°İ Á¶°Ç Ã¼Å©
+            // ê³µê²© ì¡°ê±´ ì²´í¬
             if (targetDist <= attackDist && !(currentState is AttackState) &&
                 Time.time - lastAttackTime >= attackCooldown)
             {
@@ -208,7 +208,7 @@ public class BossController : MonoBehaviour, IBossDefaultPattern
     {
         isDead = true;
 
-        SoundManager.Instance.PlaySound(sndDie); // Die »ç¿îµå
+        SoundManager.Instance.PlaySound(sndDie);
 
         animator.SetTrigger("Death");
         bossColl.enabled = false;

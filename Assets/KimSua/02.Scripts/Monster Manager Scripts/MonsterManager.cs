@@ -291,10 +291,31 @@ public abstract class MonsterManager : MonoBehaviour
         stateType = StateType.Death;
         isDead = true;
 
+        if (CompareTag("Fly"))
+        {
+            monsterRb.gravityScale = 1f;
+
+            // 땅에 닿을 때까지 기다림
+            while (transform.position.y > -2.15f)
+            {
+                yield return null;
+            }
+
+            // 땅에 닿으면 멈춤
+            monsterRb.gravityScale = 0f;
+            monsterRb.linearVelocity = Vector2.zero;
+
+            // 위치 보정
+            Vector3 pos = transform.position;
+            pos.y = -2.15f;
+            transform.position = pos;
+        }
+
+
         // GameManager를 통해 ItemDropSpawner 접근
         if (GameManager.Instance != null && GameManager.Instance.ItemDropSpawner != null)
         {
-            GameManager.Instance.ItemDropSpawner.DropItem(transform.position, gameObject);            
+            GameManager.Instance.ItemDropSpawner.DropItem(transform.position, gameObject);
         }
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");
 
@@ -303,9 +324,6 @@ public abstract class MonsterManager : MonoBehaviour
             animator.SetTrigger("Death");
             yield return new WaitForSeconds(GetAnimLegnth("Death") - 0.5f);
         }
-
-        if (CompareTag("Fly"))
-            monsterRb.gravityScale = 1f;
 
         Destroy(gameObject);
     }

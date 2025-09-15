@@ -7,56 +7,40 @@ public class ItemDropSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] coins;
 
-    private void Awake()
-    {
-        if (coins.Length == 0)
-        {
-            Debug.LogError("ÄÚÀÎ ÇÁ¸®ÆÕÀÌ ¾ø½À´Ï´Ù!");
-        }
-    }
-
     public void DropItem(Vector3 dropPos, GameObject owner)
     {
-        Debug.Log($"DropItem È£ÃâµÊ - À§Ä¡: {dropPos}, ¿À³Ê: {owner.name}");
         string layerName = LayerMask.LayerToName(owner.layer);
-        Debug.Log($"¿À³Ê ·¹ÀÌ¾î: {layerName} (·¹ÀÌ¾î ¹øÈ£: {owner.layer})");
 
         int dropCount = 1;
 
         if (layerName == "Boss")
         {
-            dropCount = Random.Range(3, 11); // 3 ~ 10°³
+            dropCount = Random.Range(3, 11); // 3 ~ 10
         }
         else if (layerName == "Monster")
         {
             dropCount = Random.Range(1, 4);
         }
 
-        Debug.Log($"µå·ÓÇÒ ¾ÆÀÌÅÛ °³¼ö: {dropCount}");
+        // coins ë°°ì—´ ìƒíƒœ í™•ì¸
+        if (coins == null || coins.Length == 0) return;
 
-        // coins ¹è¿­ »óÅÂ È®ÀÎ
-        if (coins == null || coins.Length == 0)
-        {
-            Debug.LogError("coins ¹è¿­ÀÌ nullÀÌ°Å³ª ºñ¾îÀÖ½À´Ï´Ù!");
-            return;
-        }
 
         for (int i = 0; i < dropCount; i++)
         {
             var randomIndex = Random.Range(0, coins.Length);
 
             GameObject item = Instantiate(coins[randomIndex], dropPos, Quaternion.identity);
-            Debug.Log($"¾ÆÀÌÅÛ »ı¼ºµÊ: {item.name}");
             Rigidbody2D itemRb = item.GetComponent<Rigidbody2D>();
 
             float angle = Random.Range(0f, 360f);
             float power = Random.Range(5f, 10f);
 
-            // Cos: °¢µµÀÇ xÃà ¹æÇâ ºñÀ², Sin: °¢µµÀÇ yÃà ¹æÇâ ºñÀ²
-            // Deg2Rad: rad °ª -> Degree º¯È¯
+            // Cos: ê°ë„ì˜ xì¶• ë°©í–¥ ë¹„ìœ¨, Sin: ê°ë„ì˜ yì¶• ë°©í–¥ ë¹„ìœ¨
+            // Deg2Rad: rad ê°’ -> Degree ë³€í™˜
             Vector2 dir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             itemRb.AddForce(dir * power, ForceMode2D.Impulse);
             itemRb.AddTorque(power, ForceMode2D.Impulse);
-        }           
+        }
     }
 }

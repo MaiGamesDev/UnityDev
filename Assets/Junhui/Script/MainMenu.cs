@@ -25,10 +25,4 @@ public class MainMenu : MonoBehaviour
     {
         SoundManager.Instance.PlayLoopSound(BGMMainMenu);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -44,10 +44,10 @@ public class FireWormAttackStrategy : IBossAttackStrategy
     {
         int count = Random.Range(1, 4);
 
-        // ÇÃ·¹ÀÌ¾î À§Ä¡¿¡ ÇÏ³ª »ı¼º
+        // í”Œë ˆì´ì–´ ìœ„ì¹˜ì— í•˜ë‚˜ ìƒì„±
         SpawnExplosion(boss, boss.target.position.x);
 
-        // ³ª¸ÓÁö´Â ·£´ı À§Ä¡¿¡ »ı¼º
+        // ë‚˜ë¨¸ì§€ëŠ” ëœë¤ ìœ„ì¹˜ì— ìƒì„±
         for (int i = 1; i < count; i++)
         {
             float ranPosX = Random.Range(-7f, 7f);

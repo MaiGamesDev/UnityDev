@@ -37,14 +37,14 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(AudioClip clip)
     {
-        // »ç¿îµå Àç»ı
+        // ì‚¬ìš´ë“œ ì¬ìƒ
         if (clip != null)
             audioSource.PlayOneShot(clip);
     }
 
     public void PlayLoopSound(AudioClip clip)
     {
-        // BGM Àç»ı
+        // BGM ì¬ìƒ
         audioSource.loop = true;
         audioSource.clip = clip;
         if (clip != null)

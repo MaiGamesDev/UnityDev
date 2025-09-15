@@ -30,19 +30,19 @@ public class NPC : MonoBehaviour
 
     public void BuyItem()
     {
-        // °ñµå°¡ °¡°İº¸´Ù ¸¹À»½Ã ±¸¸Å
+        // ê³¨ë“œê°€ ê°€ê²©ë³´ë‹¤ ë§ì„ì‹œ êµ¬ë§¤
         float gold = GameManager.Instance.gold;
 
         if (gold >= price)
         {
-            // type¿¡ ÇØ´çÇÏ´Â ¾ÆÀÌÅÛ ±¸¸Å
+            // typeì— í•´ë‹¹í•˜ëŠ” ì•„ì´í…œ êµ¬ë§¤
             switch (type)
             {
                 case "meat":
                     BuyMeat();
                     break;
                 case "upgrade":
-                    BuyUpgrade(); 
+                    BuyUpgrade();
                     break;
             }
 
@@ -53,7 +53,7 @@ public class NPC : MonoBehaviour
             SetPrice();
         }
         else
-        { 
+        {
             SoundManager.Instance.PlaySound(sndNoMoney);
             SetLine(noMoney);
         }
@@ -64,24 +64,24 @@ public class NPC : MonoBehaviour
         float value = plusValue;
         GameManager.Instance.maxHp += value;
         UIManager.Instance.ResetHp();
-        UIManager.Instance.ShowNotice($"°í±â¸¦ ¸Ô¾ú´Ù. (Ã¼·Â +{value})");
+        UIManager.Instance.ShowNotice($"ê³ ê¸°ë¥¼ ë¨¹ì—ˆë‹¤. (ì²´ë ¥ +{value})");
     }
     void BuyUpgrade()
     {
         float value = plusValue;
         GameManager.Instance.damage += value;
-        UIManager.Instance.ShowNotice($"¹«±â¸¦ Á¦·ÃÇß´Ù. (°ø°İ·Â +{value})");
+        UIManager.Instance.ShowNotice($"ë¬´ê¸°ë¥¼ ì œë ¨í–ˆë‹¤. (ê³µê²©ë ¥ +{value})");
     }
 
     void SetLine(string line)
     {
-        // ´ë»ç ¼³Á¤
+        // ëŒ€ì‚¬ ì„¤ì •
         lineBox.text = line;
     }
 
     void SetPrice()
     {
-        float damage = Mathf.Clamp(GameManager.Instance.damage - 1,0,10000f) / plusValue;
+        float damage = Mathf.Clamp(GameManager.Instance.damage - 1, 0, 10000f) / plusValue;
         float maxHp = Mathf.Clamp(GameManager.Instance.maxHp - 100f, 0, 10000f) / plusValue;
         switch (type)
         {
@@ -103,15 +103,14 @@ public class NPC : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
             lineBox.gameObject.SetActive(true);
-            item.SetActive(true);  
+        item.SetActive(true);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
 
         if (collision.gameObject.CompareTag("Player"))
             lineBox.gameObject.SetActive(false);
-            item.SetActive(false);
-            SetLine(idle);
+        item.SetActive(false);
+        SetLine(idle);
     }
-
 }

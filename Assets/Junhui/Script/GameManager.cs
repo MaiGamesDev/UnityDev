@@ -1,6 +1,5 @@
 using UnityEngine;
 
-//Game Manager ΩÃ±€≈Ê
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private ItemDropSpawner itemDropSpawner;

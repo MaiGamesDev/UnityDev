@@ -3,7 +3,7 @@ using static UnityEditor.PlayerSettings;
 
 public class Camera : MonoBehaviour
 {
-    // Ä«¸Ş¶ó °æ°è ¼³Á¤
+    // ì¹´ë©”ë¼ ê²½ê³„ ì„¤ì •
     public Vector2 minCamLimit = new Vector2(0,0);
     public Vector2 maxCamLimit = new Vector2(13,0);
 

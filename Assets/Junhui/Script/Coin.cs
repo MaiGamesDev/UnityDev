@@ -6,15 +6,11 @@ public class Coin : MonoBehaviour
     
     public int value = 10;
 
-    void Start()
-    {
-    }
-
     void GetCoin()
     {
-        //»ç¿îµå Àç»ı, ÄÚÀÎ È¹µæ
+        //ì‚¬ìš´ë“œ ì¬ìƒ, ì½”ì¸ íšë“
         SoundManager.Instance.PlaySound(sndCoin);
-        UIManager.Instance.ShowNotice($"{value} ÄÚÀÎÀ» ¾ò¾ú´Ù.");
+        UIManager.Instance.ShowNotice($"{value} ì½”ì¸ì„ ì–»ì—ˆë‹¤.");
         UIManager.Instance.SetGold(GameManager.Instance.gold + value);
         Destroy(gameObject);
     }

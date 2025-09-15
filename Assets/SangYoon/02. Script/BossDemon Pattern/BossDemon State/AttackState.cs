@@ -29,7 +29,7 @@ namespace DemonBoss
             if (dist > bsm.attackDist)
             {
                 bsm.ChangeState<IdleState>();
-                BossAttack("Player", demonAbil.attackDamage);
+                // BossAttack("Player", demonAbil.attackDamage);
             }
         }
 

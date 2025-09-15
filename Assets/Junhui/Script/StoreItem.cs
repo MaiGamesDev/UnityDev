@@ -8,7 +8,7 @@ public class StoreItem : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //¸¶¿ì½º Å¬¸¯½Ã ±¸¸Å
+        // ë§ˆìš°ìŠ¤ í´ë¦­ì‹œ êµ¬ë§¤
         npc.BuyItem();
     }
 }

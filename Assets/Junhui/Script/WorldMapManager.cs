@@ -11,10 +11,4 @@ public class WorldMapManager : MonoBehaviour
             buttons[i].gameObject.SetActive(true);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

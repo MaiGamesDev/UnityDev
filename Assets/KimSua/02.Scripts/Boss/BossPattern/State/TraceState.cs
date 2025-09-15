@@ -21,7 +21,7 @@ public class TraceState : IBossState
 
         boss.moveDir = direction;
 
-        // Trace ¡ﬂ ∞¯∞› ¡∂∞« √º≈©
+        // Trace Ï§ë Í≥µÍ≤© Ï°∞Í±¥ Ï≤¥ÌÅ¨
         if (boss.targetDist <= boss.attackDist && Time.time - boss.lastAttackTime >= boss.attackCooldown)
         {
             boss.lastAttackTime = Time.time;
